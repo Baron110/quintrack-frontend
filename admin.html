@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin | QUIN-TRACK</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;}
+.wordmark{font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.04em;}
+.wordmark span{color:#3b82f6;}
+.fi{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:10px 13px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#111827;background:#fff;outline:none;transition:border-color 0.15s,box-shadow 0.15s;}
+.fi:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1);}
+.fi::placeholder{color:#9ca3af;}
+select.fi{cursor:pointer;}
+input[type=range]{accent-color:#2563eb;width:100%;}
+.photo-drop{border:2px dashed #e5e7eb;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all 0.2s;background:#f9fafb;}
+.photo-drop:hover,.photo-drop.drag-over{border-color:#2563eb;background:#eff6ff;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes toastOut{from{opacity:1;}to{opacity:0;transform:translateY(16px);}}
+.toast-in{animation:toastIn 0.3s ease forwards;}
+.toast-out{animation:toastOut 0.3s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp 0.3s ease forwards;}
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<script>window.API_BASE='https://quintrack-backend-production.up.railway.app';</script>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen" class="min-h-screen flex p-0" style="background:#0a0f1e;">
+  <!-- Left panel - branding -->
+  <div class="hidden lg:flex flex-col justify-between w-1/2 p-12 relative overflow-hidden" style="background:linear-gradient(135deg,#1346d4 0%,#0a0f1e 100%);">
+    <!-- Grid overlay -->
+    <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:48px 48px;"></div>
+    <!-- Glow -->
+    <div class="absolute top-0 left-0 w-96 h-96 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(59,130,246,0.2) 0%,transparent 70%);transform:translate(-30%,-30%);"></div>
+
+    <div class="relative z-10">
+      <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:1.8rem;letter-spacing:-0.04em;color:#fff;line-height:1;">
+        QUIN<span style="color:#60a5fa;">-TRACK</span>
+      </div>
+      <div style="height:2px;background:#60a5fa;border-radius:1px;margin-top:4px;width:120px;"></div>
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:5px;">Global Logistics Platform</div>
+    </div>
+
+    <div class="relative z-10">
+      <h2 class="text-white font-black text-4xl leading-tight mb-4" style="letter-spacing:-0.03em;">Ship Smarter.<br/>Track Faster.<br/><span style="color:#60a5fa;">Deliver Better.</span></h2>
+      <p class="text-blue-200/60 text-sm leading-relaxed max-w-xs">Manage global shipments, create tracking links, and monitor your entire logistics chain from one place.</p>
+    </div>
+
+    <div class="relative z-10 grid grid-cols-3 gap-4">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">10M+</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Parcels</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">200+</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Countries</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">99.9%</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Uptime</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel - form -->
+  <div class="flex-1 flex items-center justify-center p-8" style="background:#0d1117;">
+    <div class="w-full max-w-sm fade-up">
+      <!-- Mobile logo -->
+      <div class="lg:hidden mb-8 text-center">
+        <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:1.6rem;letter-spacing:-0.04em;color:#fff;">
+          QUIN<span style="color:#3b82f6;">-TRACK</span>
+        </div>
+        <div style="height:2px;background:#3b82f6;border-radius:1px;margin:4px auto 0;width:100px;"></div>
+      </div>
+
+      <div class="mb-8">
+        <h1 class="text-white font-black text-2xl mb-1" style="letter-spacing:-0.02em;">Welcome back</h1>
+        <p class="text-gray-400 text-sm">Sign in to your admin dashboard</p>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Username</label>
+          <input id="loginUser" type="text" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"
+            style="width:100%;background:#161b27;border:1.5px solid #1e293b;border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#fff;outline:none;transition:border-color 0.15s;"
+            onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#1e293b'"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Password</label>
+          <input id="loginPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"
+            style="width:100%;background:#161b27;border:1.5px solid #1e293b;border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#fff;outline:none;transition:border-color 0.15s;"
+            onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#1e293b'"/>
+        </div>
+        <div id="loginErr" class="hidden rounded-lg px-4 py-3 text-sm font-medium" style="background:#2d1515;color:#f87171;border:1px solid #7f1d1d;"></div>
+        <button id="loginBtn" onclick="doLogin()"
+          style="width:100%;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.18s;margin-top:8px;"
+          onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+          Sign In to Dashboard
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </button>
+      </div>
+
+      <div class="mt-8 pt-6 border-t flex items-center justify-between" style="border-color:#1e293b;">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-400 inline-block" style="animation:ping2 2s infinite;"></span>
+          <span class="text-xs text-gray-500">Systems Operational</span>
+        </div>
+        <span class="text-xs text-gray-600">🔒 Encrypted</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="appShell" style="display:none;">
+
+  <!-- SIDEBAR (desktop) -->
+  <aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-white border-r border-gray-100 shadow-sm">
+    <div class="p-6 border-b border-gray-100">
+      <div class="wordmark text-xl text-gray-900">QUIN<span>-TRACK</span></div>
+      <div class="h-0.5 bg-blue-600 rounded mt-1 w-24"></div>
+      <p class="text-gray-400 text-xs uppercase tracking-widest font-semibold mt-1">Logistics Admin</p>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <button id="sb-create" onclick="switchTab('create')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Create Shipment
+      </button>
+      <button id="sb-list" onclick="switchTab('list')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        All Shipments
+      </button>
+    </nav>
+    <div class="p-4 border-t border-gray-100 space-y-1">
+      <a href="track.html" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all no-underline">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        View Track Page
+      </a>
+      <button onclick="doLogout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="lg:ml-64 min-h-screen flex flex-col">
+    <!-- TOP BAR -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <h2 id="pageTitle" class="font-bold text-gray-900">Create Shipment</h2>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
+          <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="searchInput" placeholder="Search shipments…" oninput="filterTable()" class="bg-transparent text-sm outline-none w-40 text-gray-900 placeholder:text-gray-400"/>
+        </div>
+        <span id="userBadge" class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full"></span>
+      </div>
+    </header>
+
+    <!-- CREATE TAB -->
+    <div id="tab-create" class="flex-1 p-6 max-w-5xl mx-auto w-full">
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Total</p><p id="st-total" class="font-black text-3xl text-gray-900">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">In Transit</p><p id="st-transit" class="font-black text-3xl text-blue-600">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Delivered</p><p id="st-delivered" class="font-black text-3xl text-green-600">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Pending</p><p id="st-pending" class="font-black text-3xl text-yellow-500">0</p></div>
+      </div>
+
+      <!-- Form card -->
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50">
+          <h3 class="font-bold text-gray-900">New Shipment</h3>
+          <p class="text-gray-500 text-sm mt-0.5">Fill in all details — a unique tracking link will be generated.</p>
+        </div>
+        <form id="shipForm" onsubmit="submitForm(event)" class="p-6 space-y-7">
+
+          <!-- SENDER -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Sender Details</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name <span class="text-red-400">*</span></label><input class="fi" id="s_name" placeholder="John Doe" required/></div>
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Address</label><input class="fi" id="s_addr" placeholder="123 Shipping Blvd"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">City / State <span class="text-red-400">*</span></label><input class="fi" id="s_city" placeholder="Houston, TX" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Zip Code</label><input class="fi" id="s_zip" placeholder="77001"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone</label><input class="fi" id="s_tel" placeholder="+1 (555) 000-0000" type="tel"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label><input class="fi" id="s_email" placeholder="sender@email.com" type="email"/></div>
+            </div>
+          </div>
+
+          <!-- RECEIVER -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 16v1a3 3 0 01-3 3H7a3 3 0 01-3-3v-1m4-4l4 4m0 0l4-4m-4 4V4"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Receiver Details</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name <span class="text-red-400">*</span></label><input class="fi" id="r_name" placeholder="Jane Smith" required/></div>
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Address</label><input class="fi" id="r_addr" placeholder="456 Delivery Lane"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">City / State <span class="text-red-400">*</span></label><input class="fi" id="r_city" placeholder="Chicago, IL" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Zip Code</label><input class="fi" id="r_zip" placeholder="60601"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone</label><input class="fi" id="r_tel" placeholder="+1 (555) 111-1111" type="tel"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label><input class="fi" id="r_email" placeholder="receiver@email.com" type="email"/></div>
+            </div>
+          </div>
+
+          <!-- PACKAGE -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Package & Shipment</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Content <span class="text-red-400">*</span></label><input class="fi" id="p_content" placeholder="e.g. Safe Box, Electronics" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Quantity</label><input class="fi" id="p_qty" type="number" value="1" min="1"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Weight</label><input class="fi" id="p_weight" placeholder="e.g. 35kg"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Order Type</label><select class="fi" id="p_order"><option>Paid</option><option>COD</option><option>Free</option></select></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Shipping From <span class="text-red-400">*</span></label><input class="fi" id="p_from" placeholder="Origin city/country" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Ship Out Date</label><input class="fi" id="p_shipdate" type="date"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Expected Delivery</label><input class="fi" id="p_expdate" type="date"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="p_status"><option>Pending</option><option selected>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+              <div class="md:col-span-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Delivery Progress: <span id="pctVal" class="text-blue-600 font-bold">1%</span></label>
+                <input type="range" id="p_pct" min="0" max="100" value="1" step="5" class="mt-2" oninput="document.getElementById('pctVal').textContent=this.value+'%'"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHOTO -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Item Photo <span class="text-gray-400 font-normal normal-case text-xs">(optional)</span></h4>
+            </div>
+            <div id="photoDropZone" class="photo-drop" onclick="document.getElementById('photoFileInput').click()"
+              ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
+              <div class="text-3xl mb-2">🖼️</div>
+              <p class="font-bold text-gray-700 text-sm mb-1">Click to upload or drag & drop</p>
+              <p class="text-gray-400 text-xs">JPG, PNG, WEBP — max 5MB</p>
+              <input type="file" id="photoFileInput" accept="image/*" class="hidden" onchange="handleFileSelect(event)"/>
+            </div>
+            <div id="photoPreview" class="hidden mt-3 rounded-xl overflow-hidden border border-gray-200 relative">
+              <img id="photoPreviewImg" src="" class="w-full max-h-52 object-cover"/>
+              <button type="button" onclick="removePhoto()" class="absolute top-2 right-2 bg-red-500/90 text-white border-none rounded-lg px-2 py-1 text-xs font-bold cursor-pointer">✕ Remove</button>
+            </div>
+          </div>
+
+          <!-- JOURNEY -->
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Journey Chain</h4>
+              </div>
+              <button type="button" onclick="addStop()" class="flex items-center gap-1.5 bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors">
+                + Add Stop
+              </button>
+            </div>
+            <p class="text-gray-400 text-sm mb-3">Add every checkpoint from origin to destination.</p>
+            <div id="journeyStops" class="space-y-3"></div>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="flex items-center justify-between pt-4 border-t border-gray-100 flex-wrap gap-3">
+            <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+              ✨ Generate Shipment
+            </button>
+            <button type="button" onclick="clearForm()" class="text-gray-400 text-sm hover:text-gray-700 underline cursor-pointer bg-none border-none">Clear form</button>
+          </div>
+
+          <!-- SUCCESS -->
+          <div id="successBox" class="hidden bg-blue-50 border border-blue-200 rounded-2xl p-5">
+            <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">✅ Shipment Created — Tracking Link Ready</p>
+            <div class="flex flex-wrap items-center gap-5">
+              <div><p class="text-xs text-gray-400 mb-1">Tracking ID</p><p id="genId" class="font-black text-xl text-gray-900 font-mono">—</p></div>
+              <div class="flex-1 min-w-[220px]">
+                <p class="text-xs text-gray-400 mb-1">Public Link</p>
+                <div class="flex">
+                  <input readonly id="genLink" class="flex-1 border border-gray-200 border-r-0 rounded-l-lg px-3 py-2 text-xs font-mono bg-white text-gray-900 outline-none"/>
+                  <button type="button" id="copyBtn" onclick="copyLink()" class="bg-blue-600 text-white border-none px-4 py-2 rounded-r-lg text-xs font-bold cursor-pointer hover:bg-blue-700 transition-colors">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- LIST TAB -->
+    <div id="tab-list" class="hidden flex-1 p-6">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div><h3 class="font-black text-xl text-gray-900">All Shipments</h3><p class="text-gray-500 text-sm mt-0.5">Manage and update records.</p></div>
+        <button onclick="switchTab('create')" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+          + New Shipment
+        </button>
+      </div>
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[640px]">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Tracking ID</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Photo</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Sender</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Receiver</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Status</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Exp. Date</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shipmentsBody" class="divide-y divide-gray-50"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV (mobile) -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-50 flex">
+      <button onclick="switchTab('create')" id="bn-create" class="flex-1 flex flex-col items-center py-3 gap-1 text-blue-600">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span class="text-xs font-semibold">Create</span>
+      </button>
+      <button onclick="switchTab('list')" id="bn-list" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span class="text-xs font-semibold">Shipments</span>
+      </button>
+      <a href="track.html" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400 no-underline">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        <span class="text-xs font-semibold">Track</span>
+      </a>
+    </div>
+  </main>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="hidden fixed inset-0 bg-gray-900/60 z-[100] flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl fade-up">
+    <div class="flex items-center justify-between p-5 border-b border-gray-100">
+      <h3 class="font-bold text-gray-900">Update Shipment</h3>
+      <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 hover:bg-red-50 hover:text-red-500 rounded-lg flex items-center justify-center text-sm transition-colors">✕</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <input type="hidden" id="edit_id"/>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="edit_status"><option>Pending</option><option>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Progress: <span id="editPctVal" class="text-blue-600 font-bold">0%</span></label>
+        <input type="range" id="edit_pct" min="0" max="100" step="5" class="mt-2" oninput="document.getElementById('editPctVal').textContent=this.value+'%'"/>
+      </div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Expected Delivery</label><input class="fi" type="date" id="edit_expdate"/></div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Update Photo</label>
+        <div class="photo-drop" onclick="document.getElementById('editPhotoInput').click()" style="padding:14px;">
+          <p class="text-sm text-gray-500">📷 Tap to upload new photo</p>
+          <input type="file" id="editPhotoInput" accept="image/*" class="hidden" onchange="handleEditPhoto(event)"/>
+        </div>
+        <div id="editPhotoPreview" class="hidden mt-2 rounded-xl overflow-hidden border border-gray-200 relative">
+          <img id="editPhotoPreviewImg" src="" class="w-full max-h-36 object-cover"/>
+          <button type="button" onclick="removeEditPhoto()" class="absolute top-1.5 right-1.5 bg-red-500/90 text-white border-none rounded-md px-2 py-0.5 text-xs font-bold cursor-pointer">✕</button>
+        </div>
+      </div>
+    </div>
+    <div class="p-5 flex gap-3 justify-end border-t border-gray-100">
+      <button onclick="closeModal()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors border-none cursor-pointer">Cancel</button>
+      <button onclick="saveEdit()" id="saveEditBtn" class="px-6 py-2 bg-green-600 text-white rounded-lg text-sm font-bold hover:bg-green-700 transition-colors border-none cursor-pointer flex items-center gap-2">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-xl font-bold text-sm text-white shadow-xl whitespace-nowrap"></div>
+
+<script>
+let authToken=localStorage.getItem('qt_token')||'';
+let currentPhotoData=null, editPhotoData=null, stopCount=0, editingId=null;
+const COUNTRIES=['CN','JP','DE','US','AE','KR','GB','FR','IT','AU','CA','SG','NL','IN','BR'];
+const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
+
+async function apiFetch(path,method='GET',body=null,auth=true){
+  const h={'Content-Type':'application/json'};
+  if(auth&&authToken)h['Authorization']='Bearer '+authToken;
+  const opts={method,headers:h};
+  if(body)opts.body=JSON.stringify(body);
+  const res=await fetch(window.API_BASE+path,opts);
+  if(res.status===401){doLogout();throw new Error('Unauthorized');}
+  return res.json();
+}
+
+async function doLogin(){
+  const user=document.getElementById('loginUser').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  if(!user||!pass){showLoginErr('Enter username and password');return;}
+  const btn=document.getElementById('loginBtn');
+  btn.innerHTML='<span class="spinner"></span> Signing in…';btn.disabled=true;
+  try{
+    const res=await apiFetch('/api/auth/login','POST',{username:user,password:pass},false);
+    if(res.token){authToken=res.token;localStorage.setItem('qt_token',authToken);showApp(res.username);}
+    else showLoginErr(res.error||'Login failed');
+  }catch(e){showLoginErr('Cannot reach server. Check your connection.');}
+  btn.innerHTML='Sign In to Dashboard <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>';
+  btn.disabled=false;
+}
+function showLoginErr(msg){const el=document.getElementById('loginErr');el.textContent=msg;el.classList.remove('hidden');}
+function showApp(u){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appShell').style.display='block';
+  document.getElementById('userBadge').textContent='👤 '+(u||'admin');
+  loadStats();addStop();addStop();
+}
+function doLogout(){authToken='';localStorage.removeItem('qt_token');location.reload();}
+
+function switchTab(name){
+  document.getElementById('tab-create').style.display=name==='create'?'block':'none';
+  document.getElementById('tab-list').style.display=name==='list'?'block':'none';
+  const act='bg-blue-600 text-white',ina='text-gray-500 hover:bg-gray-50 hover:text-gray-900';
+  document.getElementById('sb-create').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='create'?act:ina}`;
+  document.getElementById('sb-list').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='list'?act:ina}`;
+  document.getElementById('bn-create').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='create'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('bn-list').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='list'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('pageTitle').textContent=name==='create'?'Create Shipment':'All Shipments';
+  if(name==='list')loadShipments();
+}
+
+async function loadStats(){
+  try{const s=await apiFetch('/api/stats');
+    document.getElementById('st-total').textContent=s.total??0;
+    document.getElementById('st-transit').textContent=s.transit??0;
+    document.getElementById('st-delivered').textContent=s.delivered??0;
+    document.getElementById('st-pending').textContent=s.pending??0;
+  }catch(e){}
+}
+
+function handleFileSelect(e){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>5*1024*1024){showToast('Image too large (max 5MB)','error');return;}
+  const r=new FileReader();
+  r.onload=ev=>{currentPhotoData=ev.target.result;document.getElementById('photoPreviewImg').src=currentPhotoData;document.getElementById('photoPreview').classList.remove('hidden');document.getElementById('photoDropZone').style.display='none';};
+  r.readAsDataURL(file);
+}
+function handleDrop(e){e.preventDefault();document.getElementById('photoDropZone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(!f||!f.type.startsWith('image/'))return;handleFileSelect({target:{files:[f]}});}
+function removePhoto(){currentPhotoData=null;document.getElementById('photoPreview').classList.add('hidden');document.getElementById('photoDropZone').style.display='block';document.getElementById('photoFileInput').value='';}
+function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{editPhotoData=ev.target.result;document.getElementById('editPhotoPreviewImg').src=editPhotoData;document.getElementById('editPhotoPreview').classList.remove('hidden');};r.readAsDataURL(f);}
+function removeEditPhoto(){editPhotoData=null;document.getElementById('editPhotoPreview').classList.add('hidden');document.getElementById('editPhotoInput').value='';}
+
+function addStop(pf){
+  const id=stopCount++;
+  const div=document.createElement('div');
+  div.id='stop-'+id;
+  div.className='bg-gray-50 border border-gray-100 rounded-xl p-4';
+  div.innerHTML=`
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Stop #${id+1}</span>
+      <button type="button" onclick="document.getElementById('stop-${id}').remove()" class="bg-red-50 text-red-500 border-none rounded-lg px-2.5 py-1 text-xs font-bold cursor-pointer">✕ Remove</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Location</label><input class="fi" name="stop_loc" placeholder="e.g. Shanghai, China" value="${pf?.location||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Country</label><select class="fi" name="stop_country">${COUNTRIES.map(c=>`<option value="${c}" ${pf?.country===c?'selected':''}>${FLAG_MAP[c]} ${c}</option>`).join('')}<option value="OTHER">🌐 OTHER</option></select></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Event Type</label><select class="fi" name="stop_type"><option value="pickup">📦 Pickup</option><option value="flight">✈️ Flight</option><option value="transit">🔄 Transit</option><option value="arrival">🛬 Arrived</option><option value="sort">🏭 Sorting</option><option value="delivery">🚚 Delivery</option><option value="delivered">✅ Delivered</option></select></div>
+      <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Event Description</label><input class="fi" name="stop_event" placeholder="e.g. Departed — customs cleared" value="${pf?.event||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Date</label><input class="fi" type="date" name="stop_date" value="${pf?.dateRaw||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Time</label><input class="fi" name="stop_time" placeholder="09:14 AM" value="${pf?.time||''}"/></div>
+      <div class="flex items-center gap-4 pt-5">
+        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-500 font-medium"><input type="checkbox" name="stop_done" ${pf?.done?'checked':''} class="w-3.5 h-3.5 accent-green-600"/> Completed</label>
+        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-500 font-medium"><input type="checkbox" name="stop_active" ${pf?.active?'checked':''} class="w-3.5 h-3.5 accent-blue-600"/> Active</label>
+      </div>
+    </div>`;
+  document.getElementById('journeyStops').appendChild(div);
+}
+
+function collectStops(){
+  return [...document.querySelectorAll('#journeyStops > div')].map(div=>{
+    const loc=div.querySelector('[name=stop_loc]').value.trim();if(!loc)return null;
+    const dv=div.querySelector('[name=stop_date]').value;
+    return{location:loc,country:div.querySelector('[name=stop_country]').value,type:div.querySelector('[name=stop_type]').value,event:div.querySelector('[name=stop_event]').value||'',date:dv?new Date(dv).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—',dateRaw:dv,time:div.querySelector('[name=stop_time]').value||'—',done:div.querySelector('[name=stop_done]').checked,active:div.querySelector('[name=stop_active]').checked};
+  }).filter(Boolean);
+}
+
+async function submitForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');btn.innerHTML='<span class="spinner"></span> Creating…';btn.disabled=true;
+  const gv=id=>document.getElementById(id)?.value?.trim()||'';
+  const ship={status:gv('p_status'),pct:parseInt(gv('p_pct'))||1,itemPhoto:currentPhotoData||null,
+    sender:{name:gv('s_name'),address:gv('s_addr'),city:gv('s_city'),zip:gv('s_zip'),tel:gv('s_tel'),email:gv('s_email')},
+    receiver:{name:gv('r_name'),address:gv('r_addr'),city:gv('r_city'),zip:gv('r_zip'),tel:gv('r_tel'),email:gv('r_email')},
+    package:{content:gv('p_content'),qty:gv('p_qty')+' Unit(s)',weight:gv('p_weight'),from:gv('p_from'),orderType:gv('p_order'),shipDate:gv('p_shipdate'),expDate:gv('p_expdate')},
+    journey:collectStops()};
+  try{
+    const r=await apiFetch('/api/shipments','POST',ship);
+    if(r.id){
+      const base=window.location.href.replace('admin.html','');
+      document.getElementById('genId').textContent=r.id;
+      document.getElementById('genLink').value=base+'track.html?t='+r.id;
+      document.getElementById('successBox').classList.remove('hidden');
+      document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});
+      showToast('Shipment created! ✓','success');loadStats();
+    }else showToast(r.error||'Error','error');
+  }catch(err){showToast('Network error','error');}
+  btn.innerHTML='✨ Generate Shipment';btn.disabled=false;
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(document.getElementById('genLink').value).catch(()=>{});
+  const btn=document.getElementById('copyBtn');btn.textContent='Copied!';btn.style.background='#16a34a';
+  setTimeout(()=>{btn.textContent='Copy';btn.style.background='';},2000);
+}
+function clearForm(){document.getElementById('shipForm').reset();document.getElementById('pctVal').textContent='1%';document.getElementById('journeyStops').innerHTML='';document.getElementById('successBox').classList.add('hidden');removePhoto();stopCount=0;addStop();addStop();}
+
+const BADGE_CLS={'Pending':'bg-yellow-50 text-yellow-700 border border-yellow-200','In Transit':'bg-blue-50 text-blue-700 border border-blue-200','Out for Delivery':'bg-teal-50 text-teal-700 border border-teal-200','Delivered':'bg-green-50 text-green-700 border border-green-200'};
+
+async function loadShipments(q=''){
+  try{const d=await apiFetch('/api/shipments'+(q?'?q='+encodeURIComponent(q):''));renderTable(Array.isArray(d)?d:[]);}
+  catch(e){renderTable([]);}
+}
+function filterTable(){loadShipments(document.getElementById('searchInput')?.value||'');}
+function renderTable(all){
+  const tb=document.getElementById('shipmentsBody');
+  if(!all.length){tb.innerHTML=`<tr><td colspan="7" class="text-center py-12 text-gray-400"><div class="text-4xl mb-3">📭</div><p class="text-sm">No shipments yet.</p></td></tr>`;return;}
+  tb.innerHTML=all.map(s=>`
+    <tr class="hover:bg-gray-50 transition-colors">
+      <td class="px-5 py-4"><span class="font-mono font-bold text-xs text-blue-600">${s.id}</span></td>
+      <td class="px-5 py-4">${s.itemPhoto?`<img src="${s.itemPhoto}" class="w-10 h-10 object-cover rounded-lg border border-gray-200"/>`:'<span class="text-gray-300 text-lg">📷</span>'}</td>
+      <td class="px-5 py-4"><p class="font-semibold text-sm text-gray-900">${s.sender?.name||'—'}</p><p class="text-xs text-gray-400">${s.sender?.city||''}</p></td>
+      <td class="px-5 py-4"><p class="font-semibold text-sm text-gray-900">${s.receiver?.name||'—'}</p><p class="text-xs text-gray-400">${s.receiver?.city||''}</p></td>
+      <td class="px-5 py-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${BADGE_CLS[s.status]||''}">${s.status}</span></td>
+      <td class="px-5 py-4 font-mono text-xs text-gray-400">${s.package?.expDate||'—'}</td>
+      <td class="px-5 py-4 text-right">
+        <div class="flex justify-end gap-1.5">
+          <a href="track.html?t=${s.id}" target="_blank" class="w-8 h-8 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-xs hover:bg-blue-50 hover:border-blue-300 transition-colors no-underline">🔗</a>
+          <button onclick="openEdit('${s.id}')" class="w-8 h-8 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-xs hover:bg-blue-50 hover:border-blue-300 transition-colors cursor-pointer">✏️</button>
+          <button onclick="delShipment('${s.id}')" class="w-8 h-8 bg-red-50 border border-red-200 rounded-lg flex items-center justify-center text-xs hover:bg-red-100 transition-colors cursor-pointer">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+async function delShipment(id){if(!confirm('Delete?'))return;try{await apiFetch('/api/shipments/'+id,'DELETE');showToast('Deleted');loadShipments();loadStats();}catch(e){showToast('Error','error');}}
+async function openEdit(id){
+  editingId=id;
+  try{
+    const s=await apiFetch('/api/shipments/'+id);
+    document.getElementById('edit_id').value=id;
+    document.getElementById('edit_status').value=s.status;
+    document.getElementById('edit_pct').value=s.pct||0;
+    document.getElementById('editPctVal').textContent=(s.pct||0)+'%';
+    document.getElementById('edit_expdate').value=s.package?.expDate||'';
+    editPhotoData=s.itemPhoto||null;
+    if(s.itemPhoto){document.getElementById('editPhotoPreviewImg').src=s.itemPhoto;document.getElementById('editPhotoPreview').classList.remove('hidden');}
+    else document.getElementById('editPhotoPreview').classList.add('hidden');
+    document.getElementById('editModal').classList.remove('hidden');
+  }catch(e){showToast('Error loading','error');}
+}
+function closeModal(){document.getElementById('editModal').classList.add('hidden');}
+async function saveEdit(){
+  const btn=document.getElementById('saveEditBtn');btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;
+  try{
+    const u={status:document.getElementById('edit_status').value,pct:parseInt(document.getElementById('edit_pct').value)||0,'package.expDate':document.getElementById('edit_expdate').value};
+    if(editPhotoData!==null)u.itemPhoto=editPhotoData;
+    await apiFetch('/api/shipments/'+editingId,'PATCH',u);
+    closeModal();loadShipments();loadStats();showToast('Updated ✓','success');
+  }catch(e){showToast('Error saving','error');}
+  btn.innerHTML='Save Changes';btn.disabled=false;
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=type==='success'?'#16a34a':type==='error'?'#dc2626':'#111827';
+  t.classList.remove('hidden');t.className=t.className.replace('toast-out','')+' toast-in';
+  setTimeout(()=>{t.className=t.className.replace('toast-in','')+' toast-out';setTimeout(()=>t.classList.add('hidden'),300);},2800);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  if(authToken){
+    apiFetch('/api/stats').then(s=>{
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('appShell').style.display='block';
+      document.getElementById('userBadge').textContent='👤 admin';
+      document.getElementById('st-total').textContent=s.total??0;
+      document.getElementById('st-transit').textContent=s.transit??0;
+      document.getElementById('st-delivered').textContent=s.delivered??0;
+      document.getElementById('st-pending').textContent=s.pending??0;
+      addStop();addStop();
+    }).catch(()=>{authToken='';localStorage.removeItem('qt_token');});
+  }
+});
+</script>
+</body>
+</html>
