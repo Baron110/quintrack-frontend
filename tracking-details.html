@@ -512,27 +512,97 @@ let currentShipment=null;
 function downloadReceipt(){
   if(!currentShipment){alert('No shipment loaded.');return;}
   const s=currentShipment;
-  document.getElementById('rcDate').textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('rcId').textContent=s.id;
-  const sc={'Pending':'color:#d97706','In Transit':'color:#2563eb','Out for Delivery':'color:#0891b2','Delivered':'color:#16a34a'}[s.status]||'color:#2563eb';
-  document.getElementById('rcStatus').style.cssText=sc;
-  document.getElementById('rcStatus').textContent='Status: '+s.status;
-  document.getElementById('rcSName').textContent=s.sender?.name||'—';
-  document.getElementById('rcSAddr').textContent=[s.sender?.address,s.sender?.city].filter(Boolean).join(', ')||'—';
-  document.getElementById('rcSTel').textContent=s.sender?.tel||'—';
-  document.getElementById('rcSEmail').textContent=s.sender?.email||'—';
-  document.getElementById('rcRName').textContent=s.receiver?.name||'—';
-  document.getElementById('rcRAddr').textContent=[s.receiver?.address,s.receiver?.city].filter(Boolean).join(', ')||'—';
-  document.getElementById('rcRTel').textContent=s.receiver?.tel||'—';
-  document.getElementById('rcREmail').textContent=s.receiver?.email||'—';
-  document.getElementById('rcContent').textContent=s.package?.content||'—';
-  document.getElementById('rcWeight').textContent=s.package?.weight||'—';
-  document.getElementById('rcQty').textContent=s.package?.qty||'—';
-  document.getElementById('rcOrderType').textContent=s.package?.orderType||'—';
-  document.getElementById('rcShipDate').textContent=s.package?.shipDate||'—';
-  document.getElementById('rcExpDate').textContent=s.package?.expDate||'—';
-  document.getElementById('receiptTemplate').style.display='block';
-  document.body.style.overflow='hidden';
+  const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const statusColor={'Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
+
+  const receiptHTML=`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Receipt - ${s.id}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Inter,Arial,sans-serif;background:#fff;color:#111827;padding:40px;max-width:620px;margin:0 auto;}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid #111827;}
+  .logo{font-size:1.5rem;font-weight:900;letter-spacing:-0.04em;}
+  .logo span{color:#2563eb;}
+  .logo-line{height:2px;background:#2563eb;width:70px;margin-top:3px;border-radius:1px;}
+  .logo-sub{font-size:0.55rem;font-weight:700;letter-spacing:0.18em;color:#9ca3af;text-transform:uppercase;margin-top:3px;}
+  .tracking-box{background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:18px;margin-bottom:20px;text-align:center;}
+  .tracking-label{color:#6b7280;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
+  .tracking-id{font-family:monospace;font-weight:900;font-size:1.8rem;letter-spacing:0.05em;color:#111827;}
+  .tracking-status{margin-top:5px;font-size:0.78rem;font-weight:700;color:${statusColor};}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+  .info-box{border:1px solid #e5e7eb;border-radius:10px;padding:14px;}
+  .info-title{color:#2563eb;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .info-name{font-weight:700;font-size:0.85rem;margin-bottom:3px;}
+  .info-detail{color:#6b7280;font-size:0.75rem;margin-bottom:2px;}
+  .pkg-box{border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:20px;}
+  table{width:100%;border-collapse:collapse;}
+  td{padding:7px 0;font-size:0.8rem;border-bottom:1px solid #f3f4f6;}
+  td:first-child{color:#9ca3af;font-weight:600;text-transform:uppercase;font-size:0.7rem;width:40%;}
+  td:last-child{font-weight:600;color:#111827;}
+  .footer{border-top:1px solid #e5e7eb;padding-top:14px;text-align:center;color:#9ca3af;font-size:0.68rem;}
+  @media print{body{padding:20px;}@page{margin:1cm;}}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="logo">QUIN<span>-TRACK</span></div>
+      <div class="logo-line"></div>
+      <div class="logo-sub">Global Logistics</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="color:#9ca3af;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Shipment Receipt</div>
+      <div style="font-size:0.82rem;font-weight:600;color:#374151;">${date}</div>
+    </div>
+  </div>
+
+  <div class="tracking-box">
+    <div class="tracking-label">Tracking Number</div>
+    <div class="tracking-id">${s.id}</div>
+    <div class="tracking-status">Status: ${s.status}</div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="info-title">Sender</div>
+      <div class="info-name">${s.sender?.name||'—'}</div>
+      <div class="info-detail">${[s.sender?.address,s.sender?.city].filter(Boolean).join(', ')||'—'}</div>
+      <div class="info-detail">${s.sender?.tel||'—'}</div>
+      <div class="info-detail">${s.sender?.email||'—'}</div>
+    </div>
+    <div class="info-box">
+      <div class="info-title">Receiver</div>
+      <div class="info-name">${s.receiver?.name||'—'}</div>
+      <div class="info-detail">${[s.receiver?.address,s.receiver?.city].filter(Boolean).join(', ')||'—'}</div>
+      <div class="info-detail">${s.receiver?.tel||'—'}</div>
+      <div class="info-detail">${s.receiver?.email||'—'}</div>
+    </div>
+  </div>
+
+  <div class="pkg-box">
+    <div class="info-title">Package Details</div>
+    <table>
+      <tr><td>Content</td><td>${s.package?.content||'—'}</td></tr>
+      <tr><td>Weight</td><td>${s.package?.weight||'—'}</td></tr>
+      <tr><td>Quantity</td><td>${s.package?.qty||'—'}</td></tr>
+      <tr><td>Order Type</td><td>${s.package?.orderType||'—'}</td></tr>
+      <tr><td>Ship Date</td><td>${s.package?.shipDate||'—'}</td></tr>
+      <tr><td>Expected</td><td>${s.package?.expDate||'—'}</td></tr>
+    </table>
+  </div>
+
+  <div class="footer">Auto-generated receipt · QUIN-TRACK Logistics · © 2026</div>
+
+  <script>window.onload=function(){window.print();}<\/script>
+</body>
+</html>`;
+
+  const w=window.open('','_blank');
+  w.document.write(receiptHTML);
+  w.document.close();
 }
 
 function closeReceipt(){
