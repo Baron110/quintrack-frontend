@@ -138,6 +138,11 @@ input[type=range]{accent-color:#2563eb;width:100%;}
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         All Shipments
       </button>
+      <button id="sb-chat" onclick="switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        Support Inbox
+        <span id="sb-chat-badge" class="hidden ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"></span>
+      </button>
     </nav>
     <div class="p-4 border-t border-gray-100 space-y-1">
       <a href="track.html" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all no-underline">
@@ -327,6 +332,39 @@ input[type=range]{accent-color:#2563eb;width:100%;}
       </div>
     </div>
 
+    <!-- CHAT TAB -->
+    <div id="tab-chat" class="hidden flex-1 p-6">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div><h3 class="font-black text-xl text-gray-900">Support Inbox</h3><p class="text-gray-500 text-sm mt-0.5">Chat with users in real-time.</p></div>
+        <button onclick="loadChats()" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">↻ Refresh</button>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <!-- Sessions list -->
+        <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-gray-100 bg-gray-50">
+            <p class="font-bold text-gray-900 text-sm">Conversations</p>
+          </div>
+          <div id="chatSessionsList" class="divide-y divide-gray-50 overflow-y-auto max-h-[500px]">
+            <p class="text-gray-400 text-sm text-center py-8">No conversations yet</p>
+          </div>
+        </div>
+        <!-- Active chat -->
+        <div class="lg:col-span-2 bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden flex flex-col" style="min-height:400px;">
+          <div id="chatHeader" class="p-4 border-b border-gray-100 bg-gray-50">
+            <p class="font-bold text-gray-900 text-sm">Select a conversation</p>
+          </div>
+          <div id="chatMessages" class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 bg-gray-50">
+            <p class="text-gray-400 text-sm text-center mt-8">No conversation selected</p>
+          </div>
+          <div id="chatReplyBox" class="hidden p-4 border-t border-gray-100 flex gap-3">
+            <input type="text" id="adminReplyInput" placeholder="Type a reply…" onkeydown="if(event.key==='Enter')sendAdminReply()"
+              class="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"/>
+            <button onclick="sendAdminReply()" class="bg-gray-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- BOTTOM NAV (mobile) -->
     <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-50 flex">
       <button onclick="switchTab('create')" id="bn-create" class="flex-1 flex flex-col items-center py-3 gap-1 text-blue-600">
@@ -336,6 +374,11 @@ input[type=range]{accent-color:#2563eb;width:100%;}
       <button onclick="switchTab('list')" id="bn-list" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         <span class="text-xs font-semibold">Shipments</span>
+      </button>
+      <button onclick="switchTab('chat')" id="bn-chat" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400 relative">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span class="text-xs font-semibold">Support</span>
+        <span id="bn-chat-badge" class="hidden absolute top-1 right-4 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center"></span>
       </button>
       <a href="track.html" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400 no-underline">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -424,13 +467,17 @@ function doLogout(){authToken='';localStorage.removeItem('qt_token');location.re
 function switchTab(name){
   document.getElementById('tab-create').style.display=name==='create'?'block':'none';
   document.getElementById('tab-list').style.display=name==='list'?'block':'none';
+  document.getElementById('tab-chat').style.display=name==='chat'?'block':'none';
   const act='bg-blue-600 text-white',ina='text-gray-500 hover:bg-gray-50 hover:text-gray-900';
   document.getElementById('sb-create').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='create'?act:ina}`;
   document.getElementById('sb-list').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='list'?act:ina}`;
+  document.getElementById('sb-chat').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='chat'?act:ina}`;
   document.getElementById('bn-create').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='create'?'text-blue-600':'text-gray-400'}`;
   document.getElementById('bn-list').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='list'?'text-blue-600':'text-gray-400'}`;
-  document.getElementById('pageTitle').textContent=name==='create'?'Create Shipment':'All Shipments';
+  document.getElementById('bn-chat').className=`flex-1 flex flex-col items-center py-3 gap-1 relative ${name==='chat'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('pageTitle').textContent=name==='create'?'Create Shipment':name==='list'?'All Shipments':'Support Inbox';
   if(name==='list')loadShipments();
+  if(name==='chat')loadChats();
 }
 
 async function loadStats(){
@@ -578,6 +625,81 @@ function showToast(msg,type=''){
   t.classList.remove('hidden');t.className=t.className.replace('toast-out','')+' toast-in';
   setTimeout(()=>{t.className=t.className.replace('toast-in','')+' toast-out';setTimeout(()=>t.classList.add('hidden'),300);},2800);
 }
+
+// ── CHAT FUNCTIONS ──
+let activeChatSession = null;
+let chatPollInterval = null;
+
+async function loadChats(){
+  try{
+    const chats = await apiFetch('/api/chat/sessions');
+    const list = document.getElementById('chatSessionsList');
+    if(!chats.length){ list.innerHTML='<p class="text-gray-400 text-sm text-center py-8">No conversations yet</p>'; return; }
+    list.innerHTML = chats.map(c=>`
+      <div onclick="openChat('${c.sessionId}')" class="p-4 cursor-pointer hover:bg-gray-50 transition-colors ${activeChatSession===c.sessionId?'bg-blue-50':''}" style="border-left:${activeChatSession===c.sessionId?'3px solid #2563eb':'3px solid transparent'}">
+        <div class="flex items-center justify-between mb-1">
+          <p class="font-bold text-gray-900 text-sm">${c.userName||'Guest'}</p>
+          ${c.unread>0?`<span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">${c.unread}</span>`:''}
+        </div>
+        <p class="text-gray-400 text-xs truncate">${c.messages?.slice(-1)[0]?.text||'No messages'}</p>
+        <p class="text-gray-300 text-xs mt-1">${new Date(c.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p>
+      </div>`).join('');
+    // Update badge
+    const totalUnread = chats.reduce((sum,c)=>sum+(c.unread||0),0);
+    const badge = document.getElementById('sb-chat-badge');
+    const bnBadge = document.getElementById('bn-chat-badge');
+    if(totalUnread>0){
+      badge.textContent=totalUnread; badge.classList.remove('hidden');
+      bnBadge.textContent=totalUnread; bnBadge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden'); bnBadge.classList.add('hidden');
+    }
+  }catch(e){}
+}
+
+async function openChat(sessionId){
+  activeChatSession = sessionId;
+  await apiFetch(`/api/chat/session/${sessionId}/read`,'PATCH',{});
+  const chat = await apiFetch(`/api/chat/session/${sessionId}`);
+  document.getElementById('chatHeader').innerHTML=`<div class="flex items-center justify-between"><div><p class="font-bold text-gray-900 text-sm">${chat.userName||'Guest'}</p><p class="text-gray-400 text-xs">${chat.userEmail||'No email'}</p></div><button onclick="resolveChat('${sessionId}')" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-3 py-1 rounded-lg transition-colors">Mark Resolved</button></div>`;
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML = chat.messages?.map(m=>`
+    <div class="flex ${m.role==='admin'?'justify-end':'justify-start'}">
+      <div class="max-w-[75%] px-4 py-2.5 rounded-2xl text-sm ${m.role==='admin'?'bg-gray-900 text-white rounded-br-sm':'bg-white border border-gray-200 text-gray-900 rounded-bl-sm'}">
+        <div>${m.text}</div>
+        <div class="text-xs mt-1 ${m.role==='admin'?'text-gray-400':'text-gray-400'}">${new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`).join('') || '<p class="text-gray-400 text-sm text-center mt-8">No messages yet</p>';
+  msgs.scrollTop = msgs.scrollHeight;
+  document.getElementById('chatReplyBox').classList.remove('hidden');
+  loadChats();
+}
+
+async function sendAdminReply(){
+  const input = document.getElementById('adminReplyInput');
+  const text = input.value.trim();
+  if(!text || !activeChatSession) return;
+  input.value = '';
+  await apiFetch('/api/chat/reply','POST',{sessionId:activeChatSession,text});
+  openChat(activeChatSession);
+}
+
+async function resolveChat(sessionId){
+  await apiFetch(`/api/chat/session/${sessionId}/resolve`,'PATCH',{});
+  activeChatSession = null;
+  document.getElementById('chatMessages').innerHTML='<p class="text-gray-400 text-sm text-center mt-8">Conversation resolved</p>';
+  document.getElementById('chatReplyBox').classList.add('hidden');
+  document.getElementById('chatHeader').innerHTML='<p class="font-bold text-gray-900 text-sm">Select a conversation</p>';
+  loadChats();
+}
+
+// Poll for new chat messages every 5 seconds when on chat tab
+setInterval(()=>{
+  if(document.getElementById('tab-chat')&&document.getElementById('tab-chat').style.display!=='none'){
+    loadChats();
+    if(activeChatSession) openChat(activeChatSession);
+  }
+}, 5000);
 
 window.addEventListener('DOMContentLoaded',()=>{
   if(authToken){
