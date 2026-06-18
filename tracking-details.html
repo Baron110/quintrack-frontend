@@ -25,6 +25,14 @@ body{font-family:'Inter',sans-serif;background:#f8f9fa;}
 .fade-up{animation:fadeUp 0.45s ease forwards;}
 .pulse-ring{animation:pulseRing 2s infinite;}
 @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(19,70,212,0.4);}70%{box-shadow:0 0 0 14px rgba(19,70,212,0);}100%{box-shadow:0 0 0 0 rgba(19,70,212,0);}}
+
+/* iOS 26 Liquid Glass */
+.glass-nav{background:rgba(255,255,255,0.72)!important;backdrop-filter:blur(24px) saturate(180%)!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;border-bottom:1px solid rgba(255,255,255,0.5)!important;box-shadow:0 1px 0 rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8)!important;}
+.glass-card{background:rgba(255,255,255,0.82)!important;backdrop-filter:blur(20px) saturate(160%)!important;-webkit-backdrop-filter:blur(20px) saturate(160%)!important;border:1px solid rgba(255,255,255,0.6)!important;box-shadow:0 4px 16px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8)!important;}
+.glass-btn{background:rgba(17,24,39,0.88)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;border:1px solid rgba(255,255,255,0.15)!important;box-shadow:0 2px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.12)!important;}
+.glass-btn:hover{background:rgba(55,65,81,0.92)!important;}
+.glass-blue-btn{background:rgba(37,99,235,0.88)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;border:1px solid rgba(255,255,255,0.2)!important;box-shadow:0 2px 12px rgba(37,99,235,0.3),inset 0 1px 0 rgba(255,255,255,0.2)!important;}
+
 @media print{
   body > *:not(#receiptTemplate){display:none!important;}
   #receiptTemplate{display:block!important;position:static!important;background:#fff!important;padding:20px!important;z-index:auto!important;}
@@ -83,7 +91,7 @@ const DEMO_DATA={
 </script>
 
 <!-- NAV -->
-<nav style="background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+<nav class="glass-nav" style="position:sticky;top:0;z-index:100;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;max-width:1100px;margin:0 auto;">
     <a href="track.html" style="text-decoration:none;">
       <div class="wordmark" style="font-size:1.2rem;color:#111827;">QUIN<span>-TRACK</span></div>
@@ -196,7 +204,7 @@ const DEMO_DATA={
     </div>
 
     <!-- RIGHT: Package image -->
-    <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 1px 6px rgba(0,0,0,0.06);" class="fade-up">
+    <div class="glass-card fade-up" style="border-radius:20px;padding:24px;">
       <h2 style="font-size:1.05rem;font-weight:800;color:#111827;margin-bottom:16px;">Package Image</h2>
       <div id="pkgImageWrap">
         <div style="background:#f3f4f6;border-radius:14px;height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
@@ -228,14 +236,14 @@ const DEMO_DATA={
   </div>
 
   <!-- JOURNEY TIMELINE -->
-  <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 1px 6px rgba(0,0,0,0.06);margin-bottom:24px;" class="fade-up">
+  <div class="glass-card" style="border-radius:20px;padding:28px;margin-bottom:24px;" class="fade-up">
     <h2 style="font-size:1.05rem;font-weight:800;color:#111827;margin-bottom:20px;">Journey Timeline</h2>
     <div id="journeyList"></div>
   </div>
 
   <!-- TRACK ANOTHER + DOWNLOAD RECEIPT -->
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding-bottom:40px;" class="fade-up">
-    <button onclick="downloadReceipt()" style="display:inline-flex;align-items:center;gap:8px;background:#111827;color:#fff;padding:13px 32px;border-radius:12px;font-weight:700;font-size:0.875rem;border:none;cursor:pointer;transition:background 0.18s;"
+    <button onclick="downloadReceipt()" class="glass-btn" style="display:inline-flex;align-items:center;gap:8px;color:#fff;padding:13px 32px;border-radius:12px;font-weight:700;font-size:0.875rem;border:none;cursor:pointer;"
       onmouseover="this.style.background='#374151'" onmouseout="this.style.background='#111827'">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
       Download Receipt
