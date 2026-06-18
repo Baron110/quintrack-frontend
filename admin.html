@@ -693,13 +693,20 @@ async function resolveChat(sessionId){
   loadChats();
 }
 
-// Poll for new chat messages every 5 seconds when on chat tab
+// Poll for new chats silently - only update badge and session list
 setInterval(()=>{
-  if(document.getElementById('tab-chat')&&document.getElementById('tab-chat').style.display!=='none'){
-    loadChats();
-    if(activeChatSession) openChat(activeChatSession);
-  }
-}, 5000);
+  if(!authToken) return;
+  apiFetch('/api/chat/unread').then(data=>{
+    const badge=document.getElementById('sb-chat-badge');
+    const bnBadge=document.getElementById('bn-chat-badge');
+    if(data&&data.unread>0){
+      badge.textContent=data.unread;badge.classList.remove('hidden');
+      bnBadge.textContent=data.unread;bnBadge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');bnBadge.classList.add('hidden');
+    }
+  }).catch(()=>{});
+}, 8000);
 
 window.addEventListener('DOMContentLoaded',()=>{
   if(authToken){
