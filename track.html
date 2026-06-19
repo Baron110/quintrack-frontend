@@ -1,96 +1,26 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Track your parcels worldwide with QUIN-TRACK. Real-time updates, secure handling, and global reach."/>
 <title>QUIN-TRACK | Ship Smarter, Track Faster</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;}
 .hero-bg{background-image:url(https://lh3.googleusercontent.com/aida-public/AB6AXuDhsgXIp6p8ms67j5ZQiThuOPucc0L54z-TvQsj8JxKIonRd1YCOItFCVWGo0kuswKpOlLALD6bkjG4UIfIrsNrXcdHQGOkjuEkod7PO27DsLi90yKpmagocYQR7QQQiXJDDgEBrW4SGlFBhRvK4o5lawRzkvHftF2lmO5H1Rke6yHO1IyGMp-rtOAKeba-TROawPNyaNWkB5mKp42McS8t3wHHJhRzrUpXzLIxPgKPUhEJAUTNd_s-He1vCHOP52ZkbpEkzKlN-tE);background-size:cover;background-position:center;}
-.wordmark{font-family:'Inter',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:-0.04em;color:#111827;}
-.wordmark span{color:#1f4dda;}
-.wordmark-line{display:block;height:2px;background:#1f4dda;border-radius:1px;margin-top:2px;}
+.wordmark{font-family:'Inter',sans-serif;font-weight:900;font-size:1.3rem;letter-spacing:-0.04em;color:#111827;}
+.wordmark span{color:#2563eb;}
+.wordmark-line{display:block;height:2px;background:#2563eb;border-radius:1px;margin-top:2px;}
 .wordmark-sub{display:block;font-size:0.5rem;font-weight:600;letter-spacing:0.18em;color:#94a3b8;text-transform:uppercase;margin-top:1px;}
-.progress-fill{width:0%;transition:width 1.5s cubic-bezier(0.65,0,0.35,1);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .fade-up{animation:fadeUp 0.4s ease forwards;}
 @keyframes ping2{0%,100%{opacity:1;}50%{opacity:0.3;}}
 .live-ping{animation:ping2 2s infinite;}
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* ── MOBILE RESPONSIVE ── */
-@media(max-width:640px){
-  section{padding-left:16px!important;padding-right:16px!important;}
-  footer{padding-left:16px!important;padding-right:16px!important;}
-  nav .flex{padding-left:16px!important;padding-right:16px!important;}
-  .rounded-3xl{border-radius:16px!important;}
-  .lg\\:grid-cols-2{grid-template-columns:1fr!important;}
-  .flex.gap-3.justify-center{flex-direction:column;align-items:stretch;}
-  .flex.gap-3.justify-center a,.flex.gap-3.justify-center button{text-align:center;}
-}
-
-/* ── iOS 26 LIQUID GLASS ── */
-.glass-nav{
-  background:rgba(255,255,255,0.72) !important;
-  backdrop-filter:blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(180%) !important;
-  border-bottom:1px solid rgba(255,255,255,0.5) !important;
-  box-shadow:0 1px 0 rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8) !important;
-}
-.glass-modal{
-  background:rgba(255,255,255,0.88) !important;
-  backdrop-filter:blur(40px) saturate(200%) !important;
-  -webkit-backdrop-filter:blur(40px) saturate(200%) !important;
-  border:1px solid rgba(255,255,255,0.6) !important;
-  box-shadow:0 8px 32px rgba(0,0,0,0.12),inset 0 1px 0 rgba(255,255,255,0.9) !important;
-}
-.glass-card{
-  background:rgba(255,255,255,0.75) !important;
-  backdrop-filter:blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter:blur(20px) saturate(160%) !important;
-  border:1px solid rgba(255,255,255,0.55) !important;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8) !important;
-}
-.glass-btn{
-  background:rgba(37,99,235,0.85) !important;
-  backdrop-filter:blur(12px) !important;
-  -webkit-backdrop-filter:blur(12px) !important;
-  border:1px solid rgba(255,255,255,0.25) !important;
-  box-shadow:0 2px 12px rgba(37,99,235,0.35),inset 0 1px 0 rgba(255,255,255,0.2) !important;
-}
-.glass-btn:hover{
-  background:rgba(29,78,216,0.9) !important;
-  box-shadow:0 4px 20px rgba(37,99,235,0.45),inset 0 1px 0 rgba(255,255,255,0.25) !important;
-}
-.glass-input{
-  background:rgba(255,255,255,0.65) !important;
-  backdrop-filter:blur(12px) !important;
-  -webkit-backdrop-filter:blur(12px) !important;
-  border:1px solid rgba(255,255,255,0.6) !important;
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.06) !important;
-}
-.glass-input:focus{
-  background:rgba(255,255,255,0.85) !important;
-  border-color:rgba(37,99,235,0.5) !important;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.12),inset 0 1px 3px rgba(0,0,0,0.04) !important;
-}
-/* Feature cards glass on hover */
-.glass-feature-card{
-  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
-}
-.glass-feature-card:hover{
-  background:rgba(255,255,255,0.9) !important;
-  backdrop-filter:blur(20px) !important;
-  -webkit-backdrop-filter:blur(20px) !important;
-  border:1px solid rgba(255,255,255,0.7) !important;
-  box-shadow:0 12px 40px rgba(37,99,235,0.12),inset 0 1px 0 rgba(255,255,255,0.9) !important;
-  transform:translateY(-4px) !important;
-}
+.glass-nav{background:rgba(255,255,255,0.85)!important;backdrop-filter:blur(20px) saturate(180%)!important;-webkit-backdrop-filter:blur(20px) saturate(180%)!important;border-bottom:1px solid rgba(255,255,255,0.5)!important;}
 </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -98,46 +28,39 @@ body{font-family:'Inter',sans-serif;}
 <script>window.API_BASE='https://quintrack-backend-production.up.railway.app';</script>
 
 <!-- NAV -->
-<nav class="glass-nav bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-  <div class="flex justify-between items-center px-8 h-16 max-w-7xl mx-auto">
+<nav class="glass-nav sticky top-0 z-50 shadow-sm">
+  <div class="flex justify-between items-center px-5 h-16 max-w-7xl mx-auto">
     <a href="#" class="no-underline">
       <div class="wordmark">QUIN<span>-TRACK</span><span class="wordmark-line"></span><span class="wordmark-sub">Global Logistics</span></div>
     </a>
     <div class="hidden md:flex items-center gap-8">
-      <a href="#features" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Services</a>
-      <a href="#how" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">How It Works</a>
-      <a href="#testimonials" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Reviews</a>
-      <a href="admin.html" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Support</a>
+      <a href="#features" class="text-gray-500 hover:text-blue-600 text-sm font-medium no-underline">Services</a>
+      <a href="#how" class="text-gray-500 hover:text-blue-600 text-sm font-medium no-underline">How It Works</a>
+      <a href="#testimonials" class="text-gray-500 hover:text-blue-600 text-sm font-medium no-underline">Reviews</a>
+      <a href="admin.html" class="text-gray-500 hover:text-blue-600 text-sm font-medium no-underline">Support</a>
     </div>
-    <button onclick="openModal()" class="glass-btn bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold active:scale-95 transition-all">Track Parcel</button>
+    <button onclick="openModal()" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors">Track Parcel</button>
   </div>
 </nav>
 
 <!-- HERO -->
-<header class="relative min-h-[820px] flex items-center overflow-hidden">
+<header class="relative min-h-[780px] flex items-center overflow-hidden">
   <div class="absolute inset-0 hero-bg"></div>
   <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"></div>
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-8">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-5">
     <div class="max-w-2xl">
-      <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 px-3 py-1.5 rounded-full text-xs font-semibold mb-6">
+      <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 px-3 py-1.5 rounded-full text-xs font-semibold mb-5">
         <span class="w-1.5 h-1.5 rounded-full bg-blue-600 live-ping inline-block"></span>
         Global Logistics Partner
       </div>
-      <h1 class="text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-5" style="letter-spacing:-0.03em;">
-        Ship Smarter,<br/><span class="text-blue-600">Track Faster</span>
-      </h1>
-      <p class="text-gray-500 text-lg mb-8 leading-relaxed max-w-xl">
-        Experience next-generation global logistics. Real-time intelligence for every mile of your cargo's journey, delivered with precision.
-      </p>
-      <!-- Search -->
+      <h1 class="text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-5" style="letter-spacing:-0.03em;">Ship Smarter,<br/><span class="text-blue-600">Track Faster</span></h1>
+      <p class="text-gray-500 text-lg mb-8 leading-relaxed max-w-xl">Experience next-generation global logistics. Real-time intelligence for every mile of your cargo's journey.</p>
       <div class="flex flex-col sm:flex-row gap-0 max-w-xl">
         <div class="relative flex-1">
           <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input id="heroInput" type="text" placeholder="Enter tracking number…"
-            class="glass-input w-full h-14 pl-10 pr-4 border border-gray-200 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none bg-white text-gray-900 text-sm focus:outline-none"
-            onkeydown="if(event.key==='Enter')heroTrack()"/>
+          <input id="heroInput" type="text" placeholder="Enter tracking number…" class="w-full h-14 pl-10 pr-4 border border-gray-200 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none bg-white text-gray-900 text-sm focus:outline-none focus:border-blue-500" onkeydown="if(event.key==='Enter')heroTrack()"/>
         </div>
-        <button onclick="heroTrack()" class="glass-btn h-14 px-8 bg-blue-600 text-white font-bold text-sm rounded-b-xl sm:rounded-r-xl sm:rounded-bl-none flex items-center justify-center gap-2 whitespace-nowrap transition-all">
+        <button onclick="heroTrack()" class="h-14 px-8 bg-blue-600 text-white font-bold text-sm rounded-b-xl sm:rounded-r-xl sm:rounded-bl-none hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
           Track Now
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
         </button>
@@ -147,8 +70,8 @@ body{font-family:'Inter',sans-serif;}
 </header>
 
 <!-- STATS -->
-<section class="bg-gray-900 py-12">
-  <div class="max-w-7xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<section class="bg-gray-900 py-10 px-5">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
     <div><div class="text-3xl font-black text-white">10M<span class="text-blue-400">+</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Parcels Delivered</div></div>
     <div><div class="text-3xl font-black text-white">200<span class="text-blue-400">+</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Countries Covered</div></div>
     <div><div class="text-3xl font-black text-white">99.9<span class="text-blue-400">%</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Success Rate</div></div>
@@ -157,111 +80,78 @@ body{font-family:'Inter',sans-serif;}
 </section>
 
 <!-- FEATURES -->
-<section id="features" class="py-24 bg-gray-50 px-8">
+<section id="features" class="py-16 bg-gray-50 px-5">
   <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
+    <div class="text-center mb-12">
       <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Why Choose Us</div>
-      <h2 class="text-4xl font-black text-gray-900 mb-4" style="letter-spacing:-0.02em;">Precision Logistics Excellence</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">We combine advanced technology with a global physical network to ensure your cargo arrives on time, every time.</p>
+      <h2 class="text-3xl font-black text-gray-900 mb-3" style="letter-spacing:-0.02em;">Precision Logistics Excellence</h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-sm">Advanced technology with a global network to ensure your cargo arrives on time, every time.</p>
     </div>
-
-    <!-- Image + cards layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10">
-      <div class="rounded-3xl overflow-hidden h-80 lg:h-[480px] shadow-xl">
-        <img src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Logistics operations" class="w-full h-full object-cover"/>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-8">
+      <div class="rounded-2xl overflow-hidden h-72 lg:h-[420px]">
+        <img src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Logistics" class="w-full h-full object-cover"/>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Lightning Fast</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Optimized routing ensures the shortest, most efficient path globally.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-4"><svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-1 text-sm">Lightning Fast</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Optimized routing for the shortest, most efficient path globally.</p>
         </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Secure Handling</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Advanced monitoring protects your high-value shipments at every terminal.</p>
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-4"><svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-1 text-sm">Secure Handling</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Advanced monitoring protects your shipments at every terminal.</p>
         </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Global Network</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">200+ countries with seamless door-to-door delivery anywhere on earth.</p>
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-4"><svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-1 text-sm">Real-Time Tracking</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Live checkpoint updates. Know where your shipment is every moment.</p>
         </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Real-Time Tracking</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Live checkpoint updates. Know exactly where your shipment is every moment.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom 2 cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group flex gap-5 items-start">
-        <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-colors">
-          <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-        </div>
-        <div>
-          <h3 class="font-bold text-gray-900 mb-1">24/7 Support</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Dedicated logistics experts available around the clock for any shipping concern.</p>
-        </div>
-      </div>
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group flex gap-5 items-start">
-        <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-colors">
-          <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-        </div>
-        <div>
-          <h3 class="font-bold text-gray-900 mb-1">Business Solutions</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Enterprise-grade integrations and volume solutions designed to scale with your business.</p>
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-4"><svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-1 text-sm">Global Network</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">200+ countries with seamless door-to-door delivery anywhere.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group">
+
 <!-- HOW IT WORKS -->
-<section id="how" class="py-24 bg-white px-8">
+<section id="how" class="py-16 bg-white px-5">
   <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
+    <div class="text-center mb-12">
       <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Simple Process</div>
-      <h2 class="text-4xl font-black text-gray-900 mb-4" style="letter-spacing:-0.02em;">Streamlined Journey</h2>
-      <p class="text-gray-500">Four simple steps to global delivery.</p>
+      <h2 class="text-3xl font-black text-gray-900 mb-3" style="letter-spacing:-0.02em;">Streamlined Journey</h2>
+      <p class="text-gray-500 text-sm">Four simple steps to global delivery.</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-      <div class="hidden md:block absolute top-8 left-[12%] right-[12%] h-0.5 bg-gray-100"></div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">1</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Book</h4>
-          <p class="text-gray-500 text-sm">Schedule your pickup online in seconds.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="flex flex-col items-center text-center">
+        <div class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-lg mb-4 shadow-lg">1</div>
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 w-full">
+          <h4 class="font-bold text-gray-900 mb-1 text-sm">Book</h4>
+          <p class="text-gray-500 text-xs">Schedule your pickup online in seconds.</p>
         </div>
       </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">2</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Pack</h4>
-          <p class="text-gray-500 text-sm">We ensure your parcel is safe for the journey.</p>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-lg mb-4 shadow-lg">2</div>
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 w-full">
+          <h4 class="font-bold text-gray-900 mb-1 text-sm">Pack</h4>
+          <p class="text-gray-500 text-xs">We ensure your parcel is safe for the journey.</p>
         </div>
       </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">3</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Track</h4>
-          <p class="text-gray-500 text-sm">Monitor every movement with real-time updates.</p>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-lg mb-4 shadow-lg">3</div>
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 w-full">
+          <h4 class="font-bold text-gray-900 mb-1 text-sm">Track</h4>
+          <p class="text-gray-500 text-xs">Monitor every movement with real-time updates.</p>
         </div>
       </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">4</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Deliver</h4>
-          <p class="text-gray-500 text-sm">Safe delivery with proof of receipt.</p>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-lg mb-4 shadow-lg">4</div>
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 w-full">
+          <h4 class="font-bold text-gray-900 mb-1 text-sm">Deliver</h4>
+          <p class="text-gray-500 text-xs">Safe delivery with proof of receipt.</p>
         </div>
       </div>
     </div>
@@ -269,125 +159,76 @@ body{font-family:'Inter',sans-serif;}
 </section>
 
 <!-- GALLERY -->
-<section class="py-16 bg-white px-6">
+<section class="py-16 bg-white px-5">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-10">
       <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Global Operations</div>
-      <h2 class="text-3xl font-black text-gray-900 mb-3" style="letter-spacing:-0.02em;">Moving Cargo Across<br/>Every Corner of the World</h2>
-      <p class="text-gray-500 max-w-xl mx-auto text-sm">From seaports to airports, sorting facilities to last-mile delivery — we track every step.</p>
+      <h2 class="text-3xl font-black text-gray-900 mb-3" style="letter-spacing:-0.02em;">Moving Cargo Across Every Corner of the World</h2>
+      <p class="text-gray-500 text-sm max-w-xl mx-auto">From seaports to airports, sorting facilities to last-mile delivery — we track every step.</p>
     </div>
-    <!-- Images - standalone blocks on white -->
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div style="border-radius:18px;overflow:hidden;height:260px;width:100%;">
-        <img src="https://images.pexels.com/photos/906982/pexels-photo-906982.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cargo ship" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+    <div class="flex flex-col gap-3">
+      <div class="rounded-2xl overflow-hidden w-full" style="height:260px;">
+        <img src="https://images.pexels.com/photos/906982/pexels-photo-906982.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cargo ship" class="w-full h-full object-cover"/>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div style="border-radius:18px;overflow:hidden;height:180px;">
-          <img src="https://images.pexels.com/photos/4481326/pexels-photo-4481326.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Warehouse" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-        </div>
-        <div style="border-radius:18px;overflow:hidden;height:180px;">
-          <img src="https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cargo plane" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-        </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-2xl overflow-hidden" style="height:170px;"><img src="https://images.pexels.com/photos/4481326/pexels-photo-4481326.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Warehouse" class="w-full h-full object-cover"/></div>
+        <div class="rounded-2xl overflow-hidden" style="height:170px;"><img src="https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cargo plane" class="w-full h-full object-cover"/></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div style="border-radius:18px;overflow:hidden;height:180px;">
-          <img src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Containers" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-        </div>
-        <div style="border-radius:18px;overflow:hidden;height:180px;">
-          <img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Truck" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-        </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-2xl overflow-hidden" style="height:170px;"><img src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Containers" class="w-full h-full object-cover"/></div>
+        <div class="rounded-2xl overflow-hidden" style="height:170px;"><img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Truck" class="w-full h-full object-cover"/></div>
       </div>
     </div>
-    <!-- Stats row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;">
-      <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:16px;padding:16px;text-align:center;">
-        <p style="font-size:1.6rem;font-weight:900;color:#111827;margin:0;">150+</p>
-        <p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;">Partner Airlines</p>
-      </div>
-      <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:16px;padding:16px;text-align:center;">
-        <p style="font-size:1.6rem;font-weight:900;color:#111827;margin:0;">800+</p>
-        <p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;">Shipping Routes</p>
-      </div>
-      <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:16px;padding:16px;text-align:center;">
-        <p style="font-size:1.6rem;font-weight:900;color:#111827;margin:0;">50+</p>
-        <p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;">Global Warehouses</p>
-      </div>
-      <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:16px;padding:16px;text-align:center;">
-        <p style="font-size:1.6rem;font-weight:900;color:#111827;margin:0;">2M+</p>
-        <p style="font-size:0.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;">Happy Receivers</p>
-      </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center"><p class="text-2xl font-black text-gray-900">150+</p><p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Partner Airlines</p></div>
+      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center"><p class="text-2xl font-black text-gray-900">800+</p><p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Shipping Routes</p></div>
+      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center"><p class="text-2xl font-black text-gray-900">50+</p><p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Global Warehouses</p></div>
+      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center"><p class="text-2xl font-black text-gray-900">2M+</p><p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Happy Receivers</p></div>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section id="testimonials" class="py-12 bg-white px-6">
+<section id="testimonials" class="py-16 bg-gray-50 px-5">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-      <div>
-        <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Client Stories</div>
-        <h2 class="text-4xl font-black text-gray-900" style="letter-spacing:-0.02em;">What Our Clients<br/>Are Saying</h2>
-      </div>
-      <p class="text-gray-400 text-sm max-w-xs md:text-right">Over 10,000 businesses ship with confidence using QUIN-TRACK every day.</p>
+    <div class="text-center mb-10">
+      <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Client Stories</div>
+      <h2 class="text-3xl font-black text-gray-900 mb-2" style="letter-spacing:-0.02em;">What Our Clients Are Saying</h2>
+      <p class="text-gray-400 text-sm">Over 10,000 businesses ship with confidence using QUIN-TRACK every day.</p>
     </div>
-
-    <!-- Large featured quote with image -->
-    <div class="bg-gray-900 rounded-3xl mb-6 relative overflow-hidden">
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div class="p-8 md:p-12 relative z-10">
-          <div class="flex gap-1 text-yellow-400 text-lg mb-6">★★★★★</div>
-          <p class="text-white text-lg md:text-2xl font-medium leading-relaxed mb-8">Switching to QUIN-TRACK cut our delivery disputes by 80%. The checkpoint-by-checkpoint journey view gives our clients total confidence — they know exactly where their package is at all times.</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black flex-shrink-0">SK</div>
-            <div>
-              <p class="text-white font-bold">Sarah Kim</p>
-              <p class="text-gray-400 text-sm">Head of Imports, PrimeMed Asia</p>
-            </div>
-          </div>
-        </div>
-        <div class="hidden md:block relative overflow-hidden rounded-r-3xl h-72">
-          <img src="https://images.pexels.com/photos/906982/pexels-photo-906982.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Port logistics" class="w-full h-full object-cover opacity-60"/>
-          <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-transparent"></div>
-        </div>
+    <div class="bg-gray-900 rounded-2xl p-7 mb-5">
+      <div class="flex gap-1 text-yellow-400 mb-4">★★★★★</div>
+      <p class="text-white text-base leading-relaxed mb-6">Switching to QUIN-TRACK cut our delivery disputes by 80%. The checkpoint-by-checkpoint journey view gives our clients total confidence — they know exactly where their package is at all times.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-sm flex-shrink-0">SK</div>
+        <div><p class="text-white font-bold text-sm">Sarah Kim</p><p class="text-gray-400 text-xs">Head of Imports, PrimeMed Asia</p></div>
       </div>
     </div>
-
-    <!-- Two smaller cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="border border-gray-100 rounded-2xl overflow-hidden">
-        <div class="h-44 overflow-hidden">
-          <img src="https://images.pexels.com/photos/4481326/pexels-photo-4481326.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Warehouse operations" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-        </div>
-        <div class="p-7">
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-black text-sm">JM</div>
-              <div>
-                <p class="font-bold text-gray-900 text-sm">James Mitchell</p>
-                <p class="text-gray-400 text-xs">Founder, SwiftParts UK</p>
-              </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <div class="h-40 overflow-hidden"><img src="https://images.pexels.com/photos/4481326/pexels-photo-4481326.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Warehouse" class="w-full h-full object-cover"/></div>
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-black text-xs">JM</div>
+              <div><p class="font-bold text-gray-900 text-sm">James Mitchell</p><p class="text-gray-400 text-xs">Founder, SwiftParts UK</p></div>
             </div>
-            <div class="flex gap-0.5 text-yellow-400 text-sm">★★★★★</div>
+            <div class="flex gap-0.5 text-yellow-400 text-xs">★★★★★</div>
           </div>
-          <p class="text-gray-600 text-sm leading-relaxed">"I ship automotive parts from Japan to the UK weekly. QUIN-TRACK's real-time updates mean I never have to chase couriers. The photo feature is a game changer — I can see my goods at every stop."</p>
+          <p class="text-gray-600 text-xs leading-relaxed">QUIN-TRACK's real-time updates mean I never have to chase couriers. The photo feature is a game changer.</p>
         </div>
       </div>
-      <div class="border border-gray-100 rounded-2xl overflow-hidden">
-        <div class="h-44 overflow-hidden">
-          <img src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Global shipping" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-        </div>
-        <div class="p-7">
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm">FD</div>
-              <div>
-                <p class="font-bold text-gray-900 text-sm">Fatima Diallo</p>
-                <p class="text-gray-400 text-xs">Procurement Manager, Dakar Textiles</p>
-              </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <div class="h-40 overflow-hidden"><img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Truck" class="w-full h-full object-cover"/></div>
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-black text-xs">FD</div>
+              <div><p class="font-bold text-gray-900 text-sm">Fatima Diallo</p><p class="text-gray-400 text-xs">Procurement Manager, Dakar Textiles</p></div>
             </div>
-            <div class="flex gap-0.5 text-yellow-400 text-sm">★★★★★</div>
+            <div class="flex gap-0.5 text-yellow-400 text-xs">★★★★★</div>
           </div>
-          <p class="text-gray-600 text-sm leading-relaxed">"Before QUIN-TRACK we were in the dark for weeks. Now our receivers get a live link to track their shipment themselves. It's professional, clean, and our customers love it."</p>
+          <p class="text-gray-600 text-xs leading-relaxed">Now our receivers get a live link to track their shipment themselves. It's professional and our customers love it.</p>
         </div>
       </div>
     </div>
@@ -395,91 +236,113 @@ body{font-family:'Inter',sans-serif;}
 </section>
 
 <!-- CTA -->
-<section style="background:#2563eb;padding:48px 24px;text-align:center;margin:0;width:100%;">
-  <h2 style="font-size:1.8rem;font-weight:900;color:#fff;margin:0 0 12px;letter-spacing:-0.02em;line-height:1.2;">Ready to Ship Smarter?</h2>
-  <p style="color:rgba(255,255,255,0.8);font-size:0.9rem;margin:0 0 24px;line-height:1.6;">Join thousands of businesses that trust QUIN-TRACK for their mission-critical logistics.</p>
-  <div style="max-width:400px;margin:0 auto;display:flex;flex-direction:column;gap:10px;">
-    <button onclick="openModal()" style="background:#fff;color:#2563eb;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:0.9rem;cursor:pointer;width:100%;">Track a Shipment</button>
-    <a href="admin.html" style="border:2px solid rgba(255,255,255,0.5);color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:0.9rem;text-decoration:none;display:block;box-sizing:border-box;">Admin Panel</a>
+<section class="bg-blue-600 px-5 py-14 text-center">
+  <h2 class="text-3xl font-black text-white mb-3" style="letter-spacing:-0.02em;">Ready to Ship Smarter?</h2>
+  <p class="text-blue-100 mb-6 text-sm">Join thousands of businesses that trust QUIN-TRACK for their mission-critical logistics.</p>
+  <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
+    <button onclick="openModal()" class="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-50 transition-colors w-full">Track a Shipment</button>
+    <a href="admin.html" class="border-2 border-white/40 text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-white/10 transition-colors no-underline w-full text-center">Admin Panel</a>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-gray-950 py-16 px-8">
+<footer class="bg-gray-950 py-12 px-5">
   <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-      <div>
-        <div class="wordmark text-white mb-4" style="color:#fff;">QUIN<span style="color:#60a5fa;">-TRACK</span><span class="wordmark-line" style="background:#60a5fa;"></span><span class="wordmark-sub" style="color:#475569;">Global Logistics</span></div>
-        <p class="text-gray-400 text-sm leading-relaxed">Making global logistics simple, transparent, and reliable for everyone.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+      <div class="col-span-2 md:col-span-1">
+        <div class="wordmark text-white mb-3" style="color:#fff;">QUIN<span style="color:#60a5fa;">-TRACK</span><span class="wordmark-line" style="background:#60a5fa;"></span><span class="wordmark-sub" style="color:#475569;">Global Logistics</span></div>
+        <p class="text-gray-400 text-xs leading-relaxed">Making global logistics simple, transparent, and reliable for everyone.</p>
       </div>
       <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Company</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">About Us</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Careers</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Newsroom</a>
+        <p class="text-blue-400 font-bold text-xs mb-3">Company</p>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">About Us</a>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Careers</a>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Newsroom</a>
       </div>
       <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Services</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Express Courier</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Ocean Freight</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Warehousing</a>
+        <p class="text-blue-400 font-bold text-xs mb-3">Services</p>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Express Courier</a>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Ocean Freight</a>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Warehousing</a>
       </div>
       <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Support</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Help Center</a>
-        <a href="admin.html" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Admin Login</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Privacy Policy</a>
+        <p class="text-blue-400 font-bold text-xs mb-3">Support</p>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Help Center</a>
+        <a href="admin.html" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Admin Login</a>
+        <a href="#" class="block text-gray-400 text-xs mb-2 hover:text-white no-underline">Privacy Policy</a>
       </div>
     </div>
-    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
       <p class="text-gray-500 text-xs">© 2026 QUIN-TRACK Logistics. All rights reserved.</p>
       <div class="flex gap-6">
-        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline transition-colors">Terms</a>
-        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline transition-colors">Privacy</a>
+        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline">Terms</a>
+        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline">Privacy</a>
       </div>
     </div>
   </div>
 </footer>
 
 <!-- TRACKING MODAL -->
-<div id="trackModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm hidden">
-  <div class="glass-modal bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col fade-up">
-    <!-- Modal Header -->
-    <div class="bg-gray-900 text-white p-5 flex justify-between items-center flex-shrink-0">
+<div id="trackModal" class="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-gray-900/60 backdrop-blur-sm hidden">
+  <div class="bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col fade-up">
+    <div class="bg-gray-900 text-white p-4 flex justify-between items-center flex-shrink-0">
       <div>
         <p class="text-xs uppercase tracking-widest text-gray-400 mb-0.5">Shipment Status</p>
-        <div class="wordmark text-white" style="color:#fff;font-size:1.1rem;">QUIN<span style="color:#60a5fa;">-TRACK</span></div>
+        <div class="wordmark text-white" style="color:#fff;font-size:1rem;">QUIN<span style="color:#60a5fa;">-TRACK</span></div>
       </div>
-      <button onclick="closeModal()" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors text-white text-lg">✕</button>
+      <button onclick="closeModal()" class="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors text-white">✕</button>
     </div>
-
-    <!-- Search bar inside modal -->
-    <div class="p-5 border-b border-gray-100 flex-shrink-0">
+    <div class="p-4 border-b border-gray-100 flex-shrink-0">
       <div class="flex gap-2">
-        <input id="modalInput" type="text" placeholder="Enter tracking number…"
-          class="glass-input flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none"
-          onkeydown="if(event.key==='Enter')doTrack()"/>
-        <button id="trackBtn" onclick="doTrack()"
-          class="glass-btn bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 min-w-[90px] justify-content-center transition-all">
-          Track
-        </button>
+        <input id="modalInput" type="text" placeholder="Enter tracking number…" class="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-blue-500" onkeydown="if(event.key==='Enter')doTrack()"/>
+        <button id="trackBtn" onclick="doTrack()" class="bg-blue-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-1 min-w-[80px] justify-center">Track</button>
       </div>
     </div>
+    <div id="trackResults" class="overflow-y-auto flex-1 p-4"></div>
+  </div>
+</div>
 
-    <!-- Results -->
-    <div id="trackResults" class="overflow-y-auto flex-1 p-5"></div>
+<!-- CHAT BUBBLE -->
+<button id="qt-bubble" onclick="qtToggle()" aria-label="Chat" style="position:fixed;bottom:24px;right:24px;z-index:9999;width:52px;height:52px;border-radius:50%;background:#111827;box-shadow:0 4px 20px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;">
+  <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+  <div id="qt-badge" style="position:absolute;top:-3px;right:-3px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #fff;"></div>
+</button>
+
+<div id="qt-panel" style="position:fixed;bottom:86px;right:24px;z-index:9998;width:300px;background:#fff;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.14);border:1px solid #e5e7eb;display:none;flex-direction:column;overflow:hidden;font-family:'Inter',sans-serif;max-height:440px;">
+  <div style="background:#111827;padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
+    <div style="width:32px;height:32px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg></div>
+    <div style="flex:1;"><div style="color:#fff;font-weight:700;font-size:12px;">QUIN-TRACK Support</div><div style="color:rgba(255,255,255,0.5);font-size:10px;">Online · Replies in minutes</div></div>
+    <button onclick="qtToggle()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:16px;padding:0;">✕</button>
+  </div>
+  <div id="qt-name-form" style="padding:14px;display:flex;flex-direction:column;gap:8px;background:#fff;border-bottom:1px solid #f3f4f6;">
+    <p style="font-size:11px;color:#6b7280;margin:0;">Enter your name to start chatting</p>
+    <input id="qt-ni" type="text" placeholder="Your name" style="border:1.5px solid #e5e7eb;border-radius:8px;padding:8px 12px;font-size:12px;outline:none;color:#111827;font-family:'Inter',sans-serif;"/>
+    <input id="qt-ei" type="email" placeholder="Email (optional)" style="border:1.5px solid #e5e7eb;border-radius:8px;padding:8px 12px;font-size:12px;outline:none;color:#111827;font-family:'Inter',sans-serif;"/>
+    <button onclick="qtStart()" style="background:#111827;color:#fff;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;">Start Chat</button>
+  </div>
+  <div id="qt-msgs" style="flex:1;overflow-y:auto;padding:12px;display:none;flex-direction:column;gap:6px;background:#f9fafb;">
+    <div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;background:#fff;color:#111827;border:1px solid #e5e7eb;border-bottom-left-radius:3px;">Hi! Welcome to QUIN-TRACK Support. How can we help?</div>
+  </div>
+  <div id="qt-footer" style="padding:8px;border-top:1px solid #f3f4f6;display:none;gap:6px;background:#fff;">
+    <textarea id="qt-inp" rows="1" placeholder="Type a message..." style="flex:1;border:1.5px solid #e5e7eb;border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Inter',sans-serif;outline:none;color:#111827;resize:none;width:calc(100% - 44px);" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();qtSend();}"></textarea>
+    <button onclick="qtSend()" style="background:#111827;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;float:right;">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+    </button>
   </div>
 </div>
 
 <script>
+// ── CONFIG ──
+const API = window.API_BASE || 'https://quintrack-backend-production.up.railway.app';
+
 const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
 const TYPE_EMOJI={pickup:'📦',flight:'✈️',transit:'🔄',arrival:'🛬',sort:'🏭',delivery:'🚚',delivered:'✅'};
 
 const DEMO_DATA={
   'QT-DEMO-01':{id:'QT-DEMO-01',status:'In Transit',pct:60,
-    sender:{name:'TechCore Industries',address:'18 Zhongguancun St',city:'Beijing, CN',zip:'100190',tel:'+86 10 5550 1234',email:'logistics@techcore.cn'},
-    receiver:{name:'Marco Electronics GmbH',address:'42 Berliner Str',city:'Munich, DE',zip:'80331',tel:'+49 89 555 0182',email:'import@marco.de'},
-    package:{content:'Semiconductor Components',weight:'48kg',qty:'6 Units',orderType:'Paid',shipDate:'2026-05-28',expDate:'2026-06-15'},
+    sender:{name:'TechCore Industries',address:'18 Zhongguancun St',city:'Beijing, CN',tel:'+86 10 5550 1234',email:'logistics@techcore.cn'},
+    receiver:{name:'Marco Electronics GmbH',address:'42 Berliner Str',city:'Munich, DE',tel:'+49 89 555 0182',email:'import@marco.de'},
+    package:{content:'Semiconductor Components',weight:'48kg',qty:'6 Units',orderType:'Paid',shipDate:'2026-05-28',expDate:'2026-06-15',from:'Shenzhen, China'},
     journey:[
       {location:'Shenzhen, China',country:'CN',type:'pickup',event:'Shipment Picked Up from Warehouse',date:'May 28, 2026',time:'09:14 AM',done:true},
       {location:'Guangzhou Airport, China',country:'CN',type:'flight',event:'Departed Origin — Customs Cleared',date:'May 29, 2026',time:'11:45 PM',done:true},
@@ -490,9 +353,9 @@ const DEMO_DATA={
       {location:'42 Berliner Str, Munich',country:'DE',type:'delivered',event:'Delivered to Recipient',date:'Jun 15, 2026',time:'—',done:false}
     ]},
   'QT-DEMO-02':{id:'QT-DEMO-02',status:'Delivered',pct:100,
-    sender:{name:'Pacific Pharma Ltd',address:'7-2 Nishiki',city:'Nagoya, JP',zip:'460-0003',tel:'+81 52 555 7890',email:'export@pacpharma.jp'},
-    receiver:{name:'MedLink USA Corp',address:'3920 Westview Plaza',city:'Dallas, TX',zip:'75201',tel:'+1 214 555 0990',email:'receiving@medlink.us'},
-    package:{content:'Medical Devices',weight:'22kg',qty:'4 Cartons',orderType:'Paid',shipDate:'2026-05-10',expDate:'2026-05-22'},
+    sender:{name:'Pacific Pharma Ltd',address:'7-2 Nishiki',city:'Nagoya, JP',tel:'+81 52 555 7890',email:'export@pacpharma.jp'},
+    receiver:{name:'MedLink USA Corp',address:'3920 Westview Plaza',city:'Dallas, TX',tel:'+1 214 555 0990',email:'receiving@medlink.us'},
+    package:{content:'Medical Devices',weight:'22kg',qty:'4 Cartons',orderType:'Paid',shipDate:'2026-05-10',expDate:'2026-05-22',from:'Nagoya, Japan'},
     journey:[
       {location:'Nagoya, Japan',country:'JP',type:'pickup',event:'Shipment Collected from Sender',date:'May 10, 2026',time:'10:00 AM',done:true},
       {location:'Nagoya Port, Japan',country:'JP',type:'flight',event:'Loaded — Departed by Air Freight',date:'May 11, 2026',time:'08:15 PM',done:true},
@@ -500,21 +363,19 @@ const DEMO_DATA={
       {location:'Los Angeles, USA',country:'US',type:'arrival',event:'Arrived in USA — Customs Clearance',date:'May 12, 2026',time:'06:55 PM',done:true},
       {location:'Dallas Hub, TX',country:'US',type:'sort',event:'Arrived at Regional Facility',date:'May 14, 2026',time:'11:20 AM',done:true},
       {location:'Dallas, TX USA',country:'US',type:'delivery',event:'Out for Final Delivery',date:'May 22, 2026',time:'08:00 AM',done:true},
-      {location:'3920 Westview Plaza, Dallas',country:'US',type:'delivered',event:'Successfully Delivered ✓',date:'May 22, 2026',time:'02:14 PM',done:true}
+      {location:'3920 Westview Plaza, Dallas',country:'US',type:'delivered',event:'Successfully Delivered',date:'May 22, 2026',time:'02:14 PM',done:true}
     ]}
 };
 
-function fillDemo(num){document.getElementById('heroInput').value=num;heroTrack();}
+// ── MODAL ──
 function heroTrack(){const v=document.getElementById('heroInput').value.trim();if(!v)return;openModal(v);}
 function openModal(num=''){
   document.getElementById('trackModal').classList.remove('hidden');
   document.body.style.overflow='hidden';
   if(num){document.getElementById('modalInput').value=num;doTrack();}
+  else setTimeout(()=>document.getElementById('modalInput').focus(),100);
 }
-function closeModal(){
-  document.getElementById('trackModal').classList.add('hidden');
-  document.body.style.overflow='';
-}
+function closeModal(){document.getElementById('trackModal').classList.add('hidden');document.body.style.overflow='';}
 document.getElementById('trackModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
 async function doTrack(){
@@ -522,371 +383,145 @@ async function doTrack(){
   if(!num)return;
   const btn=document.getElementById('trackBtn');
   btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;
-  let shipment=null;
-  try{const res=await fetch(window.API_BASE+'/api/shipments/'+encodeURIComponent(num));if(res.ok)shipment=await res.json();}catch(e){}
-  // fallback to demo data
-  if(!shipment) shipment=DEMO_DATA[num]||null;
+  let s=null;
+  try{const r=await fetch(API+'/api/shipments/'+encodeURIComponent(num));if(r.ok)s=await r.json();}catch(e){}
+  if(!s)s=DEMO_DATA[num]||null;
   btn.innerHTML='Track';btn.disabled=false;
   const el=document.getElementById('trackResults');
-  if(!shipment){
-    el.innerHTML=`<div class="text-center py-12"><div class="text-5xl mb-4">🔍</div><h3 class="font-bold text-gray-900 text-lg mb-2">Shipment Not Found</h3><p class="text-gray-500 text-sm">No record found for <strong>${num}</strong>. Check the number and try again.</p></div>`;
+  if(!s){
+    el.innerHTML='<div class="text-center py-10"><div class="text-5xl mb-3">🔍</div><h3 class="font-bold text-gray-900 mb-2">Shipment Not Found</h3><p class="text-gray-500 text-sm">No record found for <strong>'+num+'</strong>. Check the number and try again.</p></div>';
     return;
   }
-  renderResult(shipment,el);
+  renderResult(s,el);
 }
 
 function renderResult(s,el){
   const pct=s.pct||0;
-  const statusStep={'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]??1;
+  const statusStep={'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]||1;
   const lastDone=s.journey?.filter(j=>j.done).slice(-1)[0];
   const stops=s.journey||[];
-  const statusColor={'Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
-  const statusBg={'Pending':'#fefce8','In Transit':'#eff6ff','Out for Delivery':'#f0fdfa','Delivered':'#f0fdf4'}[s.status]||'#eff6ff';
+  const sc={'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
 
-  // SVG icons for steps - clean, no emojis
   const stepIcons=[
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>',
+    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>',
+    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
+    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
   ];
-  const stepLabels=['Order\nConfirmed','Picked by\nCourier','In\nTransit','Out for\nDelivery','Delivered'];
+  const stepLabels=['Order\nConfirmed','Picked\nUp','In\nTransit','Out for\nDelivery','Delivered'];
 
   el.innerHTML=`
-    <!-- COMPACT SUMMARY CARD -->
-    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
         <div>
-          <p style="color:#9ca3af;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Tracking ID</p>
-          <p style="color:#111827;font-family:monospace;font-weight:900;font-size:1.05rem;">${s.id}</p>
+          <p style="color:#9ca3af;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Tracking ID</p>
+          <p style="color:#111827;font-family:monospace;font-weight:900;font-size:1rem;">${s.id}</p>
         </div>
-        <span style="background:${statusBg};color:${statusColor};border:1.5px solid ${statusColor}40;padding:5px 14px;border-radius:99px;font-size:0.75rem;font-weight:700;">${s.status}</span>
+        <span style="background:${sc.bg};color:${sc.c};border:1.5px solid ${sc.c}40;padding:4px 12px;border-radius:99px;font-size:0.7rem;font-weight:700;white-space:nowrap;">${s.status}</span>
       </div>
-
-      <!-- Progress bar -->
-      <div style="margin-bottom:14px;">
-        <div style="height:5px;background:#f3f4f6;border-radius:99px;overflow:hidden;">
+      <div style="margin-bottom:12px;">
+        <div style="height:4px;background:#f3f4f6;border-radius:99px;overflow:hidden;">
           <div id="pFill" style="height:100%;background:linear-gradient(90deg,#111827,#374151);border-radius:99px;width:0%;transition:width 1.5s cubic-bezier(0.65,0,0.35,1);"></div>
         </div>
-        <div style="display:flex;justify-content:space-between;margin-top:5px;">
-          <span style="color:#9ca3af;font-size:0.68rem;">Progress</span>
-          <span style="color:#111827;font-weight:700;font-size:0.68rem;">${pct}%</span>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;">
+          <span style="color:#9ca3af;font-size:0.65rem;">Progress</span>
+          <span style="color:#111827;font-weight:700;font-size:0.65rem;">${pct}%</span>
         </div>
       </div>
-
-      <!-- From → To -->
-      <div style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:12px;">
-        <div style="flex:1;">
-          <p style="color:#9ca3af;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">From</p>
-          <p style="color:#111827;font-weight:700;font-size:0.82rem;">${s.package?.from||s.sender?.city||'—'}</p>
-        </div>
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#111827" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-        <div style="flex:1;text-align:right;">
-          <p style="color:#9ca3af;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">To</p>
-          <p style="color:#111827;font-weight:700;font-size:0.82rem;">${s.receiver?.city||'—'}</p>
-        </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin-bottom:10px;">
+        <div style="flex:1;"><p style="color:#9ca3af;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">From</p><p style="color:#111827;font-weight:700;font-size:0.78rem;">${s.package?.from||s.sender?.city||'—'}</p></div>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#111827" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        <div style="flex:1;text-align:right;"><p style="color:#9ca3af;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">To</p><p style="color:#111827;font-weight:700;font-size:0.78rem;">${s.receiver?.city||'—'}</p></div>
       </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-        <p style="color:#9ca3af;font-size:0.7rem;">${lastDone?'Updated: '+lastDone.date:'—'}</p>
-        <p style="color:#9ca3af;font-size:0.7rem;">Expected: <span style="color:#111827;font-weight:600;">${s.package?.expDate||'—'}</span></p>
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;">
+        <p style="color:#9ca3af;font-size:0.65rem;">${lastDone?'Updated: '+lastDone.date:'—'}</p>
+        <p style="color:#9ca3af;font-size:0.65rem;">Expected: <span style="color:#111827;font-weight:600;">${s.package?.expDate||'—'}</span></p>
       </div>
     </div>
 
-    <!-- SHIPMENT PROGRESS STEPS -->
-    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-      <p style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:16px;">Shipment Progress</p>
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0;">
+    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:16px;margin-bottom:12px;">
+      <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:12px;">Shipment Progress</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
         ${stepLabels.map((lbl,i)=>{
-          const isDone=i<statusStep, isActive=i===statusStep;
-          const circleBg=isDone||isActive?'#2563eb':'#f3f4f6';
-          const iconColor=isDone||isActive?'#fff':'#9ca3af';
-          const lblColor=isDone?'#16a34a':isActive?'#2563eb':'#9ca3af';
-          const lblWeight=isDone||isActive?'700':'400';
-          const connector=i<stepLabels.length-1?`<div style="flex:1;height:2px;background:${i<statusStep?'#2563eb':'#e5e7eb'};margin-top:22px;margin-bottom:0;flex-shrink:0;"></div>`:'';
-          return`
-            <div style="display:flex;align-items:center;flex:1;min-width:0;">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;max-width:56px;">
-                <div style="width:44px;height:44px;border-radius:50%;background:${circleBg};display:flex;align-items:center;justify-content:center;color:${iconColor};flex-shrink:0;transition:all 0.3s;">
-                  ${isDone?'<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':stepIcons[i].replace('stroke="currentColor"',`stroke="${iconColor}"`)}
-                </div>
-                <span style="font-size:0.6rem;font-weight:${lblWeight};color:${lblColor};text-align:center;line-height:1.3;word-break:break-word;">${lbl.replace('\n','<br>')}</span>
-              </div>
-              ${connector}
-            </div>`;
+          const isDone=i<statusStep,isActive=i===statusStep;
+          const bg=isDone||isActive?'#111827':'#f3f4f6';
+          const ic=isDone||isActive?'#fff':'#9ca3af';
+          const lc=isDone?'#16a34a':isActive?'#111827':'#9ca3af';
+          return`<div style="display:flex;flex-direction:column;align-items:center;gap:5px;"><div style="width:36px;height:36px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;color:${ic};">${isDone?'<svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':stepIcons[i].replace('stroke="currentColor"','stroke="'+ic+'"')}</div><div style="font-size:0.55rem;text-align:center;line-height:1.3;color:${lc};font-weight:${isDone||isActive?'700':'400'};">${lbl.replace('\n','<br>')}</div></div>`;
         }).join('')}
       </div>
     </div>
 
-    <!-- VIEW FULL DETAILS BUTTON -->
-    <a id="fullDetailsLink" href="#" target="_blank"
-      style="width:100%;background:#2563eb;border-radius:12px;padding:14px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.875rem;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:background 0.18s;box-shadow:0 4px 14px rgba(37,99,235,0.25);"
-      onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+    <a id="fullDetailsLink" href="tracking-details.html?t=${s.id}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#111827;color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:0.875rem;text-decoration:none;width:100%;box-sizing:border-box;">
       View Full Shipment Details
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-    </a>
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+    </a>`;
 
-    <div id="fullDetails" style="display:none;">
-
-      <!-- Progress steps -->
-      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:16px;padding:20px;margin-bottom:14px;">
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
-          ${stepLabels.map((lbl,i)=>{
-            const isDone=i<statusStep, isActive=i===statusStep;
-            const dotStyle=isDone?'background:#dcfce7;border:2px solid #86efac;':isActive?'background:#eff6ff;border:2px solid #2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.1);':'background:#fff;border:2px solid #e5e7eb;';
-            const lblColor=isDone?'color:#16a34a;font-weight:700;':isActive?'color:#2563eb;font-weight:700;':'color:#9ca3af;';
-            return`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div style="width:36px;height:36px;border-radius:50%;${dotStyle}display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.3s;">${isDone?'✅':stepIcons[i].replace('stroke="currentColor"','stroke="'+(isActive?'#2563eb':'#9ca3af')+'"')}</div><div style="font-size:0.62rem;text-align:center;line-height:1.3;${lblColor}">${lbl.replace('\n','<br>')}</div></div>`;
-          }).join('')}
-        </div>
-      </div>
-
-      ${s.itemPhoto?`<div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;margin-bottom:14px;"><p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📸 Item Photo</p><img src="${s.itemPhoto}" style="width:100%;max-height:220px;object-fit:cover;border-radius:10px;border:1.5px solid #e0e7ff;"/></div>`:''}
-
-      <!-- Journey -->
-      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:16px;padding:20px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <p style="font-weight:700;color:#111827;font-size:0.875rem;">🗺️ Shipment Journey</p>
-          <span style="background:#eff6ff;color:#2563eb;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:99px;">${stops.length} checkpoints</span>
-        </div>
-        ${stops.map((stop,i)=>{
-          const isLast=i===stops.length-1;
-          const flag=FLAG_MAP[stop.country]||'🌐';
-          const emoji=TYPE_EMOJI[stop.type]||'📍';
-          const dotBg=stop.done?'#dcfce7;border:2px solid #86efac':stop.active?'#eff6ff;border:2px solid #2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)':'#fff;border:2px solid #e5e7eb';
-          const lineBg=stop.done?'#2563eb':'#e5e7eb';
-          const op=(stop.done||stop.active)?'1':'0.4';
-          return`<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:${dotBg};display:flex;align-items:center;justify-content:center;font-size:14px;">${stop.done?'✅':emoji}</div>${!isLast?`<div style="width:2px;flex:1;min-height:18px;background:${lineBg};margin-top:3px;"></div>`:''}</div><div style="flex:1;padding-bottom:16px;opacity:${op};"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;"><div><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span>${flag}</span><p style="font-weight:700;color:#111827;font-size:0.85rem;">${stop.location}</p>${stop.active?'<span style="font-size:0.6rem;background:#2563eb;color:#fff;font-weight:700;padding:1px 7px;border-radius:99px;">● Live</span>':''}</div><p style="color:#64748b;font-size:0.75rem;margin-top:2px;">${stop.event||''}</p></div><div style="text-align:right;flex-shrink:0;"><p style="font-size:0.72rem;font-weight:700;color:#111827;">${stop.date}</p><p style="font-size:0.7rem;color:#94a3b8;">${stop.time}</p></div></div></div></div>`;
-        }).join('')}
-      </div>
-
-      <!-- Sender / Receiver -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-        <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;">
-          <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📤 Sender</p>
-          <p style="font-weight:700;color:#111827;font-size:0.85rem;">${s.sender?.name||'—'}</p>
-          <p style="color:#64748b;font-size:0.75rem;margin-top:3px;">${[s.sender?.address,s.sender?.city].filter(Boolean).join(', ')||'—'}</p>
-          <p style="font-size:0.75rem;color:#374151;margin-top:3px;font-family:monospace;">${s.sender?.tel||'—'}</p>
-        </div>
-        <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;">
-          <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📥 Receiver</p>
-          <p style="font-weight:700;color:#111827;font-size:0.85rem;">${s.receiver?.name||'—'}</p>
-          <p style="color:#64748b;font-size:0.75rem;margin-top:3px;">${[s.receiver?.address,s.receiver?.city].filter(Boolean).join(', ')||'—'}</p>
-          <p style="font-size:0.75rem;color:#374151;margin-top:3px;font-family:monospace;">${s.receiver?.tel||'—'}</p>
-        </div>
-      </div>
-
-      <!-- Package grid -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-        ${[['Content',s.package?.content],['Weight',s.package?.weight],['Quantity',s.package?.qty],['Order Type',s.package?.orderType],['Ship Date',s.package?.shipDate],['Expected',s.package?.expDate]].map(([k,v])=>`
-          <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:12px;">
-            <p style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin-bottom:4px;">${k}</p>
-            <p style="font-weight:700;color:#111827;font-size:0.82rem;">${v||'—'}</p>
-          </div>`).join('')}
-      </div>
-    </div>
-  `;
-  setTimeout(()=>{
-    const pf=document.getElementById('pFill');if(pf)pf.style.width=pct+'%';
-    const link=document.getElementById('fullDetailsLink');
-    if(link) link.href='tracking-details.html?t='+s.id;
-  },200);
+  setTimeout(()=>{const p=document.getElementById('pFill');if(p)p.style.width=pct+'%';},200);
 }
-
 
 window.addEventListener('DOMContentLoaded',()=>{
   const t=new URLSearchParams(window.location.search).get('t');
-  if(t){openModal(t);}
+  if(t)openModal(t);
 });
-</script>
-<!-- ══ QUIN-TRACK CHAT WIDGET ══ -->
-<style>
-#qt-chat-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#111827;box-shadow:0 4px 20px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;border:none;}
-#qt-chat-bubble:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,0,0,0.3);}
-#qt-chat-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #fff;}
-#qt-chat-panel{position:fixed;bottom:90px;right:24px;z-index:9998;width:340px;max-height:500px;background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,0.15);border:1px solid #e5e7eb;display:none;flex-direction:column;overflow:hidden;font-family:'Inter',sans-serif;}
-#qt-chat-panel.open{display:flex;}
-.qt-chat-header{background:#111827;padding:14px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.qt-chat-avatar{width:36px;height:36px;border-radius:50%;background:#1f4dda;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.qt-chat-status{display:flex;align-items:center;gap:5px;margin-top:2px;}
-.qt-chat-status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:qtPulse 2s infinite;}
-@keyframes qtPulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-#qt-chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:200px;background:#f9fafb;}
-.qt-msg{max-width:80%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.45;word-break:break-word;}
-.qt-msg.user{background:#111827;color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
-.qt-msg.admin{background:#fff;color:#111827;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid #e5e7eb;}
-.qt-msg-time{font-size:10px;opacity:0.55;margin-top:3px;}
-.qt-msg.user .qt-msg-time{text-align:right;}
-#qt-chat-name-form{padding:16px;display:flex;flex-direction:column;gap:10px;background:#fff;border-bottom:1px solid #f3f4f6;}
-#qt-chat-name-form input{border:1.5px solid #e5e7eb;border-radius:10px;padding:9px 13px;font-size:13px;font-family:'Inter',sans-serif;outline:none;color:#111827;}
-#qt-chat-name-form input:focus{border-color:#111827;}
-#qt-chat-name-form button{background:#111827;color:#fff;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
-#qt-chat-footer{padding:10px;border-top:1px solid #f3f4f6;display:flex;gap:8px;flex-shrink:0;background:#fff;}
-#qt-chat-input{flex:1;border:1.5px solid #e5e7eb;border-radius:10px;padding:9px 13px;font-size:13px;font-family:'Inter',sans-serif;outline:none;color:#111827;resize:none;}
-#qt-chat-input:focus{border-color:#111827;}
-#qt-chat-send{background:#111827;color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-#qt-typing{font-size:11px;color:#9ca3af;padding:0 14px 6px;display:none;font-style:italic;}
-</style>
 
-<!-- Bubble -->
-<button id="qt-chat-bubble" onclick="qtToggleChat()" aria-label="Chat with support">
-  <svg id="qt-bubble-icon" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-  <div id="qt-chat-badge"></div>
-</button>
-
-<!-- Panel -->
-<div id="qt-chat-panel">
-  <!-- Header -->
-  <div class="qt-chat-header">
-    <div class="qt-chat-avatar">
-      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-    </div>
-    <div style="flex:1;">
-      <div style="color:#fff;font-weight:700;font-size:13px;">QUIN-TRACK Support</div>
-      <div class="qt-chat-status">
-        <div class="qt-chat-status-dot"></div>
-        <span style="color:rgba(255,255,255,0.6);font-size:11px;">Online · Typically replies in minutes</span>
-      </div>
-    </div>
-    <button onclick="qtToggleChat()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:0;line-height:1;">✕</button>
-  </div>
-
-  <!-- Name form (shown first) -->
-  <div id="qt-chat-name-form">
-    <p style="font-size:12px;color:#6b7280;margin:0;">Enter your name to start chatting</p>
-    <input id="qt-name-input" type="text" placeholder="Your name" maxlength="40"/>
-    <input id="qt-email-input" type="email" placeholder="Email (optional)"/>
-    <button onclick="qtStartChat()">Start Chat →</button>
-  </div>
-
-  <!-- Messages -->
-  <div id="qt-chat-messages" style="display:none;">
-    <div class="qt-msg admin">
-      <div>👋 Hi there! Welcome to QUIN-TRACK Support. How can we help you today?</div>
-      <div class="qt-msg-time">Support Team</div>
-    </div>
-  </div>
-  <div id="qt-typing">Support is typing…</div>
-
-  <!-- Footer input -->
-  <div id="qt-chat-footer" style="display:none;">
-    <textarea id="qt-chat-input" rows="1" placeholder="Type a message…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();qtSendMessage();}"></textarea>
-    <button id="qt-chat-send" onclick="qtSendMessage()">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-    </button>
-  </div>
-</div>
-
-<script>
+// ── CHAT ──
 (function(){
-  const API = window.API_BASE || 'https://quintrack-backend-production.up.railway.app';
-  let sessionId = localStorage.getItem('qt_chat_session');
-  let pollInterval = null;
-  let lastMsgCount = 0;
-  let chatOpen = false;
+  var API2=window.API_BASE||'https://quintrack-backend-production.up.railway.app';
+  var sid=localStorage.getItem('qt_sid');
+  if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem('qt_sid',sid);}
+  var isOpen=false,lastCount=0,poll=null;
+  if(localStorage.getItem('qt_name'))qtInit(localStorage.getItem('qt_name'),localStorage.getItem('qt_email')||'');
 
-  if(!sessionId){
-    sessionId = 'sess_' + Math.random().toString(36).substr(2,12) + '_' + Date.now();
-    localStorage.setItem('qt_chat_session', sessionId);
-  }
-
-  // Check if already started
-  const savedName = localStorage.getItem('qt_chat_name');
-  if(savedName) qtInitChat(savedName, localStorage.getItem('qt_chat_email')||'');
-
-  window.qtToggleChat = function(){
-    chatOpen = !chatOpen;
-    const panel = document.getElementById('qt-chat-panel');
-    panel.classList.toggle('open', chatOpen);
-    if(chatOpen){
-      document.getElementById('qt-chat-badge').style.display='none';
-      if(savedName || localStorage.getItem('qt_chat_name')) qtLoadMessages();
-    }
+  window.qtToggle=function(){
+    isOpen=!isOpen;
+    document.getElementById('qt-panel').style.display=isOpen?'flex':'none';
+    if(isOpen)document.getElementById('qt-badge').style.display='none';
   };
-
-  window.qtStartChat = function(){
-    const name = document.getElementById('qt-name-input').value.trim();
-    if(!name){ document.getElementById('qt-name-input').style.borderColor='#ef4444'; return; }
-    const email = document.getElementById('qt-email-input').value.trim();
-    localStorage.setItem('qt_chat_name', name);
-    localStorage.setItem('qt_chat_email', email);
-    qtInitChat(name, email);
+  window.qtStart=function(){
+    var n=document.getElementById('qt-ni').value.trim();
+    if(!n){document.getElementById('qt-ni').style.borderColor='#ef4444';return;}
+    var e=document.getElementById('qt-ei').value.trim();
+    localStorage.setItem('qt_name',n);localStorage.setItem('qt_email',e);
+    qtInit(n,e);
   };
-
-  function qtInitChat(name, email){
-    fetch(API+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,userName:name,userEmail:email})})
-      .then(r=>r.json()).then(data=>{
-        document.getElementById('qt-chat-name-form').style.display='none';
-        document.getElementById('qt-chat-messages').style.display='flex';
-        document.getElementById('qt-chat-footer').style.display='flex';
-        if(data.messages && data.messages.length>0) qtRenderMessages(data.messages);
-        lastMsgCount = data.messages?.length || 0;
-        startPolling();
-      }).catch(()=>{});
+  function qtInit(n,e){
+    fetch(API2+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,userName:n,userEmail:e})})
+    .then(function(r){return r.json();}).then(function(d){
+      document.getElementById('qt-name-form').style.display='none';
+      document.getElementById('qt-msgs').style.display='flex';
+      document.getElementById('qt-footer').style.display='flex';
+      if(d.messages&&d.messages.length)qtRender(d.messages);
+      lastCount=d.messages?d.messages.length:0;
+      if(!poll)poll=setInterval(function(){
+        fetch(API2+'/api/chat/session/'+sid).then(function(r){return r.json();}).then(function(d){
+          if(d.messages&&d.messages.length>lastCount){qtRender(d.messages);lastCount=d.messages.length;if(!isOpen){var b=document.getElementById('qt-badge');b.style.display='flex';b.textContent=d.messages.filter(function(m){return m.role==='admin';}).length;}}
+        }).catch(function(){});
+      },3000);
+    }).catch(function(){});
   }
-
-  function qtLoadMessages(){
-    fetch(API+'/api/chat/session/'+sessionId)
-      .then(r=>r.json()).then(data=>{
-        if(data.messages) qtRenderMessages(data.messages);
-        lastMsgCount = data.messages?.length || 0;
-      }).catch(()=>{});
-  }
-
-  function startPolling(){
-    if(pollInterval) clearInterval(pollInterval);
-    pollInterval = setInterval(()=>{
-      fetch(API+'/api/chat/session/'+sessionId)
-        .then(r=>r.json()).then(data=>{
-          if(data.messages && data.messages.length > lastMsgCount){
-            qtRenderMessages(data.messages);
-            lastMsgCount = data.messages.length;
-            if(!chatOpen){
-              const badge = document.getElementById('qt-chat-badge');
-              badge.style.display='flex';
-              badge.textContent = data.messages.filter(m=>m.role==='admin').length;
-            }
-          }
-        }).catch(()=>{});
-    }, 3000);
-  }
-
-  function qtRenderMessages(messages){
-    const container = document.getElementById('qt-chat-messages');
-    container.innerHTML = `<div class="qt-msg admin"><div>👋 Hi there! Welcome to QUIN-TRACK Support. How can we help you today?</div><div class="qt-msg-time">Support Team</div></div>`;
-    messages.forEach(msg=>{
-      const d = document.createElement('div');
-      d.className = 'qt-msg ' + msg.role;
-      const time = new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-      d.innerHTML = `<div>${msg.text}</div><div class="qt-msg-time">${msg.role==='admin'?'Support · ':''} ${time}</div>`;
-      container.appendChild(d);
+  function qtRender(msgs){
+    var c=document.getElementById('qt-msgs');
+    c.innerHTML='<div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;background:#fff;color:#111827;border:1px solid #e5e7eb;border-bottom-left-radius:3px;">Hi! Welcome to QUIN-TRACK Support. How can we help?</div>';
+    msgs.forEach(function(m){
+      var d=document.createElement('div');
+      var isUser=m.role==='user';
+      d.style.cssText='max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;'+(isUser?'background:#111827;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;':'background:#fff;color:#111827;align-self:flex-start;border-bottom-left-radius:3px;border:1px solid #e5e7eb;');
+      d.textContent=m.text;c.appendChild(d);
     });
-    container.scrollTop = container.scrollHeight;
+    c.scrollTop=c.scrollHeight;
   }
-
-  window.qtSendMessage = function(){
-    const input = document.getElementById('qt-chat-input');
-    const text = input.value.trim();
-    if(!text) return;
-    input.value = '';
-    const name = localStorage.getItem('qt_chat_name')||'Guest';
-    const email = localStorage.getItem('qt_chat_email')||'';
-
-    // Optimistic render
-    const container = document.getElementById('qt-chat-messages');
-    const d = document.createElement('div');
-    d.className = 'qt-msg user';
-    d.innerHTML = `<div>${text}</div><div class="qt-msg-time">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>`;
-    container.appendChild(d);
-    container.scrollTop = container.scrollHeight;
-
-    fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,text,userName:name,userEmail:email})})
-      .then(r=>r.json()).then(data=>{
-        lastMsgCount = data.messages?.length || lastMsgCount;
-      }).catch(()=>{});
+  window.qtSend=function(){
+    var inp=document.getElementById('qt-inp');var text=inp.value.trim();if(!text)return;
+    inp.value='';
+    var n=localStorage.getItem('qt_name')||'Guest';var e=localStorage.getItem('qt_email')||'';
+    var c=document.getElementById('qt-msgs');var d=document.createElement('div');
+    d.style.cssText='max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;background:#111827;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;';
+    d.textContent=text;c.appendChild(d);c.scrollTop=c.scrollHeight;
+    fetch(API2+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,text:text,userName:n,userEmail:e})}).catch(function(){});
   };
 })();
 </script>
-
 </body>
 </html>
