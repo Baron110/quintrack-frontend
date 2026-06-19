@@ -1,879 +1,727 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Track your parcels worldwide with QUIN-TRACK. Real-time updates, secure handling, and global reach."/>
-<title>QUIN-TRACK | Ship Smarter, Track Faster</title>
+<title>Admin | QUIN-TRACK</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;}
-.hero-bg{background-image:url(https://lh3.googleusercontent.com/aida-public/AB6AXuDhsgXIp6p8ms67j5ZQiThuOPucc0L54z-TvQsj8JxKIonRd1YCOItFCVWGo0kuswKpOlLALD6bkjG4UIfIrsNrXcdHQGOkjuEkod7PO27DsLi90yKpmagocYQR7QQQiXJDDgEBrW4SGlFBhRvK4o5lawRzkvHftF2lmO5H1Rke6yHO1IyGMp-rtOAKeba-TROawPNyaNWkB5mKp42McS8t3wHHJhRzrUpXzLIxPgKPUhEJAUTNd_s-He1vCHOP52ZkbpEkzKlN-tE);background-size:cover;background-position:center;}
-.wordmark{font-family:'Inter',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:-0.04em;color:#111827;}
-.wordmark span{color:#1f4dda;}
-.wordmark-line{display:block;height:2px;background:#1f4dda;border-radius:1px;margin-top:2px;}
-.wordmark-sub{display:block;font-size:0.5rem;font-weight:600;letter-spacing:0.18em;color:#94a3b8;text-transform:uppercase;margin-top:1px;}
-.progress-fill{width:0%;transition:width 1.5s cubic-bezier(0.65,0,0.35,1);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.fade-up{animation:fadeUp 0.4s ease forwards;}
-@keyframes ping2{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.live-ping{animation:ping2 2s infinite;}
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+.wordmark{font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.04em;}
+.wordmark span{color:#3b82f6;}
+.fi{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:10px 13px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#111827;background:#fff;outline:none;transition:border-color 0.15s,box-shadow 0.15s;}
+.fi:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1);}
+.fi::placeholder{color:#9ca3af;}
+select.fi{cursor:pointer;}
+input[type=range]{accent-color:#2563eb;width:100%;}
+.photo-drop{border:2px dashed #e5e7eb;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all 0.2s;background:#f9fafb;}
+.photo-drop:hover,.photo-drop.drag-over{border-color:#2563eb;background:#eff6ff;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* ── iOS 26 LIQUID GLASS ── */
-.glass-nav{
-  background:rgba(255,255,255,0.72) !important;
-  backdrop-filter:blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(180%) !important;
-  border-bottom:1px solid rgba(255,255,255,0.5) !important;
-  box-shadow:0 1px 0 rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8) !important;
-}
-.glass-modal{
-  background:rgba(255,255,255,0.88) !important;
-  backdrop-filter:blur(40px) saturate(200%) !important;
-  -webkit-backdrop-filter:blur(40px) saturate(200%) !important;
-  border:1px solid rgba(255,255,255,0.6) !important;
-  box-shadow:0 8px 32px rgba(0,0,0,0.12),inset 0 1px 0 rgba(255,255,255,0.9) !important;
-}
-.glass-card{
-  background:rgba(255,255,255,0.75) !important;
-  backdrop-filter:blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter:blur(20px) saturate(160%) !important;
-  border:1px solid rgba(255,255,255,0.55) !important;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.8) !important;
-}
-.glass-btn{
-  background:rgba(37,99,235,0.85) !important;
-  backdrop-filter:blur(12px) !important;
-  -webkit-backdrop-filter:blur(12px) !important;
-  border:1px solid rgba(255,255,255,0.25) !important;
-  box-shadow:0 2px 12px rgba(37,99,235,0.35),inset 0 1px 0 rgba(255,255,255,0.2) !important;
-}
-.glass-btn:hover{
-  background:rgba(29,78,216,0.9) !important;
-  box-shadow:0 4px 20px rgba(37,99,235,0.45),inset 0 1px 0 rgba(255,255,255,0.25) !important;
-}
-.glass-input{
-  background:rgba(255,255,255,0.65) !important;
-  backdrop-filter:blur(12px) !important;
-  -webkit-backdrop-filter:blur(12px) !important;
-  border:1px solid rgba(255,255,255,0.6) !important;
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.06) !important;
-}
-.glass-input:focus{
-  background:rgba(255,255,255,0.85) !important;
-  border-color:rgba(37,99,235,0.5) !important;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.12),inset 0 1px 3px rgba(0,0,0,0.04) !important;
-}
-/* Feature cards glass on hover */
-.glass-feature-card{
-  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
-}
-.glass-feature-card:hover{
-  background:rgba(255,255,255,0.9) !important;
-  backdrop-filter:blur(20px) !important;
-  -webkit-backdrop-filter:blur(20px) !important;
-  border:1px solid rgba(255,255,255,0.7) !important;
-  box-shadow:0 12px 40px rgba(37,99,235,0.12),inset 0 1px 0 rgba(255,255,255,0.9) !important;
-  transform:translateY(-4px) !important;
-}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes toastOut{from{opacity:1;}to{opacity:0;transform:translateY(16px);}}
+.toast-in{animation:toastIn 0.3s ease forwards;}
+.toast-out{animation:toastOut 0.3s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp 0.3s ease forwards;}
 </style>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-gray-50 text-gray-900">
 
 <script>window.API_BASE='https://quintrack-backend-production.up.railway.app';</script>
 
-<!-- NAV -->
-<nav class="glass-nav bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-  <div class="flex justify-between items-center px-8 h-16 max-w-7xl mx-auto">
-    <a href="#" class="no-underline">
-      <div class="wordmark">QUIN<span>-TRACK</span><span class="wordmark-line"></span><span class="wordmark-sub">Global Logistics</span></div>
-    </a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#features" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Services</a>
-      <a href="#how" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">How It Works</a>
-      <a href="#testimonials" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Reviews</a>
-      <a href="admin.html" class="text-gray-500 hover:text-blue-600 text-sm font-medium transition-colors no-underline">Support</a>
-    </div>
-    <button onclick="openModal()" class="glass-btn bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold active:scale-95 transition-all">Track Parcel</button>
-  </div>
-</nav>
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen" class="min-h-screen flex p-0" style="background:#0a0f1e;">
+  <!-- Left panel - branding -->
+  <div class="hidden lg:flex flex-col justify-between w-1/2 p-12 relative overflow-hidden" style="background:linear-gradient(135deg,#1346d4 0%,#0a0f1e 100%);">
+    <!-- Grid overlay -->
+    <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:48px 48px;"></div>
+    <!-- Glow -->
+    <div class="absolute top-0 left-0 w-96 h-96 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(59,130,246,0.2) 0%,transparent 70%);transform:translate(-30%,-30%);"></div>
 
-<!-- HERO -->
-<header class="relative min-h-[820px] flex items-center overflow-hidden">
-  <div class="absolute inset-0 hero-bg"></div>
-  <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"></div>
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-8">
-    <div class="max-w-2xl">
-      <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 px-3 py-1.5 rounded-full text-xs font-semibold mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-600 live-ping inline-block"></span>
-        Global Logistics Partner
+    <div class="relative z-10">
+      <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:1.8rem;letter-spacing:-0.04em;color:#fff;line-height:1;">
+        QUIN<span style="color:#60a5fa;">-TRACK</span>
       </div>
-      <h1 class="text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-5" style="letter-spacing:-0.03em;">
-        Ship Smarter,<br/><span class="text-blue-600">Track Faster</span>
-      </h1>
-      <p class="text-gray-500 text-lg mb-8 leading-relaxed max-w-xl">
-        Experience next-generation global logistics. Real-time intelligence for every mile of your cargo's journey, delivered with precision.
-      </p>
-      <!-- Search -->
-      <div class="flex flex-col sm:flex-row gap-0 max-w-xl">
-        <div class="relative flex-1">
-          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input id="heroInput" type="text" placeholder="Enter tracking number…"
-            class="glass-input w-full h-14 pl-10 pr-4 border border-gray-200 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none bg-white text-gray-900 text-sm focus:outline-none"
-            onkeydown="if(event.key==='Enter')heroTrack()"/>
-        </div>
-        <button onclick="heroTrack()" class="glass-btn h-14 px-8 bg-blue-600 text-white font-bold text-sm rounded-b-xl sm:rounded-r-xl sm:rounded-bl-none flex items-center justify-center gap-2 whitespace-nowrap transition-all">
-          Track Now
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-        </button>
+      <div style="height:2px;background:#60a5fa;border-radius:1px;margin-top:4px;width:120px;"></div>
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-top:5px;">Global Logistics Platform</div>
+    </div>
+
+    <div class="relative z-10">
+      <h2 class="text-white font-black text-4xl leading-tight mb-4" style="letter-spacing:-0.03em;">Ship Smarter.<br/>Track Faster.<br/><span style="color:#60a5fa;">Deliver Better.</span></h2>
+      <p class="text-blue-200/60 text-sm leading-relaxed max-w-xs">Manage global shipments, create tracking links, and monitor your entire logistics chain from one place.</p>
+    </div>
+
+    <div class="relative z-10 grid grid-cols-3 gap-4">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">10M+</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Parcels</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">200+</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Countries</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <p class="text-white font-black text-2xl">99.9%</p>
+        <p class="text-blue-200/50 text-xs mt-1 uppercase tracking-wider">Uptime</p>
       </div>
     </div>
   </div>
-</header>
 
-<!-- STATS -->
-<section class="bg-gray-900 py-12">
-  <div class="max-w-7xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-    <div><div class="text-3xl font-black text-white">10M<span class="text-blue-400">+</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Parcels Delivered</div></div>
-    <div><div class="text-3xl font-black text-white">200<span class="text-blue-400">+</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Countries Covered</div></div>
-    <div><div class="text-3xl font-black text-white">99.9<span class="text-blue-400">%</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Success Rate</div></div>
-    <div><div class="text-3xl font-black text-white">24<span class="text-blue-400">/7</span></div><div class="text-xs font-semibold uppercase tracking-widest text-gray-400 mt-1">Global Support</div></div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features" class="py-24 bg-gray-50 px-8">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
-      <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Why Choose Us</div>
-      <h2 class="text-4xl font-black text-gray-900 mb-4" style="letter-spacing:-0.02em;">Precision Logistics Excellence</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">We combine advanced technology with a global physical network to ensure your cargo arrives on time, every time.</p>
-    </div>
-
-    <!-- Image + cards layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10">
-      <div class="rounded-3xl overflow-hidden h-80 lg:h-[480px] shadow-xl">
-        <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&q=80" alt="Logistics operations" class="w-full h-full object-cover"/>
+  <!-- Right panel - form -->
+  <div class="flex-1 flex items-center justify-center p-8" style="background:#0d1117;">
+    <div class="w-full max-w-sm fade-up">
+      <!-- Mobile logo -->
+      <div class="lg:hidden mb-8 text-center">
+        <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:1.6rem;letter-spacing:-0.04em;color:#fff;">
+          QUIN<span style="color:#3b82f6;">-TRACK</span>
+        </div>
+        <div style="height:2px;background:#3b82f6;border-radius:1px;margin:4px auto 0;width:100px;"></div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Lightning Fast</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Optimized routing ensures the shortest, most efficient path globally.</p>
-        </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Secure Handling</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Advanced monitoring protects your high-value shipments at every terminal.</p>
-        </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Global Network</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">200+ countries with seamless door-to-door delivery anywhere on earth.</p>
-        </div>
-        <div class="glass-feature-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm group">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-            <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          </div>
-          <h3 class="font-bold text-gray-900 mb-1">Real-Time Tracking</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Live checkpoint updates. Know exactly where your shipment is every moment.</p>
-        </div>
-      </div>
-    </div>
 
-    <!-- Bottom 2 cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group flex gap-5 items-start">
-        <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-colors">
-          <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      <div class="mb-8">
+        <h1 class="text-white font-black text-2xl mb-1" style="letter-spacing:-0.02em;">Welcome back</h1>
+        <p class="text-gray-400 text-sm">Sign in to your admin dashboard</p>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Username</label>
+          <input id="loginUser" type="text" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"
+            style="width:100%;background:#161b27;border:1.5px solid #1e293b;border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#fff;outline:none;transition:border-color 0.15s;"
+            onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#1e293b'"/>
         </div>
         <div>
-          <h3 class="font-bold text-gray-900 mb-1">24/7 Support</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Dedicated logistics experts available around the clock for any shipping concern.</p>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Password</label>
+          <input id="loginPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"
+            style="width:100%;background:#161b27;border:1.5px solid #1e293b;border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:0.875rem;color:#fff;outline:none;transition:border-color 0.15s;"
+            onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#1e293b'"/>
         </div>
-      </div>
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group flex gap-5 items-start">
-        <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 transition-colors">
-          <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-        </div>
-        <div>
-          <h3 class="font-bold text-gray-900 mb-1">Business Solutions</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Enterprise-grade integrations and volume solutions designed to scale with your business.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-      <div class="glass-feature-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm group">
-<!-- HOW IT WORKS -->
-<section id="how" class="py-24 bg-white px-8">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
-      <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Simple Process</div>
-      <h2 class="text-4xl font-black text-gray-900 mb-4" style="letter-spacing:-0.02em;">Streamlined Journey</h2>
-      <p class="text-gray-500">Four simple steps to global delivery.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-      <div class="hidden md:block absolute top-8 left-[12%] right-[12%] h-0.5 bg-gray-100"></div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">1</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Book</h4>
-          <p class="text-gray-500 text-sm">Schedule your pickup online in seconds.</p>
-        </div>
-      </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">2</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Pack</h4>
-          <p class="text-gray-500 text-sm">We ensure your parcel is safe for the journey.</p>
-        </div>
-      </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">3</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Track</h4>
-          <p class="text-gray-500 text-sm">Monitor every movement with real-time updates.</p>
-        </div>
-      </div>
-      <div class="flex flex-col items-center text-center relative">
-        <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl mb-6 shadow-lg ring-4 ring-white">4</div>
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 w-full">
-          <h4 class="font-bold text-gray-900 mb-2">Deliver</h4>
-          <p class="text-gray-500 text-sm">Safe delivery with proof of receipt.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="py-24 bg-gray-900 px-8 overflow-hidden">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="inline-block bg-white/10 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Global Operations</div>
-      <h2 class="text-4xl font-black text-white mb-4" style="letter-spacing:-0.02em;">Moving Cargo Across<br/>Every Corner of the World</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">From seaports to airports, sorting facilities to last-mile delivery — we track every step.</p>
-    </div>
-    <!-- Masonry grid -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <div class="col-span-2 row-span-2 rounded-2xl overflow-hidden h-72 md:h-96">
-        <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80" alt="Cargo containers at port" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-      </div>
-      <div class="rounded-2xl overflow-hidden h-44 md:h-[188px]">
-        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80" alt="Logistics warehouse" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-      </div>
-      <div class="rounded-2xl overflow-hidden h-44 md:h-[188px]">
-        <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=400&q=80" alt="Cargo plane" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-      </div>
-      <div class="rounded-2xl overflow-hidden h-44 md:h-[188px]">
-        <img src="https://images.unsplash.com/photo-1565891741441-64926e3838b0?w=400&q=80" alt="Shipping containers" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-      </div>
-      <div class="rounded-2xl overflow-hidden h-44 md:h-[188px]">
-        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=80" alt="Delivery truck" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-      </div>
-    </div>
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-        <p class="text-3xl font-black text-white mb-1">150+</p>
-        <p class="text-gray-400 text-xs uppercase tracking-wider font-semibold">Partner Airlines</p>
-      </div>
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-        <p class="text-3xl font-black text-white mb-1">800+</p>
-        <p class="text-gray-400 text-xs uppercase tracking-wider font-semibold">Shipping Routes</p>
-      </div>
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-        <p class="text-3xl font-black text-white mb-1">50+</p>
-        <p class="text-gray-400 text-xs uppercase tracking-wider font-semibold">Global Warehouses</p>
-      </div>
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-        <p class="text-3xl font-black text-white mb-1">2M+</p>
-        <p class="text-gray-400 text-xs uppercase tracking-wider font-semibold">Happy Receivers</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="py-24 bg-white px-8">
-  <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-      <div>
-        <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">Client Stories</div>
-        <h2 class="text-4xl font-black text-gray-900" style="letter-spacing:-0.02em;">What Our Clients<br/>Are Saying</h2>
-      </div>
-      <p class="text-gray-400 text-sm max-w-xs md:text-right">Over 10,000 businesses ship with confidence using QUIN-TRACK every day.</p>
-    </div>
-
-    <!-- Large featured quote with image -->
-    <div class="bg-gray-900 rounded-3xl mb-6 relative overflow-hidden">
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div class="p-8 md:p-12 relative z-10">
-          <div class="flex gap-1 text-yellow-400 text-lg mb-6">★★★★★</div>
-          <p class="text-white text-xl md:text-2xl font-medium leading-relaxed mb-8">Switching to QUIN-TRACK cut our delivery disputes by 80%. The checkpoint-by-checkpoint journey view gives our clients total confidence — they know exactly where their package is at all times.</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black">SK</div>
-            <div>
-              <p class="text-white font-bold">Sarah Kim</p>
-              <p class="text-gray-400 text-sm">Head of Imports, PrimeMed Asia</p>
-            </div>
-          </div>
-        </div>
-        <div class="hidden md:block relative overflow-hidden rounded-r-3xl">
-          <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&q=80" alt="Port logistics" class="w-full h-full object-cover opacity-60"/>
-          <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-transparent"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Two smaller cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="border border-gray-100 rounded-2xl overflow-hidden">
-        <div class="h-44 overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=80" alt="Warehouse operations" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-        </div>
-        <div class="p-7">
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-black text-sm">JM</div>
-              <div>
-                <p class="font-bold text-gray-900 text-sm">James Mitchell</p>
-                <p class="text-gray-400 text-xs">Founder, SwiftParts UK</p>
-              </div>
-            </div>
-            <div class="flex gap-0.5 text-yellow-400 text-sm">★★★★★</div>
-          </div>
-          <p class="text-gray-600 text-sm leading-relaxed">"I ship automotive parts from Japan to the UK weekly. QUIN-TRACK's real-time updates mean I never have to chase couriers. The photo feature is a game changer — I can see my goods at every stop."</p>
-        </div>
-      </div>
-      <div class="border border-gray-100 rounded-2xl overflow-hidden">
-        <div class="h-44 overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1507149833265-60c372daea22?w=600&q=80" alt="Global shipping" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-        </div>
-        <div class="p-7">
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm">FD</div>
-              <div>
-                <p class="font-bold text-gray-900 text-sm">Fatima Diallo</p>
-                <p class="text-gray-400 text-xs">Procurement Manager, Dakar Textiles</p>
-              </div>
-            </div>
-            <div class="flex gap-0.5 text-yellow-400 text-sm">★★★★★</div>
-          </div>
-          <p class="text-gray-600 text-sm leading-relaxed">"Before QUIN-TRACK we were in the dark for weeks. Now our receivers get a live link to track their shipment themselves. It's professional, clean, and our customers love it."</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="py-24 bg-blue-600 px-8 text-center">
-  <div class="max-w-2xl mx-auto">
-    <h2 class="text-4xl font-black text-white mb-4" style="letter-spacing:-0.02em;">Ready to Ship Smarter?</h2>
-    <p class="text-blue-100 mb-8">Join thousands of businesses that trust QUIN-TRACK for their mission-critical logistics.</p>
-    <div class="flex gap-3 justify-center flex-wrap">
-      <button onclick="openModal()" class="bg-white text-blue-600 px-8 py-3.5 rounded-xl font-bold hover:bg-blue-50 transition-colors">Track a Shipment</button>
-      <a href="admin.html" class="border-2 border-white/40 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-white/10 transition-colors no-underline">Admin Panel</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-gray-950 py-16 px-8">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-      <div>
-        <div class="wordmark text-white mb-4" style="color:#fff;">QUIN<span style="color:#60a5fa;">-TRACK</span><span class="wordmark-line" style="background:#60a5fa;"></span><span class="wordmark-sub" style="color:#475569;">Global Logistics</span></div>
-        <p class="text-gray-400 text-sm leading-relaxed">Making global logistics simple, transparent, and reliable for everyone.</p>
-      </div>
-      <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Company</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">About Us</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Careers</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Newsroom</a>
-      </div>
-      <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Services</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Express Courier</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Ocean Freight</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Warehousing</a>
-      </div>
-      <div>
-        <p class="text-blue-400 font-bold text-sm mb-4">Support</p>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Help Center</a>
-        <a href="admin.html" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Admin Login</a>
-        <a href="#" class="block text-gray-400 text-sm mb-2 hover:text-white no-underline transition-colors">Privacy Policy</a>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-gray-500 text-xs">© 2026 QUIN-TRACK Logistics. All rights reserved.</p>
-      <div class="flex gap-6">
-        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline transition-colors">Terms</a>
-        <a href="#" class="text-gray-500 text-xs hover:text-white no-underline transition-colors">Privacy</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- TRACKING MODAL -->
-<div id="trackModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm hidden">
-  <div class="glass-modal bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col fade-up">
-    <!-- Modal Header -->
-    <div class="bg-gray-900 text-white p-5 flex justify-between items-center flex-shrink-0">
-      <div>
-        <p class="text-xs uppercase tracking-widest text-gray-400 mb-0.5">Shipment Status</p>
-        <div class="wordmark text-white" style="color:#fff;font-size:1.1rem;">QUIN<span style="color:#60a5fa;">-TRACK</span></div>
-      </div>
-      <button onclick="closeModal()" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors text-white text-lg">✕</button>
-    </div>
-
-    <!-- Search bar inside modal -->
-    <div class="p-5 border-b border-gray-100 flex-shrink-0">
-      <div class="flex gap-2">
-        <input id="modalInput" type="text" placeholder="Enter tracking number…"
-          class="glass-input flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none"
-          onkeydown="if(event.key==='Enter')doTrack()"/>
-        <button id="trackBtn" onclick="doTrack()"
-          class="glass-btn bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 min-w-[90px] justify-content-center transition-all">
-          Track
+        <div id="loginErr" class="hidden rounded-lg px-4 py-3 text-sm font-medium" style="background:#2d1515;color:#f87171;border:1px solid #7f1d1d;"></div>
+        <button id="loginBtn" onclick="doLogin()"
+          style="width:100%;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.18s;margin-top:8px;"
+          onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+          Sign In to Dashboard
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
         </button>
       </div>
-    </div>
 
-    <!-- Results -->
-    <div id="trackResults" class="overflow-y-auto flex-1 p-5"></div>
+      <div class="mt-8 pt-6 border-t flex items-center justify-between" style="border-color:#1e293b;">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-400 inline-block" style="animation:ping2 2s infinite;"></span>
+          <span class="text-xs text-gray-500">Systems Operational</span>
+        </div>
+        <span class="text-xs text-gray-600">🔒 Encrypted</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<script>
-const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
-const TYPE_EMOJI={pickup:'📦',flight:'✈️',transit:'🔄',arrival:'🛬',sort:'🏭',delivery:'🚚',delivered:'✅'};
+<!-- ══ APP ══ -->
+<div id="appShell" style="display:none;">
 
-const DEMO_DATA={
-  'QT-DEMO-01':{id:'QT-DEMO-01',status:'In Transit',pct:60,
-    sender:{name:'TechCore Industries',address:'18 Zhongguancun St',city:'Beijing, CN',zip:'100190',tel:'+86 10 5550 1234',email:'logistics@techcore.cn'},
-    receiver:{name:'Marco Electronics GmbH',address:'42 Berliner Str',city:'Munich, DE',zip:'80331',tel:'+49 89 555 0182',email:'import@marco.de'},
-    package:{content:'Semiconductor Components',weight:'48kg',qty:'6 Units',orderType:'Paid',shipDate:'2026-05-28',expDate:'2026-06-15'},
-    journey:[
-      {location:'Shenzhen, China',country:'CN',type:'pickup',event:'Shipment Picked Up from Warehouse',date:'May 28, 2026',time:'09:14 AM',done:true},
-      {location:'Guangzhou Airport, China',country:'CN',type:'flight',event:'Departed Origin — Customs Cleared',date:'May 29, 2026',time:'11:45 PM',done:true},
-      {location:'Dubai International, UAE',country:'AE',type:'transit',event:'Transit Hub — Connecting Flight',date:'May 30, 2026',time:'04:22 AM',done:true},
-      {location:'Frankfurt Airport, Germany',country:'DE',type:'arrival',event:'Arrived in Germany — Customs Processing',date:'May 31, 2026',time:'07:05 AM',done:true},
-      {location:'Munich Sorting Center',country:'DE',type:'sort',event:'In Sorting Facility — Processing',date:'Jun 01, 2026',time:'02:30 PM',done:false,active:true},
-      {location:'Munich, Germany',country:'DE',type:'delivery',event:'Out for Local Delivery',date:'Jun 02, 2026',time:'—',done:false},
-      {location:'42 Berliner Str, Munich',country:'DE',type:'delivered',event:'Delivered to Recipient',date:'Jun 15, 2026',time:'—',done:false}
-    ]},
-  'QT-DEMO-02':{id:'QT-DEMO-02',status:'Delivered',pct:100,
-    sender:{name:'Pacific Pharma Ltd',address:'7-2 Nishiki',city:'Nagoya, JP',zip:'460-0003',tel:'+81 52 555 7890',email:'export@pacpharma.jp'},
-    receiver:{name:'MedLink USA Corp',address:'3920 Westview Plaza',city:'Dallas, TX',zip:'75201',tel:'+1 214 555 0990',email:'receiving@medlink.us'},
-    package:{content:'Medical Devices',weight:'22kg',qty:'4 Cartons',orderType:'Paid',shipDate:'2026-05-10',expDate:'2026-05-22'},
-    journey:[
-      {location:'Nagoya, Japan',country:'JP',type:'pickup',event:'Shipment Collected from Sender',date:'May 10, 2026',time:'10:00 AM',done:true},
-      {location:'Nagoya Port, Japan',country:'JP',type:'flight',event:'Loaded — Departed by Air Freight',date:'May 11, 2026',time:'08:15 PM',done:true},
-      {location:'Incheon Airport, South Korea',country:'KR',type:'transit',event:'Layover — Connecting to US',date:'May 12, 2026',time:'01:40 AM',done:true},
-      {location:'Los Angeles, USA',country:'US',type:'arrival',event:'Arrived in USA — Customs Clearance',date:'May 12, 2026',time:'06:55 PM',done:true},
-      {location:'Dallas Hub, TX',country:'US',type:'sort',event:'Arrived at Regional Facility',date:'May 14, 2026',time:'11:20 AM',done:true},
-      {location:'Dallas, TX USA',country:'US',type:'delivery',event:'Out for Final Delivery',date:'May 22, 2026',time:'08:00 AM',done:true},
-      {location:'3920 Westview Plaza, Dallas',country:'US',type:'delivered',event:'Successfully Delivered ✓',date:'May 22, 2026',time:'02:14 PM',done:true}
-    ]}
-};
-
-function fillDemo(num){document.getElementById('heroInput').value=num;heroTrack();}
-function heroTrack(){const v=document.getElementById('heroInput').value.trim();if(!v)return;openModal(v);}
-function openModal(num=''){
-  document.getElementById('trackModal').classList.remove('hidden');
-  document.body.style.overflow='hidden';
-  if(num){document.getElementById('modalInput').value=num;doTrack();}
-}
-function closeModal(){
-  document.getElementById('trackModal').classList.add('hidden');
-  document.body.style.overflow='';
-}
-document.getElementById('trackModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-async function doTrack(){
-  const num=document.getElementById('modalInput').value.trim().toUpperCase();
-  if(!num)return;
-  const btn=document.getElementById('trackBtn');
-  btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;
-  let shipment=null;
-  try{const res=await fetch(window.API_BASE+'/api/shipments/'+encodeURIComponent(num));if(res.ok)shipment=await res.json();}catch(e){}
-  // fallback to demo data
-  if(!shipment) shipment=DEMO_DATA[num]||null;
-  btn.innerHTML='Track';btn.disabled=false;
-  const el=document.getElementById('trackResults');
-  if(!shipment){
-    el.innerHTML=`<div class="text-center py-12"><div class="text-5xl mb-4">🔍</div><h3 class="font-bold text-gray-900 text-lg mb-2">Shipment Not Found</h3><p class="text-gray-500 text-sm">No record found for <strong>${num}</strong>. Check the number and try again.</p></div>`;
-    return;
-  }
-  renderResult(shipment,el);
-}
-
-function renderResult(s,el){
-  const pct=s.pct||0;
-  const statusStep={'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]??1;
-  const lastDone=s.journey?.filter(j=>j.done).slice(-1)[0];
-  const stops=s.journey||[];
-  const statusColor={'Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
-  const statusBg={'Pending':'#fefce8','In Transit':'#eff6ff','Out for Delivery':'#f0fdfa','Delivered':'#f0fdf4'}[s.status]||'#eff6ff';
-
-  // SVG icons for steps - clean, no emojis
-  const stepIcons=[
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
-    '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
-  ];
-  const stepLabels=['Order\nConfirmed','Picked by\nCourier','In\nTransit','Out for\nDelivery','Delivered'];
-
-  el.innerHTML=`
-    <!-- COMPACT SUMMARY CARD -->
-    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
-        <div>
-          <p style="color:#9ca3af;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Tracking ID</p>
-          <p style="color:#111827;font-family:monospace;font-weight:900;font-size:1.05rem;">${s.id}</p>
-        </div>
-        <span style="background:${statusBg};color:${statusColor};border:1.5px solid ${statusColor}40;padding:5px 14px;border-radius:99px;font-size:0.75rem;font-weight:700;">${s.status}</span>
-      </div>
-
-      <!-- Progress bar -->
-      <div style="margin-bottom:14px;">
-        <div style="height:5px;background:#f3f4f6;border-radius:99px;overflow:hidden;">
-          <div id="pFill" style="height:100%;background:linear-gradient(90deg,#111827,#374151);border-radius:99px;width:0%;transition:width 1.5s cubic-bezier(0.65,0,0.35,1);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:5px;">
-          <span style="color:#9ca3af;font-size:0.68rem;">Progress</span>
-          <span style="color:#111827;font-weight:700;font-size:0.68rem;">${pct}%</span>
-        </div>
-      </div>
-
-      <!-- From → To -->
-      <div style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:12px;">
-        <div style="flex:1;">
-          <p style="color:#9ca3af;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">From</p>
-          <p style="color:#111827;font-weight:700;font-size:0.82rem;">${s.package?.from||s.sender?.city||'—'}</p>
-        </div>
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#111827" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-        <div style="flex:1;text-align:right;">
-          <p style="color:#9ca3af;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">To</p>
-          <p style="color:#111827;font-weight:700;font-size:0.82rem;">${s.receiver?.city||'—'}</p>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-        <p style="color:#9ca3af;font-size:0.7rem;">${lastDone?'Updated: '+lastDone.date:'—'}</p>
-        <p style="color:#9ca3af;font-size:0.7rem;">Expected: <span style="color:#111827;font-weight:600;">${s.package?.expDate||'—'}</span></p>
-      </div>
+  <!-- SIDEBAR (desktop) -->
+  <aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-white border-r border-gray-100 shadow-sm">
+    <div class="p-6 border-b border-gray-100">
+      <div class="wordmark text-xl text-gray-900">QUIN<span>-TRACK</span></div>
+      <div class="h-0.5 bg-blue-600 rounded mt-1 w-24"></div>
+      <p class="text-gray-400 text-xs uppercase tracking-widest font-semibold mt-1">Logistics Admin</p>
     </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <button id="sb-create" onclick="switchTab('create')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Create Shipment
+      </button>
+      <button id="sb-list" onclick="switchTab('list')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        All Shipments
+      </button>
+      <button id="sb-chat" onclick="switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        Support Inbox
+        <span id="sb-chat-badge" class="hidden ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"></span>
+      </button>
+    </nav>
+    <div class="p-4 border-t border-gray-100 space-y-1">
+      <a href="track.html" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all no-underline">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        View Track Page
+      </a>
+      <button onclick="doLogout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
 
-    <!-- SHIPMENT PROGRESS STEPS -->
-    <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-      <p style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:16px;">Shipment Progress</p>
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0;">
-        ${stepLabels.map((lbl,i)=>{
-          const isDone=i<statusStep, isActive=i===statusStep;
-          const circleBg=isDone||isActive?'#2563eb':'#f3f4f6';
-          const iconColor=isDone||isActive?'#fff':'#9ca3af';
-          const lblColor=isDone?'#16a34a':isActive?'#2563eb':'#9ca3af';
-          const lblWeight=isDone||isActive?'700':'400';
-          const connector=i<stepLabels.length-1?`<div style="flex:1;height:2px;background:${i<statusStep?'#2563eb':'#e5e7eb'};margin-top:22px;margin-bottom:0;flex-shrink:0;"></div>`:'';
-          return`
-            <div style="display:flex;align-items:center;flex:1;min-width:0;">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;max-width:56px;">
-                <div style="width:44px;height:44px;border-radius:50%;background:${circleBg};display:flex;align-items:center;justify-content:center;color:${iconColor};flex-shrink:0;transition:all 0.3s;">
-                  ${isDone?'<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':stepIcons[i].replace('stroke="currentColor"',`stroke="${iconColor}"`)}
-                </div>
-                <span style="font-size:0.6rem;font-weight:${lblWeight};color:${lblColor};text-align:center;line-height:1.3;word-break:break-word;">${lbl.replace('\n','<br>')}</span>
+  <main class="lg:ml-64 min-h-screen flex flex-col">
+    <!-- TOP BAR -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <h2 id="pageTitle" class="font-bold text-gray-900">Create Shipment</h2>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
+          <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="searchInput" placeholder="Search shipments…" oninput="filterTable()" class="bg-transparent text-sm outline-none w-40 text-gray-900 placeholder:text-gray-400"/>
+        </div>
+        <span id="userBadge" class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full"></span>
+      </div>
+    </header>
+
+    <!-- CREATE TAB -->
+    <div id="tab-create" class="flex-1 p-6 max-w-5xl mx-auto w-full">
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Total</p><p id="st-total" class="font-black text-3xl text-gray-900">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">In Transit</p><p id="st-transit" class="font-black text-3xl text-blue-600">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Delivered</p><p id="st-delivered" class="font-black text-3xl text-green-600">0</p></div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"><p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Pending</p><p id="st-pending" class="font-black text-3xl text-yellow-500">0</p></div>
+      </div>
+
+      <!-- Form card -->
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-gray-100 bg-gray-50">
+          <h3 class="font-bold text-gray-900">New Shipment</h3>
+          <p class="text-gray-500 text-sm mt-0.5">Fill in all details — a unique tracking link will be generated.</p>
+        </div>
+        <form id="shipForm" onsubmit="submitForm(event)" class="p-6 space-y-7">
+
+          <!-- SENDER -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Sender Details</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name <span class="text-red-400">*</span></label><input class="fi" id="s_name" placeholder="John Doe" required/></div>
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Address</label><input class="fi" id="s_addr" placeholder="123 Shipping Blvd"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">City / State <span class="text-red-400">*</span></label><input class="fi" id="s_city" placeholder="Houston, TX" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Zip Code</label><input class="fi" id="s_zip" placeholder="77001"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone</label><input class="fi" id="s_tel" placeholder="+1 (555) 000-0000" type="tel"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label><input class="fi" id="s_email" placeholder="sender@email.com" type="email"/></div>
+            </div>
+          </div>
+
+          <!-- RECEIVER -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 16v1a3 3 0 01-3 3H7a3 3 0 01-3-3v-1m4-4l4 4m0 0l4-4m-4 4V4"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Receiver Details</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name <span class="text-red-400">*</span></label><input class="fi" id="r_name" placeholder="Jane Smith" required/></div>
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Address</label><input class="fi" id="r_addr" placeholder="456 Delivery Lane"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">City / State <span class="text-red-400">*</span></label><input class="fi" id="r_city" placeholder="Chicago, IL" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Zip Code</label><input class="fi" id="r_zip" placeholder="60601"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone</label><input class="fi" id="r_tel" placeholder="+1 (555) 111-1111" type="tel"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label><input class="fi" id="r_email" placeholder="receiver@email.com" type="email"/></div>
+            </div>
+          </div>
+
+          <!-- PACKAGE -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Package & Shipment</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Content <span class="text-red-400">*</span></label><input class="fi" id="p_content" placeholder="e.g. Safe Box, Electronics" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Quantity</label><input class="fi" id="p_qty" type="number" value="1" min="1"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Weight</label><input class="fi" id="p_weight" placeholder="e.g. 35kg"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Order Type</label><select class="fi" id="p_order"><option>Paid</option><option>COD</option><option>Free</option></select></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Shipping From <span class="text-red-400">*</span></label><input class="fi" id="p_from" placeholder="Origin city/country" required/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Ship Out Date</label><input class="fi" id="p_shipdate" type="date"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Expected Delivery</label><input class="fi" id="p_expdate" type="date"/></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="p_status"><option>Pending</option><option selected>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+              <div class="md:col-span-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Delivery Progress: <span id="pctVal" class="text-blue-600 font-bold">1%</span></label>
+                <input type="range" id="p_pct" min="0" max="100" value="1" step="5" class="mt-2" oninput="document.getElementById('pctVal').textContent=this.value+'%'"/>
               </div>
-              ${connector}
-            </div>`;
-        }).join('')}
+            </div>
+          </div>
+
+          <!-- PHOTO -->
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
+              <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Item Photo <span class="text-gray-400 font-normal normal-case text-xs">(optional)</span></h4>
+            </div>
+            <div id="photoDropZone" class="photo-drop" onclick="document.getElementById('photoFileInput').click()"
+              ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
+              <div class="text-3xl mb-2">🖼️</div>
+              <p class="font-bold text-gray-700 text-sm mb-1">Click to upload or drag & drop</p>
+              <p class="text-gray-400 text-xs">JPG, PNG, WEBP — max 5MB</p>
+              <input type="file" id="photoFileInput" accept="image/*" class="hidden" onchange="handleFileSelect(event)"/>
+            </div>
+            <div id="photoPreview" class="hidden mt-3 rounded-xl overflow-hidden border border-gray-200 relative">
+              <img id="photoPreviewImg" src="" class="w-full max-h-52 object-cover"/>
+              <button type="button" onclick="removePhoto()" class="absolute top-2 right-2 bg-red-500/90 text-white border-none rounded-lg px-2 py-1 text-xs font-bold cursor-pointer">✕ Remove</button>
+            </div>
+          </div>
+
+          <!-- JOURNEY -->
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider">Journey Chain</h4>
+              </div>
+              <button type="button" onclick="addStop()" class="flex items-center gap-1.5 bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors">
+                + Add Stop
+              </button>
+            </div>
+            <p class="text-gray-400 text-sm mb-3">Add every checkpoint from origin to destination.</p>
+            <div id="journeyStops" class="space-y-3"></div>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="flex items-center justify-between pt-4 border-t border-gray-100 flex-wrap gap-3">
+            <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+              ✨ Generate Shipment
+            </button>
+            <button type="button" onclick="clearForm()" class="text-gray-400 text-sm hover:text-gray-700 underline cursor-pointer bg-none border-none">Clear form</button>
+          </div>
+
+          <!-- SUCCESS -->
+          <div id="successBox" class="hidden bg-blue-50 border border-blue-200 rounded-2xl p-5">
+            <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">✅ Shipment Created — Tracking Link Ready</p>
+            <div class="flex flex-wrap items-center gap-5">
+              <div><p class="text-xs text-gray-400 mb-1">Tracking ID</p><p id="genId" class="font-black text-xl text-gray-900 font-mono">—</p></div>
+              <div class="flex-1 min-w-[220px]">
+                <p class="text-xs text-gray-400 mb-1">Public Link</p>
+                <div class="flex">
+                  <input readonly id="genLink" class="flex-1 border border-gray-200 border-r-0 rounded-l-lg px-3 py-2 text-xs font-mono bg-white text-gray-900 outline-none"/>
+                  <button type="button" id="copyBtn" onclick="copyLink()" class="bg-blue-600 text-white border-none px-4 py-2 rounded-r-lg text-xs font-bold cursor-pointer hover:bg-blue-700 transition-colors">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
       </div>
     </div>
 
-    <!-- VIEW FULL DETAILS BUTTON -->
-    <a id="fullDetailsLink" href="#" target="_blank"
-      style="width:100%;background:#2563eb;border-radius:12px;padding:14px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.875rem;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:background 0.18s;box-shadow:0 4px 14px rgba(37,99,235,0.25);"
-      onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-      View Full Shipment Details
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-    </a>
-
-    <div id="fullDetails" style="display:none;">
-
-      <!-- Progress steps -->
-      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:16px;padding:20px;margin-bottom:14px;">
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
-          ${stepLabels.map((lbl,i)=>{
-            const isDone=i<statusStep, isActive=i===statusStep;
-            const dotStyle=isDone?'background:#dcfce7;border:2px solid #86efac;':isActive?'background:#eff6ff;border:2px solid #2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.1);':'background:#fff;border:2px solid #e5e7eb;';
-            const lblColor=isDone?'color:#16a34a;font-weight:700;':isActive?'color:#2563eb;font-weight:700;':'color:#9ca3af;';
-            return`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div style="width:36px;height:36px;border-radius:50%;${dotStyle}display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.3s;">${isDone?'✅':stepIcons[i].replace('stroke="currentColor"','stroke="'+(isActive?'#2563eb':'#9ca3af')+'"')}</div><div style="font-size:0.62rem;text-align:center;line-height:1.3;${lblColor}">${lbl.replace('\n','<br>')}</div></div>`;
-          }).join('')}
-        </div>
+    <!-- LIST TAB -->
+    <div id="tab-list" class="hidden flex-1 p-6">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div><h3 class="font-black text-xl text-gray-900">All Shipments</h3><p class="text-gray-500 text-sm mt-0.5">Manage and update records.</p></div>
+        <button onclick="switchTab('create')" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+          + New Shipment
+        </button>
       </div>
-
-      ${s.itemPhoto?`<div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;margin-bottom:14px;"><p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📸 Item Photo</p><img src="${s.itemPhoto}" style="width:100%;max-height:220px;object-fit:cover;border-radius:10px;border:1.5px solid #e0e7ff;"/></div>`:''}
-
-      <!-- Journey -->
-      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:16px;padding:20px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <p style="font-weight:700;color:#111827;font-size:0.875rem;">🗺️ Shipment Journey</p>
-          <span style="background:#eff6ff;color:#2563eb;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:99px;">${stops.length} checkpoints</span>
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left min-w-[640px]">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Tracking ID</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Photo</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Sender</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Receiver</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Status</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400">Exp. Date</th>
+                <th class="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-400 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shipmentsBody" class="divide-y divide-gray-50"></tbody>
+          </table>
         </div>
-        ${stops.map((stop,i)=>{
-          const isLast=i===stops.length-1;
-          const flag=FLAG_MAP[stop.country]||'🌐';
-          const emoji=TYPE_EMOJI[stop.type]||'📍';
-          const dotBg=stop.done?'#dcfce7;border:2px solid #86efac':stop.active?'#eff6ff;border:2px solid #2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)':'#fff;border:2px solid #e5e7eb';
-          const lineBg=stop.done?'#2563eb':'#e5e7eb';
-          const op=(stop.done||stop.active)?'1':'0.4';
-          return`<div style="display:flex;gap:12px;"><div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:${dotBg};display:flex;align-items:center;justify-content:center;font-size:14px;">${stop.done?'✅':emoji}</div>${!isLast?`<div style="width:2px;flex:1;min-height:18px;background:${lineBg};margin-top:3px;"></div>`:''}</div><div style="flex:1;padding-bottom:16px;opacity:${op};"><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;"><div><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span>${flag}</span><p style="font-weight:700;color:#111827;font-size:0.85rem;">${stop.location}</p>${stop.active?'<span style="font-size:0.6rem;background:#2563eb;color:#fff;font-weight:700;padding:1px 7px;border-radius:99px;">● Live</span>':''}</div><p style="color:#64748b;font-size:0.75rem;margin-top:2px;">${stop.event||''}</p></div><div style="text-align:right;flex-shrink:0;"><p style="font-size:0.72rem;font-weight:700;color:#111827;">${stop.date}</p><p style="font-size:0.7rem;color:#94a3b8;">${stop.time}</p></div></div></div></div>`;
-        }).join('')}
-      </div>
-
-      <!-- Sender / Receiver -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-        <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;">
-          <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📤 Sender</p>
-          <p style="font-weight:700;color:#111827;font-size:0.85rem;">${s.sender?.name||'—'}</p>
-          <p style="color:#64748b;font-size:0.75rem;margin-top:3px;">${[s.sender?.address,s.sender?.city].filter(Boolean).join(', ')||'—'}</p>
-          <p style="font-size:0.75rem;color:#374151;margin-top:3px;font-family:monospace;">${s.sender?.tel||'—'}</p>
-        </div>
-        <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:14px;padding:16px;">
-          <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#64748b;margin-bottom:10px;">📥 Receiver</p>
-          <p style="font-weight:700;color:#111827;font-size:0.85rem;">${s.receiver?.name||'—'}</p>
-          <p style="color:#64748b;font-size:0.75rem;margin-top:3px;">${[s.receiver?.address,s.receiver?.city].filter(Boolean).join(', ')||'—'}</p>
-          <p style="font-size:0.75rem;color:#374151;margin-top:3px;font-family:monospace;">${s.receiver?.tel||'—'}</p>
-        </div>
-      </div>
-
-      <!-- Package grid -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-        ${[['Content',s.package?.content],['Weight',s.package?.weight],['Quantity',s.package?.qty],['Order Type',s.package?.orderType],['Ship Date',s.package?.shipDate],['Expected',s.package?.expDate]].map(([k,v])=>`
-          <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:12px;">
-            <p style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin-bottom:4px;">${k}</p>
-            <p style="font-weight:700;color:#111827;font-size:0.82rem;">${v||'—'}</p>
-          </div>`).join('')}
       </div>
     </div>
-  `;
-  setTimeout(()=>{
-    const pf=document.getElementById('pFill');if(pf)pf.style.width=pct+'%';
-    const link=document.getElementById('fullDetailsLink');
-    if(link) link.href='tracking-details.html?t='+s.id;
-  },200);
+
+    <!-- CHAT TAB -->
+    <div id="tab-chat" class="hidden flex-1 p-6">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div><h3 class="font-black text-xl text-gray-900">Support Inbox</h3><p class="text-gray-500 text-sm mt-0.5">Chat with users in real-time.</p></div>
+        <button onclick="loadChats()" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">↻ Refresh</button>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <!-- Sessions list -->
+        <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-gray-100 bg-gray-50">
+            <p class="font-bold text-gray-900 text-sm">Conversations</p>
+          </div>
+          <div id="chatSessionsList" class="divide-y divide-gray-50 overflow-y-auto max-h-[500px]">
+            <p class="text-gray-400 text-sm text-center py-8">No conversations yet</p>
+          </div>
+        </div>
+        <!-- Active chat -->
+        <div class="lg:col-span-2 bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden flex flex-col" style="min-height:400px;">
+          <div id="chatHeader" class="p-4 border-b border-gray-100 bg-gray-50">
+            <p class="font-bold text-gray-900 text-sm">Select a conversation</p>
+          </div>
+          <div id="chatMessages" class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 bg-gray-50">
+            <p class="text-gray-400 text-sm text-center mt-8">No conversation selected</p>
+          </div>
+          <div id="chatReplyBox" class="hidden p-4 border-t border-gray-100 flex gap-3">
+            <input type="text" id="adminReplyInput" placeholder="Type a reply…" onkeydown="if(event.key==='Enter')sendAdminReply()"
+              class="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"/>
+            <button onclick="sendAdminReply()" class="bg-gray-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV (mobile) -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-50 flex">
+      <button onclick="switchTab('create')" id="bn-create" class="flex-1 flex flex-col items-center py-3 gap-1 text-blue-600">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span class="text-xs font-semibold">Create</span>
+      </button>
+      <button onclick="switchTab('list')" id="bn-list" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span class="text-xs font-semibold">Shipments</span>
+      </button>
+      <button onclick="switchTab('chat')" id="bn-chat" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400 relative">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span class="text-xs font-semibold">Support</span>
+        <span id="bn-chat-badge" class="hidden absolute top-1 right-4 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center"></span>
+      </button>
+      <a href="track.html" class="flex-1 flex flex-col items-center py-3 gap-1 text-gray-400 no-underline">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        <span class="text-xs font-semibold">Track</span>
+      </a>
+    </div>
+  </main>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="hidden fixed inset-0 bg-gray-900/60 z-[100] flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl fade-up">
+    <div class="flex items-center justify-between p-5 border-b border-gray-100">
+      <h3 class="font-bold text-gray-900">Update Shipment</h3>
+      <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 hover:bg-red-50 hover:text-red-500 rounded-lg flex items-center justify-center text-sm transition-colors">✕</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <input type="hidden" id="edit_id"/>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="edit_status"><option>Pending</option><option>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Progress: <span id="editPctVal" class="text-blue-600 font-bold">0%</span></label>
+        <input type="range" id="edit_pct" min="0" max="100" step="5" class="mt-2" oninput="document.getElementById('editPctVal').textContent=this.value+'%'"/>
+      </div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Expected Delivery</label><input class="fi" type="date" id="edit_expdate"/></div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Update Photo</label>
+        <div class="photo-drop" onclick="document.getElementById('editPhotoInput').click()" style="padding:14px;">
+          <p class="text-sm text-gray-500">📷 Tap to upload new photo</p>
+          <input type="file" id="editPhotoInput" accept="image/*" class="hidden" onchange="handleEditPhoto(event)"/>
+        </div>
+        <div id="editPhotoPreview" class="hidden mt-2 rounded-xl overflow-hidden border border-gray-200 relative">
+          <img id="editPhotoPreviewImg" src="" class="w-full max-h-36 object-cover"/>
+          <button type="button" onclick="removeEditPhoto()" class="absolute top-1.5 right-1.5 bg-red-500/90 text-white border-none rounded-md px-2 py-0.5 text-xs font-bold cursor-pointer">✕</button>
+        </div>
+      </div>
+    </div>
+    <div class="p-5 flex gap-3 justify-end border-t border-gray-100">
+      <button onclick="closeModal()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors border-none cursor-pointer">Cancel</button>
+      <button onclick="saveEdit()" id="saveEditBtn" class="px-6 py-2 bg-green-600 text-white rounded-lg text-sm font-bold hover:bg-green-700 transition-colors border-none cursor-pointer flex items-center gap-2">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-xl font-bold text-sm text-white shadow-xl whitespace-nowrap"></div>
+
+<script>
+let authToken=localStorage.getItem('qt_token')||'';
+let currentPhotoData=null, editPhotoData=null, stopCount=0, editingId=null;
+const COUNTRIES=['CN','JP','DE','US','AE','KR','GB','FR','IT','AU','CA','SG','NL','IN','BR'];
+const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
+
+async function apiFetch(path,method='GET',body=null,auth=true){
+  const h={'Content-Type':'application/json'};
+  if(auth&&authToken)h['Authorization']='Bearer '+authToken;
+  const opts={method,headers:h};
+  if(body)opts.body=JSON.stringify(body);
+  const res=await fetch(window.API_BASE+path,opts);
+  if(res.status===401){doLogout();throw new Error('Unauthorized');}
+  return res.json();
 }
 
+async function doLogin(){
+  const user=document.getElementById('loginUser').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  if(!user||!pass){showLoginErr('Enter username and password');return;}
+  const btn=document.getElementById('loginBtn');
+  btn.innerHTML='<span class="spinner"></span> Signing in…';btn.disabled=true;
+  try{
+    const res=await apiFetch('/api/auth/login','POST',{username:user,password:pass},false);
+    if(res.token){authToken=res.token;localStorage.setItem('qt_token',authToken);showApp(res.username);}
+    else showLoginErr(res.error||'Login failed');
+  }catch(e){showLoginErr('Cannot reach server. Check your connection.');}
+  btn.innerHTML='Sign In to Dashboard <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>';
+  btn.disabled=false;
+}
+function showLoginErr(msg){const el=document.getElementById('loginErr');el.textContent=msg;el.classList.remove('hidden');}
+function showApp(u){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appShell').style.display='block';
+  document.getElementById('userBadge').textContent='👤 '+(u||'admin');
+  loadStats();addStop();addStop();
+}
+function doLogout(){authToken='';localStorage.removeItem('qt_token');location.reload();}
+
+function switchTab(name){
+  document.getElementById('tab-create').style.display=name==='create'?'block':'none';
+  document.getElementById('tab-list').style.display=name==='list'?'block':'none';
+  document.getElementById('tab-chat').style.display=name==='chat'?'block':'none';
+  const act='bg-blue-600 text-white',ina='text-gray-500 hover:bg-gray-50 hover:text-gray-900';
+  document.getElementById('sb-create').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='create'?act:ina}`;
+  document.getElementById('sb-list').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='list'?act:ina}`;
+  document.getElementById('sb-chat').className=`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${name==='chat'?act:ina}`;
+  document.getElementById('bn-create').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='create'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('bn-list').className=`flex-1 flex flex-col items-center py-3 gap-1 ${name==='list'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('bn-chat').className=`flex-1 flex flex-col items-center py-3 gap-1 relative ${name==='chat'?'text-blue-600':'text-gray-400'}`;
+  document.getElementById('pageTitle').textContent=name==='create'?'Create Shipment':name==='list'?'All Shipments':'Support Inbox';
+  if(name==='list')loadShipments();
+  if(name==='chat')loadChats();
+}
+
+async function loadStats(){
+  try{const s=await apiFetch('/api/stats');
+    document.getElementById('st-total').textContent=s.total??0;
+    document.getElementById('st-transit').textContent=s.transit??0;
+    document.getElementById('st-delivered').textContent=s.delivered??0;
+    document.getElementById('st-pending').textContent=s.pending??0;
+  }catch(e){}
+}
+
+function handleFileSelect(e){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>5*1024*1024){showToast('Image too large (max 5MB)','error');return;}
+  const r=new FileReader();
+  r.onload=ev=>{currentPhotoData=ev.target.result;document.getElementById('photoPreviewImg').src=currentPhotoData;document.getElementById('photoPreview').classList.remove('hidden');document.getElementById('photoDropZone').style.display='none';};
+  r.readAsDataURL(file);
+}
+function handleDrop(e){e.preventDefault();document.getElementById('photoDropZone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(!f||!f.type.startsWith('image/'))return;handleFileSelect({target:{files:[f]}});}
+function removePhoto(){currentPhotoData=null;document.getElementById('photoPreview').classList.add('hidden');document.getElementById('photoDropZone').style.display='block';document.getElementById('photoFileInput').value='';}
+function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{editPhotoData=ev.target.result;document.getElementById('editPhotoPreviewImg').src=editPhotoData;document.getElementById('editPhotoPreview').classList.remove('hidden');};r.readAsDataURL(f);}
+function removeEditPhoto(){editPhotoData=null;document.getElementById('editPhotoPreview').classList.add('hidden');document.getElementById('editPhotoInput').value='';}
+
+function addStop(pf){
+  const id=stopCount++;
+  const div=document.createElement('div');
+  div.id='stop-'+id;
+  div.className='bg-gray-50 border border-gray-100 rounded-xl p-4';
+  div.innerHTML=`
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Stop #${id+1}</span>
+      <button type="button" onclick="document.getElementById('stop-${id}').remove()" class="bg-red-50 text-red-500 border-none rounded-lg px-2.5 py-1 text-xs font-bold cursor-pointer">✕ Remove</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Location</label><input class="fi" name="stop_loc" placeholder="e.g. Shanghai, China" value="${pf?.location||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Country</label><select class="fi" name="stop_country">${COUNTRIES.map(c=>`<option value="${c}" ${pf?.country===c?'selected':''}>${FLAG_MAP[c]} ${c}</option>`).join('')}<option value="OTHER">🌐 OTHER</option></select></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Event Type</label><select class="fi" name="stop_type"><option value="pickup">📦 Pickup</option><option value="flight">✈️ Flight</option><option value="transit">🔄 Transit</option><option value="arrival">🛬 Arrived</option><option value="sort">🏭 Sorting</option><option value="delivery">🚚 Delivery</option><option value="delivered">✅ Delivered</option></select></div>
+      <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Event Description</label><input class="fi" name="stop_event" placeholder="e.g. Departed — customs cleared" value="${pf?.event||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Date</label><input class="fi" type="date" name="stop_date" value="${pf?.dateRaw||''}"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Time</label><input class="fi" name="stop_time" placeholder="09:14 AM" value="${pf?.time||''}"/></div>
+      <div class="flex items-center gap-4 pt-5">
+        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-500 font-medium"><input type="checkbox" name="stop_done" ${pf?.done?'checked':''} class="w-3.5 h-3.5 accent-green-600"/> Completed</label>
+        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-500 font-medium"><input type="checkbox" name="stop_active" ${pf?.active?'checked':''} class="w-3.5 h-3.5 accent-blue-600"/> Active</label>
+      </div>
+    </div>`;
+  document.getElementById('journeyStops').appendChild(div);
+}
+
+function collectStops(){
+  return [...document.querySelectorAll('#journeyStops > div')].map(div=>{
+    const loc=div.querySelector('[name=stop_loc]').value.trim();if(!loc)return null;
+    const dv=div.querySelector('[name=stop_date]').value;
+    return{location:loc,country:div.querySelector('[name=stop_country]').value,type:div.querySelector('[name=stop_type]').value,event:div.querySelector('[name=stop_event]').value||'',date:dv?new Date(dv).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—',dateRaw:dv,time:div.querySelector('[name=stop_time]').value||'—',done:div.querySelector('[name=stop_done]').checked,active:div.querySelector('[name=stop_active]').checked};
+  }).filter(Boolean);
+}
+
+async function submitForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');btn.innerHTML='<span class="spinner"></span> Creating…';btn.disabled=true;
+  const gv=id=>document.getElementById(id)?.value?.trim()||'';
+  const ship={status:gv('p_status'),pct:parseInt(gv('p_pct'))||1,itemPhoto:currentPhotoData||null,
+    sender:{name:gv('s_name'),address:gv('s_addr'),city:gv('s_city'),zip:gv('s_zip'),tel:gv('s_tel'),email:gv('s_email')},
+    receiver:{name:gv('r_name'),address:gv('r_addr'),city:gv('r_city'),zip:gv('r_zip'),tel:gv('r_tel'),email:gv('r_email')},
+    package:{content:gv('p_content'),qty:gv('p_qty')+' Unit(s)',weight:gv('p_weight'),from:gv('p_from'),orderType:gv('p_order'),shipDate:gv('p_shipdate'),expDate:gv('p_expdate')},
+    journey:collectStops()};
+  try{
+    const r=await apiFetch('/api/shipments','POST',ship);
+    if(r.id){
+      const base=window.location.href.replace('admin.html','');
+      document.getElementById('genId').textContent=r.id;
+      document.getElementById('genLink').value=base+'track.html?t='+r.id;
+      document.getElementById('successBox').classList.remove('hidden');
+      document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});
+      showToast('Shipment created! ✓','success');loadStats();
+    }else showToast(r.error||'Error','error');
+  }catch(err){showToast('Network error','error');}
+  btn.innerHTML='✨ Generate Shipment';btn.disabled=false;
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(document.getElementById('genLink').value).catch(()=>{});
+  const btn=document.getElementById('copyBtn');btn.textContent='Copied!';btn.style.background='#16a34a';
+  setTimeout(()=>{btn.textContent='Copy';btn.style.background='';},2000);
+}
+function clearForm(){document.getElementById('shipForm').reset();document.getElementById('pctVal').textContent='1%';document.getElementById('journeyStops').innerHTML='';document.getElementById('successBox').classList.add('hidden');removePhoto();stopCount=0;addStop();addStop();}
+
+const BADGE_CLS={'Pending':'bg-yellow-50 text-yellow-700 border border-yellow-200','In Transit':'bg-blue-50 text-blue-700 border border-blue-200','Out for Delivery':'bg-teal-50 text-teal-700 border border-teal-200','Delivered':'bg-green-50 text-green-700 border border-green-200'};
+
+async function loadShipments(q=''){
+  try{const d=await apiFetch('/api/shipments'+(q?'?q='+encodeURIComponent(q):''));renderTable(Array.isArray(d)?d:[]);}
+  catch(e){renderTable([]);}
+}
+function filterTable(){loadShipments(document.getElementById('searchInput')?.value||'');}
+function renderTable(all){
+  const tb=document.getElementById('shipmentsBody');
+  if(!all.length){tb.innerHTML=`<tr><td colspan="7" class="text-center py-12 text-gray-400"><div class="text-4xl mb-3">📭</div><p class="text-sm">No shipments yet.</p></td></tr>`;return;}
+  tb.innerHTML=all.map(s=>`
+    <tr class="hover:bg-gray-50 transition-colors">
+      <td class="px-5 py-4"><span class="font-mono font-bold text-xs text-blue-600">${s.id}</span></td>
+      <td class="px-5 py-4">${s.itemPhoto?`<img src="${s.itemPhoto}" class="w-10 h-10 object-cover rounded-lg border border-gray-200"/>`:'<span class="text-gray-300 text-lg">📷</span>'}</td>
+      <td class="px-5 py-4"><p class="font-semibold text-sm text-gray-900">${s.sender?.name||'—'}</p><p class="text-xs text-gray-400">${s.sender?.city||''}</p></td>
+      <td class="px-5 py-4"><p class="font-semibold text-sm text-gray-900">${s.receiver?.name||'—'}</p><p class="text-xs text-gray-400">${s.receiver?.city||''}</p></td>
+      <td class="px-5 py-4"><span class="text-xs font-bold px-2.5 py-1 rounded-full ${BADGE_CLS[s.status]||''}">${s.status}</span></td>
+      <td class="px-5 py-4 font-mono text-xs text-gray-400">${s.package?.expDate||'—'}</td>
+      <td class="px-5 py-4 text-right">
+        <div class="flex justify-end gap-1.5">
+          <a href="track.html?t=${s.id}" target="_blank" class="w-8 h-8 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-xs hover:bg-blue-50 hover:border-blue-300 transition-colors no-underline">🔗</a>
+          <button onclick="openEdit('${s.id}')" class="w-8 h-8 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center text-xs hover:bg-blue-50 hover:border-blue-300 transition-colors cursor-pointer">✏️</button>
+          <button onclick="delShipment('${s.id}')" class="w-8 h-8 bg-red-50 border border-red-200 rounded-lg flex items-center justify-center text-xs hover:bg-red-100 transition-colors cursor-pointer">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+async function delShipment(id){if(!confirm('Delete?'))return;try{await apiFetch('/api/shipments/'+id,'DELETE');showToast('Deleted');loadShipments();loadStats();}catch(e){showToast('Error','error');}}
+async function openEdit(id){
+  editingId=id;
+  try{
+    const s=await apiFetch('/api/shipments/'+id);
+    document.getElementById('edit_id').value=id;
+    document.getElementById('edit_status').value=s.status;
+    document.getElementById('edit_pct').value=s.pct||0;
+    document.getElementById('editPctVal').textContent=(s.pct||0)+'%';
+    document.getElementById('edit_expdate').value=s.package?.expDate||'';
+    editPhotoData=s.itemPhoto||null;
+    if(s.itemPhoto){document.getElementById('editPhotoPreviewImg').src=s.itemPhoto;document.getElementById('editPhotoPreview').classList.remove('hidden');}
+    else document.getElementById('editPhotoPreview').classList.add('hidden');
+    document.getElementById('editModal').classList.remove('hidden');
+  }catch(e){showToast('Error loading','error');}
+}
+function closeModal(){document.getElementById('editModal').classList.add('hidden');}
+async function saveEdit(){
+  const btn=document.getElementById('saveEditBtn');btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;
+  try{
+    const u={status:document.getElementById('edit_status').value,pct:parseInt(document.getElementById('edit_pct').value)||0,'package.expDate':document.getElementById('edit_expdate').value};
+    if(editPhotoData!==null)u.itemPhoto=editPhotoData;
+    await apiFetch('/api/shipments/'+editingId,'PATCH',u);
+    closeModal();loadShipments();loadStats();showToast('Updated ✓','success');
+  }catch(e){showToast('Error saving','error');}
+  btn.innerHTML='Save Changes';btn.disabled=false;
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=type==='success'?'#16a34a':type==='error'?'#dc2626':'#111827';
+  t.classList.remove('hidden');t.className=t.className.replace('toast-out','')+' toast-in';
+  setTimeout(()=>{t.className=t.className.replace('toast-in','')+' toast-out';setTimeout(()=>t.classList.add('hidden'),300);},2800);
+}
+
+// ── CHAT FUNCTIONS ──
+let activeChatSession = null;
+let chatPollInterval = null;
+
+async function loadChats(){
+  try{
+    const chats = await apiFetch('/api/chat/sessions');
+    const list = document.getElementById('chatSessionsList');
+    if(!chats.length){ list.innerHTML='<p class="text-gray-400 text-sm text-center py-8">No conversations yet</p>'; return; }
+    list.innerHTML = chats.map(c=>`
+      <div onclick="openChat('${c.sessionId}')" class="p-4 cursor-pointer hover:bg-gray-50 transition-colors ${activeChatSession===c.sessionId?'bg-blue-50':''}" style="border-left:${activeChatSession===c.sessionId?'3px solid #2563eb':'3px solid transparent'}">
+        <div class="flex items-center justify-between mb-1">
+          <p class="font-bold text-gray-900 text-sm">${c.userName||'Guest'}</p>
+          ${c.unread>0?`<span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">${c.unread}</span>`:''}
+        </div>
+        <p class="text-gray-400 text-xs truncate">${c.messages?.slice(-1)[0]?.text||'No messages'}</p>
+        <p class="text-gray-300 text-xs mt-1">${new Date(c.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p>
+      </div>`).join('');
+    // Update badge
+    const totalUnread = chats.reduce((sum,c)=>sum+(c.unread||0),0);
+    const badge = document.getElementById('sb-chat-badge');
+    const bnBadge = document.getElementById('bn-chat-badge');
+    if(totalUnread>0){
+      badge.textContent=totalUnread; badge.classList.remove('hidden');
+      bnBadge.textContent=totalUnread; bnBadge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden'); bnBadge.classList.add('hidden');
+    }
+  }catch(e){}
+}
+
+async function openChat(sessionId){
+  activeChatSession = sessionId;
+  await apiFetch(`/api/chat/session/${sessionId}/read`,'PATCH',{});
+  const chat = await apiFetch(`/api/chat/session/${sessionId}`);
+  document.getElementById('chatHeader').innerHTML=`<div class="flex items-center justify-between"><div><p class="font-bold text-gray-900 text-sm">${chat.userName||'Guest'}</p><p class="text-gray-400 text-xs">${chat.userEmail||'No email'}</p></div><button onclick="resolveChat('${sessionId}')" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-3 py-1 rounded-lg transition-colors">Mark Resolved</button></div>`;
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML = chat.messages?.map(m=>`
+    <div class="flex ${m.role==='admin'?'justify-end':'justify-start'}">
+      <div class="max-w-[75%] px-4 py-2.5 rounded-2xl text-sm ${m.role==='admin'?'bg-gray-900 text-white rounded-br-sm':'bg-white border border-gray-200 text-gray-900 rounded-bl-sm'}">
+        <div>${m.text}</div>
+        <div class="text-xs mt-1 ${m.role==='admin'?'text-gray-400':'text-gray-400'}">${new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`).join('') || '<p class="text-gray-400 text-sm text-center mt-8">No messages yet</p>';
+  msgs.scrollTop = msgs.scrollHeight;
+  document.getElementById('chatReplyBox').classList.remove('hidden');
+  loadChats();
+}
+
+async function sendAdminReply(){
+  const input = document.getElementById('adminReplyInput');
+  const text = input.value.trim();
+  if(!text || !activeChatSession) return;
+  input.value = '';
+  await apiFetch('/api/chat/reply','POST',{sessionId:activeChatSession,text});
+  openChat(activeChatSession);
+}
+
+async function resolveChat(sessionId){
+  await apiFetch(`/api/chat/session/${sessionId}/resolve`,'PATCH',{});
+  activeChatSession = null;
+  document.getElementById('chatMessages').innerHTML='<p class="text-gray-400 text-sm text-center mt-8">Conversation resolved</p>';
+  document.getElementById('chatReplyBox').classList.add('hidden');
+  document.getElementById('chatHeader').innerHTML='<p class="font-bold text-gray-900 text-sm">Select a conversation</p>';
+  loadChats();
+}
+
+// Poll for new chats silently - only update badge and session list
+setInterval(()=>{
+  if(!authToken) return;
+  apiFetch('/api/chat/unread').then(data=>{
+    const badge=document.getElementById('sb-chat-badge');
+    const bnBadge=document.getElementById('bn-chat-badge');
+    if(data&&data.unread>0){
+      badge.textContent=data.unread;badge.classList.remove('hidden');
+      bnBadge.textContent=data.unread;bnBadge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');bnBadge.classList.add('hidden');
+    }
+  }).catch(()=>{});
+}, 8000);
 
 window.addEventListener('DOMContentLoaded',()=>{
-  const t=new URLSearchParams(window.location.search).get('t');
-  if(t){openModal(t);}
+  if(authToken){
+    apiFetch('/api/stats').then(s=>{
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('appShell').style.display='block';
+      document.getElementById('userBadge').textContent='👤 admin';
+      document.getElementById('st-total').textContent=s.total??0;
+      document.getElementById('st-transit').textContent=s.transit??0;
+      document.getElementById('st-delivered').textContent=s.delivered??0;
+      document.getElementById('st-pending').textContent=s.pending??0;
+      addStop();addStop();
+    }).catch(()=>{authToken='';localStorage.removeItem('qt_token');});
+  }
 });
 </script>
-<!-- ══ QUIN-TRACK CHAT WIDGET ══ -->
-<style>
-#qt-chat-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#111827;box-shadow:0 4px 20px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;border:none;}
-#qt-chat-bubble:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,0,0,0.3);}
-#qt-chat-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #fff;}
-#qt-chat-panel{position:fixed;bottom:90px;right:24px;z-index:9998;width:340px;max-height:500px;background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,0.15);border:1px solid #e5e7eb;display:none;flex-direction:column;overflow:hidden;font-family:'Inter',sans-serif;}
-#qt-chat-panel.open{display:flex;}
-.qt-chat-header{background:#111827;padding:14px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.qt-chat-avatar{width:36px;height:36px;border-radius:50%;background:#1f4dda;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.qt-chat-status{display:flex;align-items:center;gap:5px;margin-top:2px;}
-.qt-chat-status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:qtPulse 2s infinite;}
-@keyframes qtPulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-#qt-chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:200px;background:#f9fafb;}
-.qt-msg{max-width:80%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.45;word-break:break-word;}
-.qt-msg.user{background:#111827;color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
-.qt-msg.admin{background:#fff;color:#111827;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid #e5e7eb;}
-.qt-msg-time{font-size:10px;opacity:0.55;margin-top:3px;}
-.qt-msg.user .qt-msg-time{text-align:right;}
-#qt-chat-name-form{padding:16px;display:flex;flex-direction:column;gap:10px;background:#fff;border-bottom:1px solid #f3f4f6;}
-#qt-chat-name-form input{border:1.5px solid #e5e7eb;border-radius:10px;padding:9px 13px;font-size:13px;font-family:'Inter',sans-serif;outline:none;color:#111827;}
-#qt-chat-name-form input:focus{border-color:#111827;}
-#qt-chat-name-form button{background:#111827;color:#fff;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
-#qt-chat-footer{padding:10px;border-top:1px solid #f3f4f6;display:flex;gap:8px;flex-shrink:0;background:#fff;}
-#qt-chat-input{flex:1;border:1.5px solid #e5e7eb;border-radius:10px;padding:9px 13px;font-size:13px;font-family:'Inter',sans-serif;outline:none;color:#111827;resize:none;}
-#qt-chat-input:focus{border-color:#111827;}
-#qt-chat-send{background:#111827;color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-#qt-typing{font-size:11px;color:#9ca3af;padding:0 14px 6px;display:none;font-style:italic;}
-</style>
-
-<!-- Bubble -->
-<button id="qt-chat-bubble" onclick="qtToggleChat()" aria-label="Chat with support">
-  <svg id="qt-bubble-icon" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-  <div id="qt-chat-badge"></div>
-</button>
-
-<!-- Panel -->
-<div id="qt-chat-panel">
-  <!-- Header -->
-  <div class="qt-chat-header">
-    <div class="qt-chat-avatar">
-      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-    </div>
-    <div style="flex:1;">
-      <div style="color:#fff;font-weight:700;font-size:13px;">QUIN-TRACK Support</div>
-      <div class="qt-chat-status">
-        <div class="qt-chat-status-dot"></div>
-        <span style="color:rgba(255,255,255,0.6);font-size:11px;">Online · Typically replies in minutes</span>
-      </div>
-    </div>
-    <button onclick="qtToggleChat()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:0;line-height:1;">✕</button>
-  </div>
-
-  <!-- Name form (shown first) -->
-  <div id="qt-chat-name-form">
-    <p style="font-size:12px;color:#6b7280;margin:0;">Enter your name to start chatting</p>
-    <input id="qt-name-input" type="text" placeholder="Your name" maxlength="40"/>
-    <input id="qt-email-input" type="email" placeholder="Email (optional)"/>
-    <button onclick="qtStartChat()">Start Chat →</button>
-  </div>
-
-  <!-- Messages -->
-  <div id="qt-chat-messages" style="display:none;">
-    <div class="qt-msg admin">
-      <div>👋 Hi there! Welcome to QUIN-TRACK Support. How can we help you today?</div>
-      <div class="qt-msg-time">Support Team</div>
-    </div>
-  </div>
-  <div id="qt-typing">Support is typing…</div>
-
-  <!-- Footer input -->
-  <div id="qt-chat-footer" style="display:none;">
-    <textarea id="qt-chat-input" rows="1" placeholder="Type a message…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();qtSendMessage();}"></textarea>
-    <button id="qt-chat-send" onclick="qtSendMessage()">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-    </button>
-  </div>
-</div>
-
-<script>
-(function(){
-  const API = window.API_BASE || 'https://quintrack-backend-production.up.railway.app';
-  let sessionId = localStorage.getItem('qt_chat_session');
-  let pollInterval = null;
-  let lastMsgCount = 0;
-  let chatOpen = false;
-
-  if(!sessionId){
-    sessionId = 'sess_' + Math.random().toString(36).substr(2,12) + '_' + Date.now();
-    localStorage.setItem('qt_chat_session', sessionId);
-  }
-
-  // Check if already started
-  const savedName = localStorage.getItem('qt_chat_name');
-  if(savedName) qtInitChat(savedName, localStorage.getItem('qt_chat_email')||'');
-
-  window.qtToggleChat = function(){
-    chatOpen = !chatOpen;
-    const panel = document.getElementById('qt-chat-panel');
-    panel.classList.toggle('open', chatOpen);
-    if(chatOpen){
-      document.getElementById('qt-chat-badge').style.display='none';
-      if(savedName || localStorage.getItem('qt_chat_name')) qtLoadMessages();
-    }
-  };
-
-  window.qtStartChat = function(){
-    const name = document.getElementById('qt-name-input').value.trim();
-    if(!name){ document.getElementById('qt-name-input').style.borderColor='#ef4444'; return; }
-    const email = document.getElementById('qt-email-input').value.trim();
-    localStorage.setItem('qt_chat_name', name);
-    localStorage.setItem('qt_chat_email', email);
-    qtInitChat(name, email);
-  };
-
-  function qtInitChat(name, email){
-    fetch(API+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,userName:name,userEmail:email})})
-      .then(r=>r.json()).then(data=>{
-        document.getElementById('qt-chat-name-form').style.display='none';
-        document.getElementById('qt-chat-messages').style.display='flex';
-        document.getElementById('qt-chat-footer').style.display='flex';
-        if(data.messages && data.messages.length>0) qtRenderMessages(data.messages);
-        lastMsgCount = data.messages?.length || 0;
-        startPolling();
-      }).catch(()=>{});
-  }
-
-  function qtLoadMessages(){
-    fetch(API+'/api/chat/session/'+sessionId)
-      .then(r=>r.json()).then(data=>{
-        if(data.messages) qtRenderMessages(data.messages);
-        lastMsgCount = data.messages?.length || 0;
-      }).catch(()=>{});
-  }
-
-  function startPolling(){
-    if(pollInterval) clearInterval(pollInterval);
-    pollInterval = setInterval(()=>{
-      fetch(API+'/api/chat/session/'+sessionId)
-        .then(r=>r.json()).then(data=>{
-          if(data.messages && data.messages.length > lastMsgCount){
-            qtRenderMessages(data.messages);
-            lastMsgCount = data.messages.length;
-            if(!chatOpen){
-              const badge = document.getElementById('qt-chat-badge');
-              badge.style.display='flex';
-              badge.textContent = data.messages.filter(m=>m.role==='admin').length;
-            }
-          }
-        }).catch(()=>{});
-    }, 3000);
-  }
-
-  function qtRenderMessages(messages){
-    const container = document.getElementById('qt-chat-messages');
-    container.innerHTML = `<div class="qt-msg admin"><div>👋 Hi there! Welcome to QUIN-TRACK Support. How can we help you today?</div><div class="qt-msg-time">Support Team</div></div>`;
-    messages.forEach(msg=>{
-      const d = document.createElement('div');
-      d.className = 'qt-msg ' + msg.role;
-      const time = new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-      d.innerHTML = `<div>${msg.text}</div><div class="qt-msg-time">${msg.role==='admin'?'Support · ':''} ${time}</div>`;
-      container.appendChild(d);
-    });
-    container.scrollTop = container.scrollHeight;
-  }
-
-  window.qtSendMessage = function(){
-    const input = document.getElementById('qt-chat-input');
-    const text = input.value.trim();
-    if(!text) return;
-    input.value = '';
-    const name = localStorage.getItem('qt_chat_name')||'Guest';
-    const email = localStorage.getItem('qt_chat_email')||'';
-
-    // Optimistic render
-    const container = document.getElementById('qt-chat-messages');
-    const d = document.createElement('div');
-    d.className = 'qt-msg user';
-    d.innerHTML = `<div>${text}</div><div class="qt-msg-time">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>`;
-    container.appendChild(d);
-    container.scrollTop = container.scrollHeight;
-
-    fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,text,userName:name,userEmail:email})})
-      .then(r=>r.json()).then(data=>{
-        lastMsgCount = data.messages?.length || lastMsgCount;
-      }).catch(()=>{});
-  };
-})();
-</script>
-
 </body>
 </html>
