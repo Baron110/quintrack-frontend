@@ -63,7 +63,7 @@ body{font-family:'Inter',sans-serif;background:#f8f9fa;}
 <body>
 
 <script>
-window.API_BASE='https://quintrack-backend-production.up.railway.app';
+window.API_BASE='https://quintrack-backend.onrender.com';
 const OPENCAGE_KEY='ee4b326bb887470d8142b8abfb97eccb';
 let currentShipment=null;
 const geocodeCache={};
@@ -436,7 +436,7 @@ function downloadReceipt(){
 
 // ── CHAT ──
 (function(){
-  var API=window.API_BASE||'https://quintrack-backend-production.up.railway.app';
+  var API=window.API_BASE||'https://quintrack-backend.onrender.com';
   var sid=localStorage.getItem('qt_sid');
   if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem('qt_sid',sid);}
   var isOpen=false,lastCount=0,poll=null;

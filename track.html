@@ -25,7 +25,7 @@ body{font-family:'Inter',sans-serif;}
 </head>
 <body class="bg-white text-gray-900">
 
-<script>window.API_BASE='https://quintrack-backend-production.up.railway.app';</script>
+<script>window.API_BASE='https://quintrack-backend.onrender.com';</script>
 
 <!-- NAV -->
 <nav class="glass-nav sticky top-0 z-50 shadow-sm">
@@ -333,7 +333,7 @@ body{font-family:'Inter',sans-serif;}
 
 <script>
 // ── CONFIG ──
-const API = window.API_BASE || 'https://quintrack-backend-production.up.railway.app';
+const API = window.API_BASE || 'https://quintrack-backend.onrender.com';
 
 const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
 const TYPE_EMOJI={pickup:'📦',flight:'✈️',transit:'🔄',arrival:'🛬',sort:'🏭',delivery:'🚚',delivered:'✅'};
@@ -468,7 +468,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 // ── CHAT ──
 (function(){
-  var API2=window.API_BASE||'https://quintrack-backend-production.up.railway.app';
+  var API2=window.API_BASE||'https://quintrack-backend.onrender.com';
   var sid=localStorage.getItem('qt_sid');
   if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem('qt_sid',sid);}
   var isOpen=false,lastCount=0,poll=null;
