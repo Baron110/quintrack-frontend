@@ -40,6 +40,10 @@ body{font-family:'Inter',sans-serif;background:#f8f9fa;}
 #qt-badge{position:absolute;top:-3px;right:-3px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #fff;}
 #qt-panel{position:fixed;bottom:90px;right:24px;z-index:9998;width:330px;background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,0.14);border:1px solid #e5e7eb;display:none;flex-direction:column;overflow:hidden;font-family:'Inter',sans-serif;max-height:480px;}
 #qt-panel.open{display:flex;}
+#qt-panel.full{inset:0;bottom:0;right:0;width:100%;height:100%;max-height:none;border-radius:0;border:none;box-shadow:none;}
+#qt-panel.full #qt-msgs{max-width:720px;width:100%;margin:0 auto;}
+#qt-panel.full #qt-footer{max-width:720px;width:100%;margin:0 auto;}
+.qt-img{max-width:100%;border-radius:8px;display:block;cursor:pointer;}
 .qt-hd{background:#111827;padding:14px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .qt-av{width:36px;height:36px;border-radius:50%;background:#1f4dda;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .qt-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:qtP 2s infinite;}
@@ -272,6 +276,9 @@ const DEMO_DATA={
       <div style="color:#fff;font-weight:700;font-size:13px;">QUIN-TRACK Support</div>
       <div style="display:flex;align-items:center;gap:5px;margin-top:2px;"><div class="qt-dot"></div><span style="color:rgba(255,255,255,0.55);font-size:11px;">Online · Replies in minutes</span></div>
     </div>
+    <button id="qtExpandBtn" onclick="qtExpand()" aria-label="Expand chat" style="background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:4px;display:flex;margin-right:2px;">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+    </button>
     <button onclick="qtToggle()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:0;line-height:1;">&#x2715;</button>
   </div>
   <div id="qt-name-form">
@@ -284,6 +291,10 @@ const DEMO_DATA={
     <div class="qt-m admin"><div>Hi! Welcome to QUIN-TRACK Support. How can we help you?</div><div class="qt-t">Support Team</div></div>
   </div>
   <div id="qt-footer" style="display:none;">
+    <input id="qt-img-inp" type="file" accept="image/*" style="display:none;" onchange="qtPickImage(event)"/>
+    <button onclick="document.getElementById('qt-img-inp').click()" aria-label="Attach photo" style="background:none;border:none;color:#6b7280;cursor:pointer;padding:9px 6px;flex-shrink:0;">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+    </button>
     <textarea id="qt-inp" rows="1" placeholder="Type a message..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();qtSend();}"></textarea>
     <button id="qt-send-btn" onclick="qtSend()">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
@@ -428,10 +439,78 @@ function downloadReceipt(){
   var s=currentShipment;
   var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   var statusColor={'Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
-  var html='<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Receipt - '+s.id+'</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Inter,Arial,sans-serif;background:#fff;color:#111827;padding:40px;max-width:620px;margin:0 auto;}.logo{font-size:22px;font-weight:900;letter-spacing:-0.04em;}.logo span{color:#2563eb;}.hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #111827;}.id-box{background:#f0f4ff;border:1.5px solid #e0e7ff;border-radius:12px;padding:18px;margin-bottom:18px;text-align:center;}.id-box .lbl{color:#6b7280;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}.id-box .id{font-family:monospace;font-size:26px;font-weight:900;color:#111827;letter-spacing:0.05em;}.id-box .st{margin-top:6px;font-size:12px;font-weight:700;color:'+statusColor+';}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}.box{border:1px solid #e5e7eb;border-radius:10px;padding:14px;}.box .t{color:#2563eb;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}.box .n{font-weight:700;font-size:13px;margin-bottom:3px;}.box .d{color:#6b7280;font-size:12px;margin-bottom:2px;}.pkg{border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:18px;}.pkg .t{color:#2563eb;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}table{width:100%;border-collapse:collapse;}td{padding:7px 0;font-size:12px;border-bottom:1px solid #f3f4f6;}td:first-child{color:#9ca3af;font-weight:600;text-transform:uppercase;font-size:10px;width:40%;}td:last-child{font-weight:600;color:#111827;}.footer{border-top:1px solid #e5e7eb;padding-top:12px;text-align:center;color:#9ca3af;font-size:11px;}@media print{body{padding:20px;}@page{margin:1cm;}}</style></head><body><div class="hdr"><div><div class="logo">QUIN<span>-TRACK</span></div><div style="height:2px;background:#2563eb;width:70px;margin-top:3px;border-radius:1px;"></div><div style="font-size:9px;font-weight:700;letter-spacing:0.18em;color:#9ca3af;text-transform:uppercase;margin-top:3px;">Global Logistics</div></div><div style="text-align:right;"><div style="color:#9ca3af;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Shipment Receipt</div><div style="font-size:13px;font-weight:600;color:#374151;">'+date+'</div></div></div><div class="id-box"><div class="lbl">Tracking Number</div><div class="id">'+s.id+'</div><div class="st">Status: '+s.status+'</div></div><div class="grid"><div class="box"><div class="t">Sender</div><div class="n">'+((s.sender&&s.sender.name)||'—')+'</div><div class="d">'+([s.sender&&s.sender.address,s.sender&&s.sender.city].filter(Boolean).join(', ')||'—')+'</div><div class="d">'+((s.sender&&s.sender.tel)||'—')+'</div><div class="d">'+((s.sender&&s.sender.email)||'—')+'</div></div><div class="box"><div class="t">Receiver</div><div class="n">'+((s.receiver&&s.receiver.name)||'—')+'</div><div class="d">'+([s.receiver&&s.receiver.address,s.receiver&&s.receiver.city].filter(Boolean).join(', ')||'—')+'</div><div class="d">'+((s.receiver&&s.receiver.tel)||'—')+'</div><div class="d">'+((s.receiver&&s.receiver.email)||'—')+'</div></div></div><div class="pkg"><div class="t">Package Details</div><table><tr><td>Content</td><td>'+((s.package&&s.package.content)||'—')+'</td></tr><tr><td>Weight</td><td>'+((s.package&&s.package.weight)||'—')+'</td></tr><tr><td>Quantity</td><td>'+((s.package&&s.package.qty)||'—')+'</td></tr><tr><td>Order Type</td><td>'+((s.package&&s.package.orderType)||'—')+'</td></tr><tr><td>Ship Date</td><td>'+((s.package&&s.package.shipDate)||'—')+'</td></tr><tr><td>Expected</td><td>'+((s.package&&s.package.expDate)||'—')+'</td></tr></table></div><div class="footer">Auto-generated receipt &middot; QUIN-TRACK Logistics &middot; &copy; 2026</div><script>window.onload=function(){window.print();}<\/script></body></html>';
   var w=window.open('','_blank');
-  w.document.write(html);
-  w.document.close();
+  var d=w.document;
+  d.title='Receipt - '+s.id;
+  var style=d.createElement('style');
+  style.textContent=[
+    '*{box-sizing:border-box;margin:0;padding:0;}',
+    'body{font-family:Inter,Arial,sans-serif;background:#fff;color:#111827;padding:40px;max-width:620px;margin:0 auto;}',
+    '.logo{font-size:22px;font-weight:900;letter-spacing:-0.04em;}',
+    '.logo span{color:#2563eb;}',
+    '.hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #111827;}',
+    '.id-box{background:#f0f4ff;border:1.5px solid #e0e7ff;border-radius:12px;padding:18px;margin-bottom:18px;text-align:center;}',
+    '.id-box .lbl{color:#6b7280;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}',
+    '.id-box .id{font-family:monospace;font-size:26px;font-weight:900;color:#111827;letter-spacing:0.05em;}',
+    '.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}',
+    '.box{border:1px solid #e5e7eb;border-radius:10px;padding:14px;}',
+    '.box .t{color:#2563eb;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}',
+    '.box .n{font-weight:700;font-size:13px;margin-bottom:3px;}',
+    '.box .d{color:#6b7280;font-size:12px;margin-bottom:2px;}',
+    '.pkg{border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:18px;}',
+    '.pkg .t{color:#2563eb;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}',
+    'table{width:100%;border-collapse:collapse;}',
+    'td{padding:7px 0;font-size:12px;border-bottom:1px solid #f3f4f6;}',
+    'td:first-child{color:#9ca3af;font-weight:600;text-transform:uppercase;font-size:10px;width:40%;}',
+    'td:last-child{font-weight:600;color:#111827;}',
+    '.footer{border-top:1px solid #e5e7eb;padding-top:12px;text-align:center;color:#9ca3af;font-size:11px;}',
+    '@media print{body{padding:20px;}@page{margin:1cm;}}'
+  ].join('\n');
+  d.head.appendChild(style);
+  function el(tag,opts){
+    var e=d.createElement(tag);opts=opts||{};
+    if(opts.cls)e.className=opts.cls;
+    if(opts.text!==undefined)e.textContent=opts.text;
+    if(opts.css)e.style.cssText=opts.css;
+    if(opts.parent)opts.parent.appendChild(e);
+    return e;
+  }
+  var body=d.body;
+  var hdr=el('div',{cls:'hdr',parent:body});
+  var logoWrap=el('div',{parent:hdr});
+  var logo=el('div',{cls:'logo',parent:logoWrap});
+  logo.appendChild(d.createTextNode('QUIN'));
+  el('span',{text:'-TRACK',parent:logo});
+  el('div',{css:'height:2px;background:#2563eb;width:70px;margin-top:3px;border-radius:1px;',parent:logoWrap});
+  el('div',{text:'Global Logistics',css:'font-size:9px;font-weight:700;letter-spacing:0.18em;color:#9ca3af;text-transform:uppercase;margin-top:3px;',parent:logoWrap});
+  var hdrRight=el('div',{css:'text-align:right;',parent:hdr});
+  el('div',{text:'Shipment Receipt',css:'color:#9ca3af;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;',parent:hdrRight});
+  el('div',{text:date,css:'font-size:13px;font-weight:600;color:#374151;',parent:hdrRight});
+  var idBox=el('div',{cls:'id-box',parent:body});
+  el('div',{cls:'lbl',text:'Tracking Number',parent:idBox});
+  el('div',{cls:'id',text:s.id,parent:idBox});
+  el('div',{text:'Status: '+s.status,css:'margin-top:6px;font-size:12px;font-weight:700;color:'+statusColor+';',parent:idBox});
+  var grid=el('div',{cls:'grid',parent:body});
+  [['Sender',s.sender],['Receiver',s.receiver]].forEach(function(pair){
+    var label=pair[0],p=pair[1]||{};
+    var box=el('div',{cls:'box',parent:grid});
+    el('div',{cls:'t',text:label,parent:box});
+    el('div',{cls:'n',text:p.name||'—',parent:box});
+    el('div',{cls:'d',text:[p.address,p.city].filter(Boolean).join(', ')||'—',parent:box});
+    el('div',{cls:'d',text:p.tel||'—',parent:box});
+    el('div',{cls:'d',text:p.email||'—',parent:box});
+  });
+  var pkg=el('div',{cls:'pkg',parent:body});
+  el('div',{cls:'t',text:'Package Details',parent:pkg});
+  var table=el('table',{parent:pkg});
+  var pk=s.package||{};
+  [['Content',pk.content],['Weight',pk.weight],['Quantity',pk.qty],['Order Type',pk.orderType],['Ship Date',pk.shipDate],['Expected',pk.expDate]].forEach(function(row){
+    var tr=el('tr',{parent:table});
+    el('td',{text:row[0],parent:tr});
+    el('td',{text:row[1]||'—',parent:tr});
+  });
+  el('div',{text:'Auto-generated receipt · QUIN-TRACK Logistics · © 2026',cls:'footer',parent:body});
+  w.onload=function(){w.focus();w.print();};
 }
 
 // ── CHAT ──
@@ -447,6 +526,10 @@ function downloadReceipt(){
     isOpen=!isOpen;
     document.getElementById('qt-panel').classList.toggle('open',isOpen);
     if(isOpen){document.getElementById('qt-badge').style.display='none';if(localStorage.getItem('qt_name'))qtLoad();}
+  };
+
+  window.qtExpand=function(){
+    document.getElementById('qt-panel').classList.toggle('full');
   };
 
   window.qtStart=function(){
@@ -482,15 +565,26 @@ function downloadReceipt(){
     }).catch(function(){});
   }
 
+  function qtBubble(m){
+    var d=document.createElement('div');d.className='qt-m '+m.role;
+    if(m.image){
+      var img=document.createElement('img');img.className='qt-img';img.src=m.image;
+      img.style.marginBottom=m.text?'6px':'0';
+      img.onclick=function(){window.open(m.image,'_blank');};
+      d.appendChild(img);
+    }
+    if(m.text){var txt=document.createElement('div');txt.textContent=m.text;d.appendChild(txt);}
+    var t=document.createElement('div');t.className='qt-t'+(m.role==='user'?' r':'');
+    t.textContent=m.timestamp?new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'Support Team';
+    d.appendChild(t);
+    return d;
+  }
+
   function qtRender(msgs){
     var c=document.getElementById('qt-msgs');
-    c.innerHTML='<div class="qt-m admin"><div>Hi! Welcome to QUIN-TRACK Support. How can we help you?</div><div class="qt-t">Support Team</div></div>';
-    msgs.forEach(function(m){
-      var d=document.createElement('div');d.className='qt-m '+m.role;
-      var t=new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-      d.innerHTML='<div>'+m.text+'</div><div class="qt-t'+(m.role==='user'?' r':'')+'">'+t+'</div>';
-      c.appendChild(d);
-    });
+    c.innerHTML='';
+    c.appendChild(qtBubble({role:'admin',text:'Hi! Welcome to QUIN-TRACK Support. How can we help you?'}));
+    msgs.forEach(function(m){ c.appendChild(qtBubble(m)); });
     c.scrollTop=c.scrollHeight;
   }
 
@@ -498,11 +592,33 @@ function downloadReceipt(){
     var inp=document.getElementById('qt-inp');var text=inp.value.trim();if(!text)return;
     inp.value='';
     var n=localStorage.getItem('qt_name')||'Guest';var e=localStorage.getItem('qt_email')||'';
-    var c=document.getElementById('qt-msgs');var d=document.createElement('div');d.className='qt-m user';
-    var t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    d.innerHTML='<div>'+text+'</div><div class="qt-t r">'+t+'</div>';c.appendChild(d);c.scrollTop=c.scrollHeight;
+    var c=document.getElementById('qt-msgs');
+    c.appendChild(qtBubble({role:'user',text:text,timestamp:new Date()}));c.scrollTop=c.scrollHeight;
     fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,text:text,userName:n,userEmail:e})})
     .then(function(r){return r.json();}).then(function(d){lastCount=d.messages?d.messages.length:lastCount;}).catch(function(){});
+  };
+
+  window.qtPickImage=function(ev){
+    var file=ev.target.files[0];if(!file)return;
+    ev.target.value='';
+    var reader=new FileReader();
+    reader.onload=function(){
+      var img=new Image();
+      img.onload=function(){
+        var maxW=900;var scale=Math.min(1,maxW/img.width);
+        var canvas=document.createElement('canvas');
+        canvas.width=img.width*scale;canvas.height=img.height*scale;
+        canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+        var dataUrl=canvas.toDataURL('image/jpeg',0.72);
+        var n=localStorage.getItem('qt_name')||'Guest';var e=localStorage.getItem('qt_email')||'';
+        var c=document.getElementById('qt-msgs');
+        c.appendChild(qtBubble({role:'user',image:dataUrl,timestamp:new Date()}));c.scrollTop=c.scrollHeight;
+        fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,image:dataUrl,userName:n,userEmail:e})})
+        .then(function(r){return r.json();}).then(function(d){lastCount=d.messages?d.messages.length:lastCount;}).catch(function(){});
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
   };
 })();
 

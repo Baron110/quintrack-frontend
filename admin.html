@@ -357,6 +357,10 @@ input[type=range]{accent-color:#2563eb;width:100%;}
             <p class="text-gray-400 text-sm text-center mt-8">No conversation selected</p>
           </div>
           <div id="chatReplyBox" class="hidden p-4 border-t border-gray-100 flex gap-3">
+            <input id="adminImgInp" type="file" accept="image/*" class="hidden" onchange="adminPickImage(event)"/>
+            <button onclick="document.getElementById('adminImgInp').click()" title="Attach photo" class="text-gray-400 hover:text-gray-700 px-1 flex items-center">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+            </button>
             <input type="text" id="adminReplyInput" placeholder="Type a reply…" onkeydown="if(event.key==='Enter')sendAdminReply()"
               class="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"/>
             <button onclick="sendAdminReply()" class="bg-gray-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">Send</button>
@@ -635,15 +639,25 @@ async function loadChats(){
     const chats = await apiFetch('/api/chat/sessions');
     const list = document.getElementById('chatSessionsList');
     if(!chats.length){ list.innerHTML='<p class="text-gray-400 text-sm text-center py-8">No conversations yet</p>'; return; }
-    list.innerHTML = chats.map(c=>`
-      <div onclick="openChat('${c.sessionId}')" class="p-4 cursor-pointer hover:bg-gray-50 transition-colors ${activeChatSession===c.sessionId?'bg-blue-50':''}" style="border-left:${activeChatSession===c.sessionId?'3px solid #2563eb':'3px solid transparent'}">
+    list.innerHTML='';
+    chats.forEach(c=>{
+      const last = c.messages?.slice(-1)[0];
+      const preview = last ? (last.text || (last.image ? '📷 Photo' : '')) : 'No messages';
+      const row = document.createElement('div');
+      row.onclick = ()=>openChat(c.sessionId);
+      row.className = 'p-4 cursor-pointer hover:bg-gray-50 transition-colors '+(activeChatSession===c.sessionId?'bg-blue-50':'');
+      row.style.borderLeft = activeChatSession===c.sessionId?'3px solid #2563eb':'3px solid transparent';
+      row.innerHTML = `
         <div class="flex items-center justify-between mb-1">
-          <p class="font-bold text-gray-900 text-sm">${c.userName||'Guest'}</p>
+          <p class="font-bold text-gray-900 text-sm"></p>
           ${c.unread>0?`<span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">${c.unread}</span>`:''}
         </div>
-        <p class="text-gray-400 text-xs truncate">${c.messages?.slice(-1)[0]?.text||'No messages'}</p>
-        <p class="text-gray-300 text-xs mt-1">${new Date(c.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p>
-      </div>`).join('');
+        <p class="text-gray-400 text-xs truncate"></p>
+        <p class="text-gray-300 text-xs mt-1">${new Date(c.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p>`;
+      row.querySelector('p.font-bold').textContent = c.userName||'Guest';
+      row.querySelector('p.truncate').textContent = preview;
+      list.appendChild(row);
+    });
     // Update badge
     const totalUnread = chats.reduce((sum,c)=>sum+(c.unread||0),0);
     const badge = document.getElementById('sb-chat-badge');
@@ -657,19 +671,46 @@ async function loadChats(){
   }catch(e){}
 }
 
+function renderChatMsg(m){
+  const wrap = document.createElement('div');
+  wrap.className = 'flex '+(m.role==='admin'?'justify-end':'justify-start');
+  const bubble = document.createElement('div');
+  bubble.className = 'max-w-[75%] px-4 py-2.5 rounded-2xl text-sm '+(m.role==='admin'?'bg-gray-900 text-white rounded-br-sm':'bg-white border border-gray-200 text-gray-900 rounded-bl-sm');
+  if(m.image){
+    const img = document.createElement('img');
+    img.src = m.image;
+    img.style.cssText = 'max-width:100%;border-radius:8px;display:block;cursor:pointer;'+(m.text?'margin-bottom:6px;':'');
+    img.onclick = ()=>window.open(m.image,'_blank');
+    bubble.appendChild(img);
+  }
+  if(m.text){
+    const t = document.createElement('div');
+    t.textContent = m.text;
+    bubble.appendChild(t);
+  }
+  const time = document.createElement('div');
+  time.className = 'text-xs mt-1 text-gray-400';
+  time.textContent = new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  bubble.appendChild(time);
+  wrap.appendChild(bubble);
+  return wrap;
+}
+
 async function openChat(sessionId){
   activeChatSession = sessionId;
   await apiFetch(`/api/chat/session/${sessionId}/read`,'PATCH',{});
   const chat = await apiFetch(`/api/chat/session/${sessionId}`);
-  document.getElementById('chatHeader').innerHTML=`<div class="flex items-center justify-between"><div><p class="font-bold text-gray-900 text-sm">${chat.userName||'Guest'}</p><p class="text-gray-400 text-xs">${chat.userEmail||'No email'}</p></div><button onclick="resolveChat('${sessionId}')" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-3 py-1 rounded-lg transition-colors">Mark Resolved</button></div>`;
+  const hdr = document.getElementById('chatHeader');
+  hdr.innerHTML = `<div class="flex items-center justify-between"><div><p class="font-bold text-gray-900 text-sm"></p><p class="text-gray-400 text-xs"></p></div><button onclick="resolveChat('${sessionId}')" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-3 py-1 rounded-lg transition-colors">Mark Resolved</button></div>`;
+  hdr.querySelector('p.font-bold').textContent = chat.userName||'Guest';
+  hdr.querySelector('p.text-gray-400').textContent = chat.userEmail||'No email';
   const msgs = document.getElementById('chatMessages');
-  msgs.innerHTML = chat.messages?.map(m=>`
-    <div class="flex ${m.role==='admin'?'justify-end':'justify-start'}">
-      <div class="max-w-[75%] px-4 py-2.5 rounded-2xl text-sm ${m.role==='admin'?'bg-gray-900 text-white rounded-br-sm':'bg-white border border-gray-200 text-gray-900 rounded-bl-sm'}">
-        <div>${m.text}</div>
-        <div class="text-xs mt-1 ${m.role==='admin'?'text-gray-400':'text-gray-400'}">${new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
-      </div>
-    </div>`).join('') || '<p class="text-gray-400 text-sm text-center mt-8">No messages yet</p>';
+  msgs.innerHTML = '';
+  if(chat.messages && chat.messages.length){
+    chat.messages.forEach(m=>msgs.appendChild(renderChatMsg(m)));
+  } else {
+    msgs.innerHTML = '<p class="text-gray-400 text-sm text-center mt-8">No messages yet</p>';
+  }
   msgs.scrollTop = msgs.scrollHeight;
   document.getElementById('chatReplyBox').classList.remove('hidden');
   loadChats();
@@ -682,6 +723,28 @@ async function sendAdminReply(){
   input.value = '';
   await apiFetch('/api/chat/reply','POST',{sessionId:activeChatSession,text});
   openChat(activeChatSession);
+}
+
+function adminPickImage(ev){
+  const file = ev.target.files[0];
+  if(!file || !activeChatSession) return;
+  ev.target.value = '';
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const img = new Image();
+    img.onload = async ()=>{
+      const maxW = 900;
+      const scale = Math.min(1, maxW/img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width*scale; canvas.height = img.height*scale;
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg',0.72);
+      await apiFetch('/api/chat/reply','POST',{sessionId:activeChatSession,image:dataUrl});
+      openChat(activeChatSession);
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 async function resolveChat(sessionId){
