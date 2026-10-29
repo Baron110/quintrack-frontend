@@ -281,6 +281,11 @@ const DEMO_DATA={
     </button>
     <button onclick="qtToggle()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:0;line-height:1;">&#x2715;</button>
   </div>
+  <label style="padding:8px 14px;font-size:12px;color:#111827;background:white;">Chat with
+    <select id="qt-support-admin" onchange="qtSwitchAdmin(this.value)" style="padding:6px;border:1px solid #e5e7eb;border-radius:6px;">
+      <option value="admin">Admin 1</option><option value="admin2">Admin 2</option>
+    </select>
+  </label>
   <div id="qt-name-form">
     <p style="font-size:12px;color:#6b7280;margin:0;">Enter your name to start chatting</p>
     <input id="qt-ni" type="text" placeholder="Your name" maxlength="40"/>
@@ -516,8 +521,12 @@ function downloadReceipt(){
 // ── CHAT ──
 (function(){
   var API=window.API_BASE||'https://quintrack-backend.onrender.com';
-  var sid=localStorage.getItem('qt_sid');
-  if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem('qt_sid',sid);}
+  var supportAdmin=localStorage.getItem('qt_support_admin')||'admin';
+  document.getElementById('qt-support-admin').value=supportAdmin;
+  var sidKey=supportAdmin==='admin2'?'qt_sid_admin2':'qt_sid';
+  var sid=localStorage.getItem(sidKey);
+  if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem(sidKey,sid);}
+  window.qtSwitchAdmin=function(value){localStorage.setItem('qt_support_admin',value);location.reload();};
   var isOpen=false,lastCount=0,poll=null;
   var savedName=localStorage.getItem('qt_name');
   if(savedName)qtInit(savedName,localStorage.getItem('qt_email')||'');
@@ -541,8 +550,8 @@ function downloadReceipt(){
   };
 
   function qtInit(n,e){
-    fetch(API+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,userName:n,userEmail:e})})
-    .then(function(r){return r.json();}).then(function(d){
+    fetch(API+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,supportAdmin:supportAdmin,userName:n,userEmail:e})})
+    .then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||'Cannot start chat');return d;});}).then(function(d){
       document.getElementById('qt-name-form').style.display='none';
       document.getElementById('qt-msgs').style.display='flex';
       document.getElementById('qt-footer').style.display='flex';
@@ -556,8 +565,7 @@ function downloadReceipt(){
           }
         }).catch(function(){});
       },3000);
-    }).catch(function(){});
-  }
+    }).catch(function(err){alert(err.message||"Cannot connect to support");});  }
 
   function qtLoad(){
     fetch(API+'/api/chat/session/'+sid).then(function(r){return r.json();}).then(function(d){

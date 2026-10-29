@@ -430,7 +430,10 @@ input[type=range]{accent-color:#2563eb;width:100%;}
 <div id="toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-xl font-bold text-sm text-white shadow-xl whitespace-nowrap"></div>
 
 <script>
-let authToken=localStorage.getItem('qt_token')||'';
+const admin2Panel=new URLSearchParams(location.search).get('panel')==='2';
+const tokenKey=admin2Panel?'qt_token_admin2':'qt_token';
+let authToken=localStorage.getItem(tokenKey)||'';
+if(admin2Panel)document.getElementById('loginUser').value='admin2';
 let currentPhotoData=null, editPhotoData=null, stopCount=0, editingId=null;
 const COUNTRIES=['CN','JP','DE','US','AE','KR','GB','FR','IT','AU','CA','SG','NL','IN','BR'];
 const FLAG_MAP={CN:'🇨🇳',JP:'🇯🇵',DE:'🇩🇪',US:'🇺🇸',AE:'🇦🇪',KR:'🇰🇷',GB:'🇬🇧',FR:'🇫🇷',IT:'🇮🇹',AU:'🇦🇺',CA:'🇨🇦',SG:'🇸🇬',NL:'🇳🇱',IN:'🇮🇳',BR:'🇧🇷',OTHER:'🌐'};
@@ -441,8 +444,10 @@ async function apiFetch(path,method='GET',body=null,auth=true){
   const opts={method,headers:h};
   if(body)opts.body=JSON.stringify(body);
   const res=await fetch(window.API_BASE+path,opts);
-  if(res.status===401){doLogout();throw new Error('Unauthorized');}
-  return res.json();
+  if(auth&&res.status===401){doLogout();throw new Error('Unauthorized');}
+  const data=await res.json();
+  if(!res.ok)throw new Error(data.error||'Request failed');
+  return data;
 }
 
 async function doLogin(){
@@ -453,7 +458,7 @@ async function doLogin(){
   btn.innerHTML='<span class="spinner"></span> Signing in…';btn.disabled=true;
   try{
     const res=await apiFetch('/api/auth/login','POST',{username:user,password:pass},false);
-    if(res.token){authToken=res.token;localStorage.setItem('qt_token',authToken);showApp(res.username);}
+    if(res.token){authToken=res.token;localStorage.setItem(tokenKey,authToken);showApp(res.username);}
     else showLoginErr(res.error||'Login failed');
   }catch(e){showLoginErr('Cannot reach server. Check your connection.');}
   btn.innerHTML='Sign In to Dashboard <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>';
@@ -466,7 +471,7 @@ function showApp(u){
   document.getElementById('userBadge').textContent='👤 '+(u||'admin');
   loadStats();addStop();addStop();
 }
-function doLogout(){authToken='';localStorage.removeItem('qt_token');location.reload();}
+function doLogout(){authToken='';localStorage.removeItem(tokenKey);location.reload();}
 
 function switchTab(name){
   document.getElementById('tab-create').style.display=name==='create'?'block':'none';
@@ -776,13 +781,13 @@ window.addEventListener('DOMContentLoaded',()=>{
     apiFetch('/api/stats').then(s=>{
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('appShell').style.display='block';
-      document.getElementById('userBadge').textContent='👤 admin';
+      document.getElementById('userBadge').textContent=JSON.parse(atob(authToken.split('.')[1])).username;
       document.getElementById('st-total').textContent=s.total??0;
       document.getElementById('st-transit').textContent=s.transit??0;
       document.getElementById('st-delivered').textContent=s.delivered??0;
       document.getElementById('st-pending').textContent=s.pending??0;
       addStop();addStop();
-    }).catch(()=>{authToken='';localStorage.removeItem('qt_token');});
+    }).catch(()=>{authToken='';localStorage.removeItem(tokenKey);});
   }
 });
 </script>
