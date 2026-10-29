@@ -446,7 +446,7 @@ async function apiFetch(path,method='GET',body=null,auth=true){
   const res=await fetch(window.API_BASE+path,opts);
   if(auth&&res.status===401){doLogout();throw new Error('Unauthorized');}
   const data=await res.json();
-  if(!res.ok)throw new Error(data.error||'Request failed');
+  if(!res.ok){const error=new Error(data.error||'Request failed');error.status=res.status;throw error;}
   return data;
 }
 
@@ -460,7 +460,7 @@ async function doLogin(){
     const res=await apiFetch('/api/auth/login','POST',{username:user,password:pass},false);
     if(res.token){authToken=res.token;localStorage.setItem(tokenKey,authToken);showApp(res.username);}
     else showLoginErr(res.error||'Login failed');
-  }catch(e){showLoginErr('Cannot reach server. Check your connection.');}
+  }catch(e){showLoginErr(e.status?e.message:'Cannot reach server. Check your connection.');}
   btn.innerHTML='Sign In to Dashboard <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>';
   btn.disabled=false;
 }
