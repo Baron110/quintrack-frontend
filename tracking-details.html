@@ -309,6 +309,7 @@ var STEP_DEFS=[
   {label:'Order Confirmed',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'},
   {label:'Picked by Courier',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>'},
   {label:'In Transit',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>'},
+  {label:'On Hold',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M9 5v14M15 5v14"/></svg>'},
   {label:'Out for Delivery',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 12.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>'},
   {label:'Delivered',icon:'<svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'}
 ];
@@ -336,7 +337,7 @@ function render(s){
   document.getElementById('loadingState').style.display='none';
   document.getElementById('mainContent').style.display='block';
 
-  var statusStep=s.status==='On Hold'?Math.min(3,Math.floor((s.pct||0)/25)):({'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]??1);
+  var statusStep=({'Pending':0,'In Transit':2,'On Hold':3,'Out for Delivery':4,'Delivered':5}[s.status]??1);
   var sc={'On Hold':{bg:'#fff7ed',c:'#c2410c'},'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
   var stops=s.journey||[];
   var activeStop=stops.find(function(j){return j.active;})||stops.filter(function(j){return j.done;}).slice(-1)[0]||stops[0];
@@ -349,11 +350,12 @@ function render(s){
 
   // Steps
   var stepsEl=document.getElementById('progressSteps');
+  stepsEl.style.overflowX='auto';
   stepsEl.innerHTML=STEP_DEFS.map(function(st,i){
-    var isDone=i<statusStep,isActive=s.status!=='On Hold'&&i===statusStep;
-    var bg=isDone||isActive?'#1346d4':'#f3f4f6';
+    var isDone=i<statusStep,isActive=i===statusStep;
+    var bg=isActive&&s.status==='On Hold'?'#c2410c':isDone||isActive?'#1346d4':'#f3f4f6';
     var iconColor=isDone||isActive?'#fff':'#9ca3af';
-    var lblColor=isDone?'#16a34a':isActive?'#1346d4':'#9ca3af';
+    var lblColor=isActive&&s.status==='On Hold'?'#c2410c':isDone?'#16a34a':isActive?'#1346d4':'#9ca3af';
     var connector=i<STEP_DEFS.length-1?'<div style="flex:1;height:2px;background:'+(i<statusStep?'#1346d4':'#e5e7eb')+';margin-top:24px;flex-shrink:1;min-width:8px;max-width:40px;"></div>':'';
     return '<div style="display:flex;align-items:center;flex:1;min-width:0;"><div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:54px;max-width:80px;flex:1;"><div style="width:46px;height:46px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;color:'+iconColor+';flex-shrink:0;">'+st.icon.replace('stroke="currentColor"','stroke="'+iconColor+'"')+'</div><span style="font-size:0.6rem;font-weight:600;color:'+lblColor+';text-align:center;line-height:1.3;word-break:break-word;padding:0 2px;">'+st.label+'</span></div>'+connector+'</div>';
   }).join('');

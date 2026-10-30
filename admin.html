@@ -235,7 +235,7 @@ input[type=range]{accent-color:#2563eb;width:100%;}
               <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Shipping From <span class="text-red-400">*</span></label><input class="fi" id="p_from" placeholder="Origin city/country" required/></div>
               <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Ship Out Date</label><input class="fi" id="p_shipdate" type="date"/></div>
               <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Expected Delivery</label><input class="fi" id="p_expdate" type="date"/></div>
-              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="p_status"><option>Pending</option><option>On Hold</option><option selected>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+              <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="p_status"><option>Pending</option><option selected>In Transit</option><option>On Hold</option><option>Out for Delivery</option><option>Delivered</option></select></div>
               <div class="md:col-span-2">
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Delivery Progress: <span id="pctVal" class="text-blue-600 font-bold">1%</span></label>
                 <input type="range" id="p_pct" min="0" max="100" value="1" step="5" class="mt-2" oninput="document.getElementById('pctVal').textContent=this.value+'%'"/>
@@ -402,7 +402,7 @@ input[type=range]{accent-color:#2563eb;width:100%;}
     <div class="p-5 space-y-4">
       <input type="hidden" id="edit_id"/>
       <div id="editDetails"></div>
-      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="edit_status"><option>Pending</option><option>On Hold</option><option>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
+      <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="edit_status"><option>Pending</option><option>In Transit</option><option>On Hold</option><option>Out for Delivery</option><option>Delivered</option></select></div>
       <div>
         <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Progress: <span id="editPctVal" class="text-blue-600 font-bold">0%</span></label>
         <input type="range" id="edit_pct" min="0" max="100" step="5" class="mt-2" oninput="document.getElementById('editPctVal').textContent=this.value+'%'"/>
