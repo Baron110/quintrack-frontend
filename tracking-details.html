@@ -274,18 +274,14 @@ const DEMO_DATA={
     </div>
     <div style="flex:1;">
       <div style="color:#fff;font-weight:700;font-size:13px;">QUIN-TRACK Support</div>
-      <div style="display:flex;align-items:center;gap:5px;margin-top:2px;"><div class="qt-dot"></div><span style="color:rgba(255,255,255,0.55);font-size:11px;">Online · Replies in minutes</span></div>
+      <div style="display:flex;align-items:center;gap:5px;margin-top:2px;"><span style="color:rgba(255,255,255,0.55);font-size:11px;">Leave a message for shipment support</span></div>
     </div>
     <button id="qtExpandBtn" onclick="qtExpand()" aria-label="Expand chat" style="background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:4px;display:flex;margin-right:2px;">
       <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
     </button>
     <button onclick="qtToggle()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:0;line-height:1;">&#x2715;</button>
   </div>
-  <label style="padding:8px 14px;font-size:12px;color:#111827;background:white;">Chat with
-    <select id="qt-support-admin" onchange="qtSwitchAdmin(this.value)" style="padding:6px;border:1px solid #e5e7eb;border-radius:6px;">
-      <option value="admin">Admin 1</option><option value="admin2">Admin 2</option>
-    </select>
-  </label>
+
   <div id="qt-name-form">
     <p style="font-size:12px;color:#6b7280;margin:0;">Enter your name to start chatting</p>
     <input id="qt-ni" type="text" placeholder="Your name" maxlength="40"/>
@@ -519,118 +515,9 @@ function downloadReceipt(){
 }
 
 // ── CHAT ──
-(function(){
-  var API=window.API_BASE||'https://quintrack-backend.onrender.com';
-  var supportAdmin=localStorage.getItem('qt_support_admin')||'admin';
-  document.getElementById('qt-support-admin').value=supportAdmin;
-  var sidKey=supportAdmin==='admin2'?'qt_sid_admin2':'qt_sid';
-  var sid=localStorage.getItem(sidKey);
-  if(!sid){sid='sess_'+Math.random().toString(36).substr(2,12)+'_'+Date.now();localStorage.setItem(sidKey,sid);}
-  window.qtSwitchAdmin=function(value){localStorage.setItem('qt_support_admin',value);location.reload();};
-  var isOpen=false,lastCount=0,poll=null;
-  var savedName=localStorage.getItem('qt_name');
-  if(savedName)qtInit(savedName,localStorage.getItem('qt_email')||'');
-
-  window.qtToggle=function(){
-    isOpen=!isOpen;
-    document.getElementById('qt-panel').classList.toggle('open',isOpen);
-    if(isOpen){document.getElementById('qt-badge').style.display='none';if(localStorage.getItem('qt_name'))qtLoad();}
-  };
-
-  window.qtExpand=function(){
-    document.getElementById('qt-panel').classList.toggle('full');
-  };
-
-  window.qtStart=function(){
-    var n=document.getElementById('qt-ni').value.trim();
-    if(!n){document.getElementById('qt-ni').style.borderColor='#ef4444';return;}
-    var e=document.getElementById('qt-ei').value.trim();
-    localStorage.setItem('qt_name',n);localStorage.setItem('qt_email',e);
-    qtInit(n,e);
-  };
-
-  function qtInit(n,e){
-    fetch(API+'/api/chat/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,supportAdmin:supportAdmin,userName:n,userEmail:e})})
-    .then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||'Cannot start chat');return d;});}).then(function(d){
-      document.getElementById('qt-name-form').style.display='none';
-      document.getElementById('qt-msgs').style.display='flex';
-      document.getElementById('qt-footer').style.display='flex';
-      if(d.messages&&d.messages.length)qtRender(d.messages);
-      lastCount=d.messages?d.messages.length:0;
-      if(!poll)poll=setInterval(function(){
-        fetch(API+'/api/chat/session/'+sid).then(function(r){return r.json();}).then(function(d){
-          if(d.messages&&d.messages.length>lastCount){
-            qtRender(d.messages);lastCount=d.messages.length;
-            if(!isOpen){var b=document.getElementById('qt-badge');b.style.display='flex';b.textContent=d.messages.filter(function(m){return m.role==='admin';}).length;}
-          }
-        }).catch(function(){});
-      },3000);
-    }).catch(function(err){alert(err.message||"Cannot connect to support");});  }
-
-  function qtLoad(){
-    fetch(API+'/api/chat/session/'+sid).then(function(r){return r.json();}).then(function(d){
-      if(d.messages)qtRender(d.messages);lastCount=d.messages?d.messages.length:0;
-    }).catch(function(){});
-  }
-
-  function qtBubble(m){
-    var d=document.createElement('div');d.className='qt-m '+m.role;
-    if(m.image){
-      var img=document.createElement('img');img.className='qt-img';img.src=m.image;
-      img.style.marginBottom=m.text?'6px':'0';
-      img.onclick=function(){window.open(m.image,'_blank');};
-      d.appendChild(img);
-    }
-    if(m.text){var txt=document.createElement('div');txt.textContent=m.text;d.appendChild(txt);}
-    var t=document.createElement('div');t.className='qt-t'+(m.role==='user'?' r':'');
-    t.textContent=m.timestamp?new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'Support Team';
-    d.appendChild(t);
-    return d;
-  }
-
-  function qtRender(msgs){
-    var c=document.getElementById('qt-msgs');
-    c.innerHTML='';
-    c.appendChild(qtBubble({role:'admin',text:'Hi! Welcome to QUIN-TRACK Support. How can we help you?'}));
-    msgs.forEach(function(m){ c.appendChild(qtBubble(m)); });
-    c.scrollTop=c.scrollHeight;
-  }
-
-  window.qtSend=function(){
-    var inp=document.getElementById('qt-inp');var text=inp.value.trim();if(!text)return;
-    inp.value='';
-    var n=localStorage.getItem('qt_name')||'Guest';var e=localStorage.getItem('qt_email')||'';
-    var c=document.getElementById('qt-msgs');
-    c.appendChild(qtBubble({role:'user',text:text,timestamp:new Date()}));c.scrollTop=c.scrollHeight;
-    fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,text:text,userName:n,userEmail:e})})
-    .then(function(r){return r.json();}).then(function(d){lastCount=d.messages?d.messages.length:lastCount;}).catch(function(){});
-  };
-
-  window.qtPickImage=function(ev){
-    var file=ev.target.files[0];if(!file)return;
-    ev.target.value='';
-    var reader=new FileReader();
-    reader.onload=function(){
-      var img=new Image();
-      img.onload=function(){
-        var maxW=900;var scale=Math.min(1,maxW/img.width);
-        var canvas=document.createElement('canvas');
-        canvas.width=img.width*scale;canvas.height=img.height*scale;
-        canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-        var dataUrl=canvas.toDataURL('image/jpeg',0.72);
-        var n=localStorage.getItem('qt_name')||'Guest';var e=localStorage.getItem('qt_email')||'';
-        var c=document.getElementById('qt-msgs');
-        c.appendChild(qtBubble({role:'user',image:dataUrl,timestamp:new Date()}));c.scrollTop=c.scrollHeight;
-        fetch(API+'/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,image:dataUrl,userName:n,userEmail:e})})
-        .then(function(r){return r.json();}).then(function(d){lastCount=d.messages?d.messages.length:lastCount;}).catch(function(){});
-      };
-      img.src=reader.result;
-    };
-    reader.readAsDataURL(file);
-  };
-})();
 
 load();
 </script>
+<script src="support-chat.js"></script>
 </body>
 </html>

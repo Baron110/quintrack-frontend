@@ -394,13 +394,14 @@ input[type=range]{accent-color:#2563eb;width:100%;}
 
 <!-- EDIT MODAL -->
 <div id="editModal" class="hidden fixed inset-0 bg-gray-900/60 z-[100] flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl fade-up">
+  <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl fade-up">
     <div class="flex items-center justify-between p-5 border-b border-gray-100">
       <h3 class="font-bold text-gray-900">Update Shipment</h3>
       <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 hover:bg-red-50 hover:text-red-500 rounded-lg flex items-center justify-center text-sm transition-colors">✕</button>
     </div>
     <div class="p-5 space-y-4">
       <input type="hidden" id="edit_id"/>
+      <div id="editDetails"></div>
       <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Status</label><select class="fi" id="edit_status"><option>Pending</option><option>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select></div>
       <div>
         <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Progress: <span id="editPctVal" class="text-blue-600 font-bold">0%</span></label>
@@ -486,7 +487,8 @@ function switchTab(name){
   document.getElementById('bn-chat').className=`flex-1 flex flex-col items-center py-3 gap-1 relative ${name==='chat'?'text-blue-600':'text-gray-400'}`;
   document.getElementById('pageTitle').textContent=name==='create'?'Create Shipment':name==='list'?'All Shipments':'Support Inbox';
   if(name==='list')loadShipments();
-  if(name==='chat')loadChats();
+  if(chatPollInterval){clearInterval(chatPollInterval);chatPollInterval=null;}
+  if(name==='chat'){loadChats();chatPollInterval=setInterval(refreshActiveChat,3000);}
 }
 
 async function loadStats(){
@@ -606,6 +608,7 @@ async function openEdit(id){
   try{
     const s=await apiFetch('/api/shipments/'+id);
     document.getElementById('edit_id').value=id;
+    populateShipmentEditor(s);
     document.getElementById('edit_status').value=s.status;
     document.getElementById('edit_pct').value=s.pct||0;
     document.getElementById('editPctVal').textContent=(s.pct||0)+'%';
@@ -620,11 +623,12 @@ function closeModal(){document.getElementById('editModal').classList.add('hidden
 async function saveEdit(){
   const btn=document.getElementById('saveEditBtn');btn.innerHTML='<span class="spinner"></span>';btn.disabled=true;
   try{
-    const u={status:document.getElementById('edit_status').value,pct:parseInt(document.getElementById('edit_pct').value)||0,'package.expDate':document.getElementById('edit_expdate').value};
-    if(editPhotoData!==null)u.itemPhoto=editPhotoData;
+    const u={status:document.getElementById('edit_status').value,pct:parseInt(document.getElementById('edit_pct').value)||0};
+    Object.assign(u,collectShipmentEditor());
+    u.itemPhoto=editPhotoData;
     await apiFetch('/api/shipments/'+editingId,'PATCH',u);
     closeModal();loadShipments();loadStats();showToast('Updated ✓','success');
-  }catch(e){showToast('Error saving','error');}
+  }catch(e){showToast(e.message||'Error saving','error');}
   btn.innerHTML='Save Changes';btn.disabled=false;
 }
 
@@ -638,6 +642,29 @@ function showToast(msg,type=''){
 // ── CHAT FUNCTIONS ──
 let activeChatSession = null;
 let chatPollInterval = null;
+let activeChatSignature='',refreshingChat=false;
+async function refreshActiveChat(){
+  if(!authToken||refreshingChat)return;
+  refreshingChat=true;
+  try{
+    const id=activeChatSession;
+    if(id){
+      const chat=await apiFetch('/api/chat/session/'+encodeURIComponent(id));
+      if(id!==activeChatSession)return;
+      const signature=JSON.stringify(chat.messages||[]);
+      if(signature!==activeChatSignature){
+        const msgs=document.getElementById('chatMessages');
+        const atBottom=msgs.scrollHeight-msgs.scrollTop-msgs.clientHeight<80;
+        msgs.replaceChildren(...(chat.messages||[]).map(renderChatMsg));
+        if(atBottom)msgs.scrollTop=msgs.scrollHeight;
+        activeChatSignature=signature;
+        await apiFetch('/api/chat/session/'+encodeURIComponent(id)+'/read','PATCH',{});
+      }
+    }
+    await loadChats();
+  }catch(e){showToast(e.message||'Unable to refresh support inbox','error');}
+  finally{refreshingChat=false;}
+}
 
 async function loadChats(){
   try{
@@ -703,12 +730,15 @@ function renderChatMsg(m){
 
 async function openChat(sessionId){
   activeChatSession = sessionId;
+  activeChatSignature='';
   await apiFetch(`/api/chat/session/${sessionId}/read`,'PATCH',{});
   const chat = await apiFetch(`/api/chat/session/${sessionId}`);
+  if(activeChatSession!==sessionId)return;
+  activeChatSignature=JSON.stringify(chat.messages||[]);
   const hdr = document.getElementById('chatHeader');
   hdr.innerHTML = `<div class="flex items-center justify-between"><div><p class="font-bold text-gray-900 text-sm"></p><p class="text-gray-400 text-xs"></p></div><button onclick="resolveChat('${sessionId}')" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-3 py-1 rounded-lg transition-colors">Mark Resolved</button></div>`;
   hdr.querySelector('p.font-bold').textContent = chat.userName||'Guest';
-  hdr.querySelector('p.text-gray-400').textContent = chat.userEmail||'No email';
+  hdr.querySelector('p.text-gray-400').textContent = [chat.shipmentId,chat.userEmail].filter(Boolean).join(' ? ')||'No email';
   const msgs = document.getElementById('chatMessages');
   msgs.innerHTML = '';
   if(chat.messages && chat.messages.length){
@@ -791,5 +821,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 });
 </script>
+<script src="shipment-editor.js"></script>
 </body>
 </html>
