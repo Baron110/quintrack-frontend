@@ -336,8 +336,8 @@ function render(s){
   document.getElementById('loadingState').style.display='none';
   document.getElementById('mainContent').style.display='block';
 
-  var statusStep={'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]||1;
-  var sc={'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
+  var statusStep=s.status==='On Hold'?Math.min(3,Math.floor((s.pct||0)/25)):({'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]??1);
+  var sc={'On Hold':{bg:'#fff7ed',c:'#c2410c'},'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
   var stops=s.journey||[];
   var activeStop=stops.find(function(j){return j.active;})||stops.filter(function(j){return j.done;}).slice(-1)[0]||stops[0];
 
@@ -350,7 +350,7 @@ function render(s){
   // Steps
   var stepsEl=document.getElementById('progressSteps');
   stepsEl.innerHTML=STEP_DEFS.map(function(st,i){
-    var isDone=i<statusStep,isActive=i===statusStep;
+    var isDone=i<statusStep,isActive=s.status!=='On Hold'&&i===statusStep;
     var bg=isDone||isActive?'#1346d4':'#f3f4f6';
     var iconColor=isDone||isActive?'#fff':'#9ca3af';
     var lblColor=isDone?'#16a34a':isActive?'#1346d4':'#9ca3af';
@@ -439,7 +439,7 @@ function downloadReceipt(){
   if(!currentShipment){alert('No shipment loaded.');return;}
   var s=currentShipment;
   var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  var statusColor={'Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
+  var statusColor={'On Hold':'#c2410c','Pending':'#d97706','In Transit':'#2563eb','Out for Delivery':'#0891b2','Delivered':'#16a34a'}[s.status]||'#2563eb';
   var w=window.open('','_blank');
   var d=w.document;
   d.title='Receipt - '+s.id;

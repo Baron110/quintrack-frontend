@@ -405,10 +405,10 @@ async function doTrack(){
 
 function renderResult(s,el){
   const pct=s.pct||0;
-  const statusStep={'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]||1;
+  const statusStep=s.status==='On Hold'?Math.min(3,Math.floor((s.pct||0)/25)):({'Pending':0,'In Transit':2,'Out for Delivery':3,'Delivered':4}[s.status]??1);
   const lastDone=s.journey?.filter(j=>j.done).slice(-1)[0];
   const stops=s.journey||[];
-  const sc={'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
+  const sc={'On Hold':{bg:'#fff7ed',c:'#c2410c'},'Pending':{bg:'#fefce8',c:'#d97706'},'In Transit':{bg:'#eff6ff',c:'#2563eb'},'Out for Delivery':{bg:'#f0fdfa',c:'#0891b2'},'Delivered':{bg:'#f0fdf4',c:'#16a34a'}}[s.status]||{bg:'#eff6ff',c:'#2563eb'};
 
   const stepIcons=[
     '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
@@ -452,7 +452,7 @@ function renderResult(s,el){
       <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:12px;">Shipment Progress</p>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
         ${stepLabels.map((lbl,i)=>{
-          const isDone=i<statusStep,isActive=i===statusStep;
+          const isDone=i<statusStep,isActive=s.status!=='On Hold'&&i===statusStep;
           const bg=isDone||isActive?'#111827':'#f3f4f6';
           const ic=isDone||isActive?'#fff':'#9ca3af';
           const lc=isDone?'#16a34a':isActive?'#111827':'#9ca3af';
