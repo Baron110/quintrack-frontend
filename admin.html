@@ -357,8 +357,8 @@ input[type=range]{accent-color:#2563eb;width:100%;}
             <p class="text-gray-400 text-sm text-center mt-8">No conversation selected</p>
           </div>
           <div id="chatReplyBox" class="hidden p-4 border-t border-gray-100 flex gap-3">
-            <input id="adminImgInp" type="file" accept="image/*" class="hidden" onchange="adminPickImage(event)"/>
-            <button onclick="document.getElementById('adminImgInp').click()" title="Attach photo" class="text-gray-400 hover:text-gray-700 px-1 flex items-center">
+            <input id="adminImgInp" type="file" accept="image/jpeg,image/png,image/webp,application/pdf,.pdf" class="hidden" onchange="adminPickImage(event)"/>
+            <button onclick="document.getElementById('adminImgInp').click()" title="Attach photo or PDF (up to 5 MB)" aria-label="Attach photo or PDF" class="text-gray-400 hover:text-gray-700 px-1 flex items-center">
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
             </button>
             <input type="text" id="adminReplyInput" placeholder="Type a reply…" onkeydown="if(event.key==='Enter')sendAdminReply()"
@@ -674,7 +674,7 @@ async function loadChats(){
     list.innerHTML='';
     chats.forEach(c=>{
       const last = c.messages?.slice(-1)[0];
-      const preview = last ? (last.text || (last.image ? '📷 Photo' : '')) : 'No messages';
+      const preview = last ? (last.text || (last.attachment ? 'PDF: '+last.attachment.name : '') || (last.image ? '📷 Photo' : '')) : 'No messages';
       const row = document.createElement('div');
       row.onclick = ()=>openChat(c.sessionId);
       row.className = 'p-4 cursor-pointer hover:bg-gray-50 transition-colors '+(activeChatSession===c.sessionId?'bg-blue-50':'');
@@ -715,6 +715,7 @@ function renderChatMsg(m){
     img.onclick = ()=>window.open(m.image,'_blank');
     bubble.appendChild(img);
   }
+  if(m.attachment)bubble.appendChild(window.createPdfAttachment(m.attachment,()=>apiFetch('/api/chat/session/'+encodeURIComponent(activeChatSession)+'/attachment/'+encodeURIComponent(m.attachment.fileId))));
   if(m.text){
     const t = document.createElement('div');
     t.textContent = m.text;
@@ -760,26 +761,25 @@ async function sendAdminReply(){
   openChat(activeChatSession);
 }
 
-function adminPickImage(ev){
-  const file = ev.target.files[0];
-  if(!file || !activeChatSession) return;
-  ev.target.value = '';
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    const img = new Image();
-    img.onload = async ()=>{
-      const maxW = 900;
-      const scale = Math.min(1, maxW/img.width);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width*scale; canvas.height = img.height*scale;
-      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg',0.72);
-      await apiFetch('/api/chat/reply','POST',{sessionId:activeChatSession,image:dataUrl});
-      openChat(activeChatSession);
-    };
-    img.src = reader.result;
-  };
-  reader.readAsDataURL(file);
+let adminUploading=false;
+async function adminPickImage(ev){
+  const file=ev.target.files[0],sessionId=activeChatSession;ev.target.value='';
+  if(!file||!sessionId||adminUploading)return;
+  if(file.size>5*1024*1024){showToast('Choose a file up to 5 MB','error');return;}
+  adminUploading=true;
+  try{
+    let payload;
+    if(file.type==='application/pdf'||file.name.toLowerCase().endsWith('.pdf'))payload={attachment:await window.readSupportPdf(file)};
+    else{
+      if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Choose a JPG, PNG, WebP, or PDF');
+      const img=await createImageBitmap(file),canvas=document.createElement('canvas'),scale=Math.min(1,900/img.width);
+      canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);img.close();payload={image:canvas.toDataURL('image/jpeg',0.72)};
+    }
+    await apiFetch('/api/chat/reply','POST',{sessionId,...payload});
+    if(activeChatSession===sessionId)await openChat(sessionId);
+    showToast('Attachment sent','success');
+  }catch(e){showToast(e.message||'Unable to send attachment','error');}
+  finally{adminUploading=false;}
 }
 
 async function resolveChat(sessionId){
@@ -821,6 +821,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 });
 </script>
+<script src="chat-attachments.js"></script>
 <script src="shipment-editor.js"></script>
 </body>
 </html>

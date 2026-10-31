@@ -25,6 +25,7 @@
     for(const m of chat.messages||[]){
       const bubble=document.createElement('div');bubble.style.cssText='max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;overflow-wrap:anywhere;'+(m.role==='user'?'align-self:flex-end;background:#111827;color:white;':'align-self:flex-start;background:white;color:#111827;border:1px solid #e5e7eb;');
       if(m.image&&/^data:image\/(jpeg|png|webp);base64,/.test(m.image)){const img=document.createElement('img');img.src=m.image;img.alt='Chat attachment';img.style.cssText='max-width:100%;border-radius:8px;';bubble.append(img);}
+      if(m.attachment)bubble.append(window.createPdfAttachment(m.attachment,()=>{if(!access)throw Error('Unlock shipment chat first.');return request('/api/chat/session/'+encodeURIComponent(access.sessionId)+'/attachment/'+encodeURIComponent(m.attachment.fileId));}));
       if(m.text){const text=document.createElement('div');text.textContent=m.text;bubble.append(text);}msgs.append(bubble);
     }
     if(atBottom)msgs.scrollTop=msgs.scrollHeight;
@@ -46,9 +47,10 @@
   window.qtSend=async()=>{const text=el('qt-inp').value.trim();if(!text||busy)return;busy=true;error.textContent='';try{await send({text});el('qt-inp').value='';}catch(e){error.textContent=e.message;}finally{busy=false;}};
   window.qtPickImage=async event=>{
     const file=event.target.files[0];event.target.value='';if(!file||busy)return;
-    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){error.textContent='Choose a JPG, PNG, or WebP image up to 5 MB.';return;}
+    if(!['image/jpeg','image/png','image/webp','application/pdf'].includes(file.type)&&!file.name.toLowerCase().endsWith('.pdf')||file.size>5*1024*1024){error.textContent='Choose a JPG, PNG, WebP, or PDF up to 5 MB.';return;}
     busy=true;error.textContent='';
     try{
+      if(file.type==='application/pdf'||file.name.toLowerCase().endsWith('.pdf')){await send({attachment:await window.readSupportPdf(file)});return;}
       const image=await createImageBitmap(file),canvas=document.createElement('canvas'),scale=Math.min(1,900/image.width);canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);image.close();await send({image:canvas.toDataURL('image/jpeg',0.75)});
     }catch(e){error.textContent=e.message;}finally{busy=false;}
   };

@@ -23,3 +23,15 @@ test('open admin conversation refreshes new replies without replacing the draft'
  await ctx.refreshActiveChat();assert.equal(nodes.chatMessages.children[0].textContent,'New customer message');assert.equal(nodes.adminReplyInput.value,'Draft reply');assert.equal(read,1);assert.equal(list,1);
  await ctx.refreshActiveChat();assert.equal(read,1);
 });
+
+test('PDF cards load files on demand and open/download through protected access',async()=>{
+ const {document}=dom();let loads=0,opened,downloaded;const originalCreate=document.createElement;document.createElement=tag=>{const n=originalCreate(tag);n.click=()=>downloaded=n.download;return n;};
+ const bytes=Buffer.from('%PDF-1.4\n%%EOF'),dataUrl='data:application/pdf;base64,'+bytes.toString('base64');
+ const ctx={document,window:{open:()=>opened={location:{},close(){}}},Uint8Array,Blob,atob:s=>Buffer.from(s,'base64').toString('binary'),URL:{createObjectURL:()=> 'blob:protected-pdf',revokeObjectURL(){}},setTimeout(){}};
+ vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(__dirname,'../chat-attachments.js'),'utf8'),ctx);
+ const card=ctx.window.createPdfAttachment({fileId:'file-id',name:'<receipt>.pdf',mimeType:'application/pdf',size:bytes.length},async()=>{loads++;return {dataUrl}});
+ assert.equal(loads,0);assert.equal(card.children[0].textContent,'PDF · <receipt>.pdf');
+ await card.children[2].onclick({preventDefault(){}});assert.equal(loads,1);assert.equal(opened.location.href,'blob:protected-pdf');assert.equal(opened.opener,null);
+ await card.children[3].onclick({preventDefault(){}});assert.equal(downloaded,'<receipt>.pdf');
+ const bad=new Blob(['not a PDF']);bad.name='fake.pdf';await assert.rejects(ctx.window.readSupportPdf(bad),/not a valid PDF/);
+});
